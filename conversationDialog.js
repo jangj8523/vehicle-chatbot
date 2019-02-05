@@ -23,22 +23,28 @@ class ConversationDialog  extends ComponentDialog {
         this.addDialog(new WaterfallDialog(dialogId, [
             async function (step) {
                 // Clear the guest information and prompt for the guest's name.
-                step.values.guestInfo = {};
-                return await step.prompt('textPrompt', "What is your name?");
+                step.values.userInfo = {};
+                step.values.userInfo.destChoice = "home";
+                await step.context.sendActivity("Ok, navigating to “Home”");
+                return await step.endDialog(step.values.userInfo);
             },
-            async function (step) {
-                // Save the name and prompt for the room number.
-                step.values.guestInfo.userName = step.result;
-                return await step.prompt('textPrompt', `Hi ${step.result}. What room will you be staying in?`);
-            },
-            async function (step) {
-                // Save the room number and "sign off".
-                step.values.guestInfo.roomNumber = step.result;
-                await step.context.sendActivity(`Great! Enjoy your stay in room ${step.result}!`);
 
-                // End the dialog, returning the guest info.
-                return await step.endDialog(step.values.guestInfo);
-            }
+            // async function (step) {
+            //     // Save the name and prompt for the room number.
+            //     step.values.userInfo = {};
+            //     step.values.userInfo.userName = step.result;
+            //     await step.context.sendActivity("Great, let’s go. Home sweet home!");
+            //     return await step.endDialog(step.values.userInfo);
+            //     // return await step.prompt('textPrompt', `Hi ${step.result}. What room will you be staying in?`);
+            // },
+            // async function (step) {
+            //     // Save the room number and "sign off".
+            //     step.values.guestInfo.roomNumber = step.result;
+            //     await step.context.sendActivity(`Great! Enjoy your stay in room ${step.result}!`);
+
+            //     // End the dialog, returning the guest info.
+            //     return await step.endDialog(step.values.guestInfo);
+            // }
         ]));
     }
 

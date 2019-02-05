@@ -12,6 +12,7 @@ class ReserveRestaurant  extends ComponentDialog {
         this.initialDialogId = dialogId;
 
         // Define the prompts used in this conversation flow.
+        this.addDialog(new ChoicePrompt('choicePrompt'));
         this.addDialog(new TextPrompt('textPrompt'));
 
         // Define the conversation flow using a waterfall model.
@@ -19,14 +20,25 @@ class ReserveRestaurant  extends ComponentDialog {
             async function (step) {
                 // Clear the user information and prompt for the user's name.
                 step.values.userInfo = {};
-                return await step.prompt('textPrompt', "What type of food would you like for dinner?");
+                const promptOptions = {
+                    prompt: `Ok, here is a list of restaurants near you.`,
+                    choices: ["Nola", "Pompous", "Izakaya", "L&L", "Circles"]
+                };
+                return await step.prompt('choicePrompt', promptOptions);
+                
             },
 
-            async function (step) {
-                // Clear the user information and prompt for the user's name.
-                step.values.userInfo = {};
-                return await step.prompt('textPrompt', "Sure, what about Rubiano’s, the Italian place from last week? Might be nice to destress and enjoy your favorites!?");
-            }
+            // async function (step) {
+            //     // Clear the user information and prompt for the user's name.
+            //     step.values.userInfo = {};
+            //     // result.send("Might be nice to destress and enjoy your favorites!?");   
+            //     await step.context.sendActivity("Might be nice to destress and enjoy your favorites!?")
+            //     const promptOptions = {
+            //         prompt: `Here's a list. What about Rubiano’s, the Italian place from last week?`,
+            //         choices: ["Rubiano’s", "Pompous", "Izakaya", "Nola", "Circles"]
+            //     };
+            //     return await step.prompt('choicePrompt', promptOptions);
+            // }
 
             // async function (step) {
             //     // Save the name and prompt for the room number.

@@ -16,24 +16,28 @@ class ChooseMusic  extends ComponentDialog {
 
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
-            async function (step) {
-                // Clear the user information and prompt for the user's name.
-                step.values.userInfo = {};
-                return await step.prompt('textPrompt', "What is your name?");
-            },
+            // async function (step) {
+            //     // Clear the user information and prompt for the user's name.
+            //     step.values.userInfo = {};
+            //     await step.context.sendActivity("Sorry, I’m not quite sure I understand.");
+            //     return await step.endDialog(step.values.userInfo);
+            // },
             async function (step) {
                 // Save the name and prompt for the room number.
+                step.values.userInfo = {}
                 step.values.userInfo.userName = step.result;
-                return await step.prompt('textPrompt', `Hi ${step.result}. What would you like to do?`);
+                await step.context.sendActivity("I’m sorry to hear that.");
+                await step.context.sendActivity("One day at a time, you can do it!");
+                return await step.endDialog(step.values.userInfo)
             },
-            async function (step) {
-                // Save the room number and "sign off".
-                step.values.userInfo.roomNumber = step.result;
-                await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
+            // async function (step) {
+            //     // Save the room number and "sign off".
+            //     step.values.userInfo.roomNumber = step.result;
+            //     await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
 
-                // End the dialog, returning the user info.
-                return await step.endDialog(step.values.userInfo);
-            }
+            //     // End the dialog, returning the user info.
+            //     return await step.endDialog(step.values.userInfo);
+            // }
         ]));
     }
 

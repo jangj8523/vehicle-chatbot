@@ -3,7 +3,6 @@
 
 const { ActivityTypes, MessageFactory } = require('botbuilder');
 const { DialogSet, WaterfallDialog, TextPrompt, Dialog, DialogTurnStatus } = require('botbuilder-dialogs');
-const { ConversationDialog } = require('./conversationDialog');
 
 const DIALOG_STATE_PROPERTY = 'dialogStatePropertyAccessor';
 const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
@@ -12,7 +11,7 @@ const { CheckInDialog } = require("./checkInDialog");
 const { ControlCarFeature } = require("./controlCarFeature.js");
 const { ChooseMusic } = require("./chooseMusic.js");
 const { ReserveRestaurant } = require("./reserveRestaurant.js");
-
+const { ConversationDialog } = require("./conversationDialog");
 
 
 class MyBot {
@@ -32,6 +31,7 @@ class MyBot {
         .add(new TextPrompt('textPrompt'))
         .add(new ControlCarFeature('controlCarFeature'))
         .add(new ChooseMusic('chooseMusic'))
+        .add(new ConversationDialog('conversationDialog'))
         .add(new ReserveRestaurant('reserveRestaurant'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
@@ -66,13 +66,15 @@ class MyBot {
             return await step.beginDialog('controlCarFeature', user.userInfo);
         } else if (step.result.includes("list of restaurant")) {
             return await step.beginDialog('checkInDialog', user.userInfo);
-        } else if (step.result.includes("hey")) {
-
-        } else if (step.result.includes("recommendations for dinner")) {
-            await step.beginDialog('reserveRestaurant', user.userInfo);
-        } else if (step.result.include("")) {
+        } else if (step.result.includes("tough day")) {
             await step.beginDialog('chooseMusic', user.userInfo);
-        } else {
+        } else if (step.result.includes("dinner tonight")) {
+            await step.beginDialog('reserveRestaurant', user.userInfo);
+        } else if (step.result.includes("choose music")) {
+            await step.beginDialog('chooseMusic', user.userInfo);
+        } else if (step.result.includes("take me")){
+            await step.beginDialog('conversationDialog', user.userInfo);
+        }else {
             await step.context.sendActivity("What the heck are you talking about. Say it again.");
               
         }
