@@ -7,11 +7,11 @@ const { DialogSet, WaterfallDialog, TextPrompt, Dialog, DialogTurnStatus } = req
 const DIALOG_STATE_PROPERTY = 'dialogStatePropertyAccessor';
 const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
-const { CheckInDialog } = require("./checkInDialog");
-const { ControlCarFeature } = require("./controlCarFeature.js");
-const { ChooseMusic } = require("./chooseMusic.js");
-const { ReserveRestaurant } = require("./reserveRestaurant.js");
-const { ConversationDialog } = require("./conversationDialog");
+const { CheckInDialog } = require("./dialogs/checkInDialog");
+const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
+const { ChooseMusic } = require("./dialogs/chooseMusic.js");
+const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
+const { ConversationDialog } = require("./dialogs/conversationDialog");
 
 
 class MyBot {
