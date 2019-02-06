@@ -21,7 +21,7 @@ class MyBot {
         // Record the conversation and user state management objects.
         this.conversationState = conversationState;
         this.userState = userState;
-
+        
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
