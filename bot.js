@@ -12,6 +12,7 @@ const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { ChooseMusic } = require("./dialogs/chooseMusic.js");
 const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
 const { ConversationDialog } = require("./dialogs/conversationDialog");
+const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
 
 
 class MyBot {
@@ -21,7 +22,7 @@ class MyBot {
         // Record the conversation and user state management objects.
         this.conversationState = conversationState;
         this.userState = userState;
-        
+
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
@@ -52,6 +53,16 @@ class MyBot {
         return Dialog.EndOfTurn;
     }
 
+    async findIntent (step) {
+        let intentApi = intentUri;
+        intentApi += step.result;
+        const response = await fetch(intentApi);
+        const intentResponse = await response.json()
+        console.log (intentResponse)
+        let topScoreIntent = intentResponse['topScoringIntent']['intent']
+        let sentiment = intentResponse['sentimentAnalysis']['score']
+        return topScoreIntent, sentiment
+    }
     async startChildDialog(step) {
         // Get the user's info.
         const user = await this.userInfoAccessor.get(step.context);
@@ -60,9 +71,15 @@ class MyBot {
         if (!user.userInfo) {
             user.userInfo = {}
         } 
+        var sentimentIntentList = await this.findIntent(step);
+
+        let topScoreIntent = sentimentIntentList[0]
+        let sentiment = sentimentIntentList[1]
+        /***
+        Navigate to its corresponding intent.
+        */
 
         if (step.result.includes("turn on")) {
-
             return await step.beginDialog('controlCarFeature', user.userInfo);
         } else if (step.result.includes("list of restaurant")) {
             return await step.beginDialog('checkInDialog', user.userInfo);
