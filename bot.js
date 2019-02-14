@@ -1,17 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityTypes, MessageFactory } = require('botbuilder');
+const { ActivityTypes, MessageFactory, IMessageActivity } = require('botbuilder');
 const { DialogSet, WaterfallDialog, TextPrompt, Dialog, DialogTurnStatus } = require('botbuilder-dialogs');
 
 const DIALOG_STATE_PROPERTY = 'dialogStatePropertyAccessor';
 const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
-const { CheckInDialog } = require("./dialogs/checkInDialog");
+const { CheckInDialog } = require("./dialogs/checkInDialog.js");
 const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { ChooseMusic } = require("./dialogs/chooseMusic.js");
 const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
-const { ConversationDialog } = require("./dialogs/conversationDialog");
+const { ConversationDialog } = require("./dialogs/conversationDialog.js");
+const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
 
 
@@ -22,7 +23,7 @@ class MyBot {
         // Record the conversation and user state management objects.
         this.conversationState = conversationState;
         this.userState = userState;
-
+        this.textToSpeech = new TextToSpeech();
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
@@ -45,8 +46,9 @@ class MyBot {
 
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
-        if (!user.first_time) {
-            user.first_time = true;
+
+        if (!user.firstTime) {
+            user.firstTime = true;
             user.userName = "Jaewoo";
             await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
         } 
@@ -61,56 +63,75 @@ class MyBot {
         console.log (intentResponse)
         let topScoreIntent = intentResponse['topScoringIntent']['intent']
         let sentiment = intentResponse['sentimentAnalysis']['score']
-        return topScoreIntent, sentiment
+        return [topScoreIntent, sentiment, intentResponse]
     }
+
+
+
     async startChildDialog(step) {
         // Get the user's info.
         const user = await this.userInfoAccessor.get(step.context);
         // Check the user's input and decide which dialog to start.
         // Pass in the user info when starting either of the child dialogs.
         if (!user.userInfo) {
-            user.userInfo = {}
+            user.userInfo = {};
+        } 
+        if (!user.conversation) {
+            user.conversation = [];
         } 
         var sentimentIntentList = await this.findIntent(step);
 
-        let topScoreIntent = sentimentIntentList[0]
-        let sentiment = sentimentIntentList[1]
+        let topScoreIntent = sentimentIntentList[0];
+        let sentiment = sentimentIntentList[1];
+        let response = sentimentIntentList[2]
+        // console.log(sentimentIntentList)
         /***
         Navigate to its corresponding intent.
         */
+        user.topScoreIntent = topScoreIntent;
+        user.sentiment = sentiment;
+        user.response = response;
+        user.conversation.push(step.result);
+        console.log(user.conversation);
+
+
 
         if (step.result.includes("turn on")) {
-            return await step.beginDialog('controlCarFeature', user.userInfo);
+            return await step.beginDialog('controlCarFeature', user);
         } else if (step.result.includes("list of restaurant")) {
-            return await step.beginDialog('checkInDialog', user.userInfo);
+            return await step.beginDialog('checkInDialog', user);
         } else if (step.result.includes("tough day")) {
-            await step.beginDialog('chooseMusic', user.userInfo);
+            await step.beginDialog('chooseMusic', user);
         } else if (step.result.includes("dinner tonight")) {
-            await step.beginDialog('reserveRestaurant', user.userInfo);
+            await step.beginDialog('reserveRestaurant', user);
         } else if (step.result.includes("choose music")) {
-            await step.beginDialog('chooseMusic', user.userInfo);
+            await step.beginDialog('chooseMusic', user);
         } else if (step.result.includes("take me")){
-            await step.beginDialog('conversationDialog', user.userInfo);
-        }else {
-            await step.context.sendActivity("What the heck are you talking about. Say it again.");
+            await step.beginDialog('conversationDialog', user);
+        } else {
+            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
               
         }
-        // await step.context.sendActivity("Sorry, I don't understand that command. Please choose an option from the list.");
-        // return await step.replaceDialog('mainDialog');
-        // break;
+        
     }
 
     async saveResult(step) {
         // Process the return value from the child dialog.
         if (step.result) {
             const user = await this.userInfoAccessor.get(step.context);
-            if (step.result.table) {
+            if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
-                user.table = step.result.table;
+                user.userName = step.result.userName;
             } else if (step.result.alarm) {
                 // Store the results of the set-wake-up-call dialog.
                 user.alarm = step.result.alarm;
+            } 
+            if (step.result.conversation.length) {
+                for (var i = 0; i < step.result.conversation.length; i++) {
+                    user.conversation.push(step.result.conversation[i]);
+                }
             }
+
             await this.userInfoAccessor.set(step.context, user);
         }
         // Restart the main menu dialog.
@@ -126,14 +147,9 @@ class MyBot {
         if (turnContext.activity.type === ActivityTypes.Message) {
             const user = await this.userInfoAccessor.get(turnContext, {});
             const dc = await this.dialogs.createContext(turnContext);
-            
 
             const dialogTurnResult = await dc.continueDialog();
-            // if (dialogTurnResult.status === DialogTurnStatus.complete) {
-            //     user.userInfo = dialogTurnResult.result;
-            //     await this.userInfoAccessor.set(turnContext, user);
-            //     await dc.beginDialog('mainDialog');
-            // } 
+            
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.
                 await dc.continueDialog();
