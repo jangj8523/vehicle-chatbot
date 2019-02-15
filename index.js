@@ -15,6 +15,30 @@ const { BotConfiguration } = require('botframework-config');
 // This bot's main dialog.
 const { MyBot } = require('./bot');
 
+
+//  Azure DB Storage
+const CosmosClient = require('@azure/cosmos').CosmosClient;
+const config = require('./util/config');
+const endpoint = config.endpoint;
+const masterKey = config.primaryKey;
+const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey } });
+const HttpStatusCodes = { NOTFOUND: 404 };
+const databaseId = config.database.id;
+const containerId = config.container.id;
+
+//  async function createDatabase() {
+//   const { database } = await client.databases.createIfNotExists({ id: databaseId });
+//   console.log(`Created database:\n${database.id}\n`);
+// }
+
+// createDatabase()
+//   .then(() => readDatabase())
+//   .then(() => { exit(`Completed successfully`); })
+//   .catch((error) => { exit(`Completed with error ${JSON.stringify(error) }`) });
+
+require('dotenv').config()
+// const storage = require('azure-storage');
+
 // Read botFilePath and botFileSecret from .env file
 // Note: Ensure you have a .env file and include botFilePath and botFileSecret.
 const ENV_FILE = path.join(__dirname, '.env');
@@ -71,6 +95,33 @@ adapter.onTurnError = async (context, error) => {
 // Define a state store for your bot. See https://aka.ms/about-bot-state to learn more about using MemoryStorage.
 // A bot requires a state store to persist the dialog and user state between messages.
 let userState;
+
+
+//For Azure Development, access and save Azure memory
+//CAUTION:: Use local development for testing
+
+
+//Add CosmosDB 
+// const storage = new CosmosDbStorage({
+//     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT, 
+//     authKey: process.env.ACTUAL_AUTH_KEY, 
+//     databaseId: process.env.DATABASE,
+//     collectionId: process.env.COLLECTION
+// })
+
+
+// //Blob Storage
+// // storage = new BlobStorage({
+// //    "amicus123",
+// //    "DefaultEndpointsProtocol=https;AccountName=amicus123;AccountKey=VeclGls4vOtaIhIjnSHQiXoSwI0DrdWoV0yANalAFVLsPPwNEtZXTItdWNfPdDRSXZbJ/lRwGyLTUffnCAzzyg==;EndpointSuffix=core.windows.net",
+// //    "VeclGls4vOtaIhIjnSHQiXoSwI0DrdWoV0yANalAFVLsPPwNEtZXTItdWNfPdDRSXZbJ/lRwGyLTUffnCAzzyg=="
+// // });
+
+// const conversationState = new ConversationState(storage);
+// userState = new UserState(storage);
+// adapter.use(conversationState);
+
+
 
 // For local development, in-memory storage is used.
 // CAUTION: The Memory Storage used here is for local bot debugging only. When the bot
