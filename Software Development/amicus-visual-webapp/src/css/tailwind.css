@@ -839,6 +839,14 @@ table {
   background-color: #ffebef;
 }
 
+.bg-woodsmoke {
+  background-color: #110910;
+}
+
+.bg-cod-gray {
+  background-color: #2f2f2f;
+}
+
 .hover\:bg-transparent:hover {
   background-color: transparent;
 }
@@ -1131,6 +1139,14 @@ table {
   background-color: #ffebef;
 }
 
+.hover\:bg-woodsmoke:hover {
+  background-color: #110910;
+}
+
+.hover\:bg-cod-gray:hover {
+  background-color: #2f2f2f;
+}
+
 .focus\:bg-transparent:focus {
   background-color: transparent;
 }
@@ -1421,6 +1437,14 @@ table {
 
 .focus\:bg-pink-lightest:focus {
   background-color: #ffebef;
+}
+
+.focus\:bg-woodsmoke:focus {
+  background-color: #110910;
+}
+
+.focus\:bg-cod-gray:focus {
+  background-color: #2f2f2f;
 }
 
 .bg-bottom {
@@ -1787,6 +1811,14 @@ table {
   border-color: #ffebef;
 }
 
+.border-woodsmoke {
+  border-color: #110910;
+}
+
+.border-cod-gray {
+  border-color: #2f2f2f;
+}
+
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
@@ -2079,6 +2111,14 @@ table {
   border-color: #ffebef;
 }
 
+.hover\:border-woodsmoke:hover {
+  border-color: #110910;
+}
+
+.hover\:border-cod-gray:hover {
+  border-color: #2f2f2f;
+}
+
 .focus\:border-transparent:focus {
   border-color: transparent;
 }
@@ -2369,6 +2409,14 @@ table {
 
 .focus\:border-pink-lightest:focus {
   border-color: #ffebef;
+}
+
+.focus\:border-woodsmoke:focus {
+  border-color: #110910;
+}
+
+.focus\:border-cod-gray:focus {
+  border-color: #2f2f2f;
 }
 
 .rounded-none {
@@ -5188,6 +5236,14 @@ table {
   color: #ffebef;
 }
 
+.text-woodsmoke {
+  color: #110910;
+}
+
+.text-cod-gray {
+  color: #2f2f2f;
+}
+
 .hover\:text-transparent:hover {
   color: transparent;
 }
@@ -5480,6 +5536,14 @@ table {
   color: #ffebef;
 }
 
+.hover\:text-woodsmoke:hover {
+  color: #110910;
+}
+
+.hover\:text-cod-gray:hover {
+  color: #2f2f2f;
+}
+
 .focus\:text-transparent:focus {
   color: transparent;
 }
@@ -5770,6 +5834,14 @@ table {
 
 .focus\:text-pink-lightest:focus {
   color: #ffebef;
+}
+
+.focus\:text-woodsmoke:focus {
+  color: #110910;
+}
+
+.focus\:text-cod-gray:focus {
+  color: #2f2f2f;
 }
 
 .text-xs {
@@ -6498,6 +6570,14 @@ table {
     background-color: #ffebef;
   }
 
+  .sm\:bg-woodsmoke {
+    background-color: #110910;
+  }
+
+  .sm\:bg-cod-gray {
+    background-color: #2f2f2f;
+  }
+
   .sm\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -6790,6 +6870,14 @@ table {
     background-color: #ffebef;
   }
 
+  .sm\:hover\:bg-woodsmoke:hover {
+    background-color: #110910;
+  }
+
+  .sm\:hover\:bg-cod-gray:hover {
+    background-color: #2f2f2f;
+  }
+
   .sm\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -7080,6 +7168,14 @@ table {
 
   .sm\:focus\:bg-pink-lightest:focus {
     background-color: #ffebef;
+  }
+
+  .sm\:focus\:bg-woodsmoke:focus {
+    background-color: #110910;
+  }
+
+  .sm\:focus\:bg-cod-gray:focus {
+    background-color: #2f2f2f;
   }
 
   .sm\:bg-bottom {
@@ -7438,6 +7534,14 @@ table {
     border-color: #ffebef;
   }
 
+  .sm\:border-woodsmoke {
+    border-color: #110910;
+  }
+
+  .sm\:border-cod-gray {
+    border-color: #2f2f2f;
+  }
+
   .sm\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -7730,6 +7834,14 @@ table {
     border-color: #ffebef;
   }
 
+  .sm\:hover\:border-woodsmoke:hover {
+    border-color: #110910;
+  }
+
+  .sm\:hover\:border-cod-gray:hover {
+    border-color: #2f2f2f;
+  }
+
   .sm\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -8020,6 +8132,14 @@ table {
 
   .sm\:focus\:border-pink-lightest:focus {
     border-color: #ffebef;
+  }
+
+  .sm\:focus\:border-woodsmoke:focus {
+    border-color: #110910;
+  }
+
+  .sm\:focus\:border-cod-gray:focus {
+    border-color: #2f2f2f;
   }
 
   .sm\:rounded-none {
@@ -10823,6 +10943,14 @@ table {
     color: #ffebef;
   }
 
+  .sm\:text-woodsmoke {
+    color: #110910;
+  }
+
+  .sm\:text-cod-gray {
+    color: #2f2f2f;
+  }
+
   .sm\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -11115,6 +11243,14 @@ table {
     color: #ffebef;
   }
 
+  .sm\:hover\:text-woodsmoke:hover {
+    color: #110910;
+  }
+
+  .sm\:hover\:text-cod-gray:hover {
+    color: #2f2f2f;
+  }
+
   .sm\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -11405,6 +11541,14 @@ table {
 
   .sm\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .sm\:focus\:text-woodsmoke:focus {
+    color: #110910;
+  }
+
+  .sm\:focus\:text-cod-gray:focus {
+    color: #2f2f2f;
   }
 
   .sm\:text-xs {
@@ -12134,6 +12278,14 @@ table {
     background-color: #ffebef;
   }
 
+  .md\:bg-woodsmoke {
+    background-color: #110910;
+  }
+
+  .md\:bg-cod-gray {
+    background-color: #2f2f2f;
+  }
+
   .md\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -12426,6 +12578,14 @@ table {
     background-color: #ffebef;
   }
 
+  .md\:hover\:bg-woodsmoke:hover {
+    background-color: #110910;
+  }
+
+  .md\:hover\:bg-cod-gray:hover {
+    background-color: #2f2f2f;
+  }
+
   .md\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -12716,6 +12876,14 @@ table {
 
   .md\:focus\:bg-pink-lightest:focus {
     background-color: #ffebef;
+  }
+
+  .md\:focus\:bg-woodsmoke:focus {
+    background-color: #110910;
+  }
+
+  .md\:focus\:bg-cod-gray:focus {
+    background-color: #2f2f2f;
   }
 
   .md\:bg-bottom {
@@ -13074,6 +13242,14 @@ table {
     border-color: #ffebef;
   }
 
+  .md\:border-woodsmoke {
+    border-color: #110910;
+  }
+
+  .md\:border-cod-gray {
+    border-color: #2f2f2f;
+  }
+
   .md\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -13366,6 +13542,14 @@ table {
     border-color: #ffebef;
   }
 
+  .md\:hover\:border-woodsmoke:hover {
+    border-color: #110910;
+  }
+
+  .md\:hover\:border-cod-gray:hover {
+    border-color: #2f2f2f;
+  }
+
   .md\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -13656,6 +13840,14 @@ table {
 
   .md\:focus\:border-pink-lightest:focus {
     border-color: #ffebef;
+  }
+
+  .md\:focus\:border-woodsmoke:focus {
+    border-color: #110910;
+  }
+
+  .md\:focus\:border-cod-gray:focus {
+    border-color: #2f2f2f;
   }
 
   .md\:rounded-none {
@@ -16459,6 +16651,14 @@ table {
     color: #ffebef;
   }
 
+  .md\:text-woodsmoke {
+    color: #110910;
+  }
+
+  .md\:text-cod-gray {
+    color: #2f2f2f;
+  }
+
   .md\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -16751,6 +16951,14 @@ table {
     color: #ffebef;
   }
 
+  .md\:hover\:text-woodsmoke:hover {
+    color: #110910;
+  }
+
+  .md\:hover\:text-cod-gray:hover {
+    color: #2f2f2f;
+  }
+
   .md\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -17041,6 +17249,14 @@ table {
 
   .md\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .md\:focus\:text-woodsmoke:focus {
+    color: #110910;
+  }
+
+  .md\:focus\:text-cod-gray:focus {
+    color: #2f2f2f;
   }
 
   .md\:text-xs {
@@ -17770,6 +17986,14 @@ table {
     background-color: #ffebef;
   }
 
+  .lg\:bg-woodsmoke {
+    background-color: #110910;
+  }
+
+  .lg\:bg-cod-gray {
+    background-color: #2f2f2f;
+  }
+
   .lg\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -18062,6 +18286,14 @@ table {
     background-color: #ffebef;
   }
 
+  .lg\:hover\:bg-woodsmoke:hover {
+    background-color: #110910;
+  }
+
+  .lg\:hover\:bg-cod-gray:hover {
+    background-color: #2f2f2f;
+  }
+
   .lg\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -18352,6 +18584,14 @@ table {
 
   .lg\:focus\:bg-pink-lightest:focus {
     background-color: #ffebef;
+  }
+
+  .lg\:focus\:bg-woodsmoke:focus {
+    background-color: #110910;
+  }
+
+  .lg\:focus\:bg-cod-gray:focus {
+    background-color: #2f2f2f;
   }
 
   .lg\:bg-bottom {
@@ -18710,6 +18950,14 @@ table {
     border-color: #ffebef;
   }
 
+  .lg\:border-woodsmoke {
+    border-color: #110910;
+  }
+
+  .lg\:border-cod-gray {
+    border-color: #2f2f2f;
+  }
+
   .lg\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -19002,6 +19250,14 @@ table {
     border-color: #ffebef;
   }
 
+  .lg\:hover\:border-woodsmoke:hover {
+    border-color: #110910;
+  }
+
+  .lg\:hover\:border-cod-gray:hover {
+    border-color: #2f2f2f;
+  }
+
   .lg\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -19292,6 +19548,14 @@ table {
 
   .lg\:focus\:border-pink-lightest:focus {
     border-color: #ffebef;
+  }
+
+  .lg\:focus\:border-woodsmoke:focus {
+    border-color: #110910;
+  }
+
+  .lg\:focus\:border-cod-gray:focus {
+    border-color: #2f2f2f;
   }
 
   .lg\:rounded-none {
@@ -22095,6 +22359,14 @@ table {
     color: #ffebef;
   }
 
+  .lg\:text-woodsmoke {
+    color: #110910;
+  }
+
+  .lg\:text-cod-gray {
+    color: #2f2f2f;
+  }
+
   .lg\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -22387,6 +22659,14 @@ table {
     color: #ffebef;
   }
 
+  .lg\:hover\:text-woodsmoke:hover {
+    color: #110910;
+  }
+
+  .lg\:hover\:text-cod-gray:hover {
+    color: #2f2f2f;
+  }
+
   .lg\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -22677,6 +22957,14 @@ table {
 
   .lg\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .lg\:focus\:text-woodsmoke:focus {
+    color: #110910;
+  }
+
+  .lg\:focus\:text-cod-gray:focus {
+    color: #2f2f2f;
   }
 
   .lg\:text-xs {
@@ -23406,6 +23694,14 @@ table {
     background-color: #ffebef;
   }
 
+  .xl\:bg-woodsmoke {
+    background-color: #110910;
+  }
+
+  .xl\:bg-cod-gray {
+    background-color: #2f2f2f;
+  }
+
   .xl\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -23698,6 +23994,14 @@ table {
     background-color: #ffebef;
   }
 
+  .xl\:hover\:bg-woodsmoke:hover {
+    background-color: #110910;
+  }
+
+  .xl\:hover\:bg-cod-gray:hover {
+    background-color: #2f2f2f;
+  }
+
   .xl\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -23988,6 +24292,14 @@ table {
 
   .xl\:focus\:bg-pink-lightest:focus {
     background-color: #ffebef;
+  }
+
+  .xl\:focus\:bg-woodsmoke:focus {
+    background-color: #110910;
+  }
+
+  .xl\:focus\:bg-cod-gray:focus {
+    background-color: #2f2f2f;
   }
 
   .xl\:bg-bottom {
@@ -24346,6 +24658,14 @@ table {
     border-color: #ffebef;
   }
 
+  .xl\:border-woodsmoke {
+    border-color: #110910;
+  }
+
+  .xl\:border-cod-gray {
+    border-color: #2f2f2f;
+  }
+
   .xl\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -24638,6 +24958,14 @@ table {
     border-color: #ffebef;
   }
 
+  .xl\:hover\:border-woodsmoke:hover {
+    border-color: #110910;
+  }
+
+  .xl\:hover\:border-cod-gray:hover {
+    border-color: #2f2f2f;
+  }
+
   .xl\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -24928,6 +25256,14 @@ table {
 
   .xl\:focus\:border-pink-lightest:focus {
     border-color: #ffebef;
+  }
+
+  .xl\:focus\:border-woodsmoke:focus {
+    border-color: #110910;
+  }
+
+  .xl\:focus\:border-cod-gray:focus {
+    border-color: #2f2f2f;
   }
 
   .xl\:rounded-none {
@@ -27731,6 +28067,14 @@ table {
     color: #ffebef;
   }
 
+  .xl\:text-woodsmoke {
+    color: #110910;
+  }
+
+  .xl\:text-cod-gray {
+    color: #2f2f2f;
+  }
+
   .xl\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -28023,6 +28367,14 @@ table {
     color: #ffebef;
   }
 
+  .xl\:hover\:text-woodsmoke:hover {
+    color: #110910;
+  }
+
+  .xl\:hover\:text-cod-gray:hover {
+    color: #2f2f2f;
+  }
+
   .xl\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -28313,6 +28665,14 @@ table {
 
   .xl\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .xl\:focus\:text-woodsmoke:focus {
+    color: #110910;
+  }
+
+  .xl\:focus\:text-cod-gray:focus {
+    color: #2f2f2f;
   }
 
   .xl\:text-xs {

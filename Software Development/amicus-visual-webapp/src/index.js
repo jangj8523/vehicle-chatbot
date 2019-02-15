@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import './index.css';
 import './css/tailwind.css';
+import 'react-activity/lib/Sentry/Sentry.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 import WebFont from 'webfontloader';
 

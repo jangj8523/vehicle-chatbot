@@ -127,6 +127,9 @@ let colors = {
   'pink-light': '#fa7ea8',
   'pink-lighter': '#ffbbca',
   'pink-lightest': '#ffebef',
+
+  'woodsmoke' : '#110910',
+  'cod-gray' : '#2F2F2F',
 }
 
 module.exports = {
