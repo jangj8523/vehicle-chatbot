@@ -20,6 +20,7 @@ class ReserveRestaurant  extends ComponentDialog {
             async function (step) {
                 // Clear the user information and prompt for the user's name.
                 step.values.userInfo = {};
+                step.values.conversation = [];
                 const promptOptions = {
                     prompt: `Ok, here is a list of restaurants near you.`,
                     choices: ["Nola", "Pompous", "Izakaya", "L&L", "Circles"]
@@ -28,31 +29,14 @@ class ReserveRestaurant  extends ComponentDialog {
                 
             },
 
-            // async function (step) {
-            //     // Clear the user information and prompt for the user's name.
-            //     step.values.userInfo = {};
-            //     // result.send("Might be nice to destress and enjoy your favorites!?");   
-            //     await step.context.sendActivity("Might be nice to destress and enjoy your favorites!?")
-            //     const promptOptions = {
-            //         prompt: `Here's a list. What about Rubiano’s, the Italian place from last week?`,
-            //         choices: ["Rubiano’s", "Pompous", "Izakaya", "Nola", "Circles"]
-            //     };
-            //     return await step.prompt('choicePrompt', promptOptions);
-            // }
+            async function (step) {
+                
+                step.values.activity = step.result;
+                await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
 
-            // async function (step) {
-            //     // Save the name and prompt for the room number.
-            //     step.values.userInfo.userName = step.result;
-            //     return await step.prompt('textPrompt', `Hi ${step.result}. What would you like to do?`);
-            // },
-            // async function (step) {
-            //     // Save the room number and "sign off".
-            //     step.values.userInfo.roomNumber = step.result;
-            //     await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
-
-            //     // End the dialog, returning the user info.
-            //     return await step.endDialog(step.values.userInfo);
-            // }
+                // End the dialog, returning the user info.
+                return await step.endDialog(step.values);
+            }
         ]));
     }
 
@@ -62,3 +46,21 @@ class ReserveRestaurant  extends ComponentDialog {
 }
 
 module.exports.ReserveRestaurant = ReserveRestaurant;
+
+// async function (step) {
+    //     // Clear the user information and prompt for the user's name.
+    //     step.values.userInfo = {};
+    //     // result.send("Might be nice to destress and enjoy your favorites!?");   
+    //     await step.context.sendActivity("Might be nice to destress and enjoy your favorites!?")
+    //     const promptOptions = {
+    //         prompt: `Here's a list. What about Rubiano’s, the Italian place from last week?`,
+    //         choices: ["Rubiano’s", "Pompous", "Izakaya", "Nola", "Circles"]
+    //     };
+    //     return await step.prompt('choicePrompt', promptOptions);
+    // }
+
+    // async function (step) {
+    //     // Save the name and prompt for the room number.
+    //     step.values.userInfo.userName = step.result;
+    //     return await step.prompt('textPrompt', `Hi ${step.result}. What would you like to do?`);
+    // },

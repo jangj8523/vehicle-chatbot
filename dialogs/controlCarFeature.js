@@ -23,39 +23,47 @@ class ControlCarFeature  extends ComponentDialog {
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
             async function (step) {
-                // step.prompt('textPrompt', `Hi ${args}`);
-                // Clear the user information and prompt for the user's name.
-                // var list = step.options
-                // var sentimentList = args.sentimentIntent;
-                step.values.conversation = [];
-                if (step.options.sentiment > 0.5) {
-                    console.log("user is happy");
-                } else if (step.options.sentiment < 0.5) {
-                    console.log(`user is sad: ${step.options.sentiment}`);
-                } else {
-                    console.log(`user is neutral: ${step.options.sentiment}`);
-                }
-                if (step.context.activity.type === 'message') {
-                    console.log('hi');
-                }
-                // step.context.activity.text = 'There is a snake';
-                // step.context.activity.speak = 'There is a snake';
-                // var message = step.context.activity.AsMessageActivity();
+                
+                /**
+
+                This is the start of the waterfall dialog and everytime the user 
+                responds to the prompt in each function, the response gets read 
+                as an input to the next function. 
+
+
+                step.values.conversation holds the conversation
+                step.options holds the input parameters
+                */
+
+
+                //*DEBUGGING PURPOSES*
+                //-------------------------------------
+                // step.values.conversation = [];
+                // if (step.options.sentiment > 0.5) {
+                //     console.log("user is happy");
+                // } else if (step.options.sentiment < 0.5) {
+                //     console.log(`user is sad: ${step.options.sentiment}`);
+                // } else {
+                //     console.log(`user is neutral: ${step.options.sentiment}`);
+                // }
+                // if (step.context.activity.type === 'message') {
+                //     console.log('hi');
+                // }
+                
+
                 return await step.prompt('textPrompt', `${step.options.userName}. What is your name?`);
             },
+
             async function (step) {
-                // Save the name and prompt for the room number.
                 step.values.userName = step.result;
                 step.values.conversation.push(step.result);
                 return await step.prompt('textPrompt', `Hi ${step.result}. What would you like to do?`);
             },
             async function (step) {
-                // Save the room number and "sign off".
                 step.values.activity = step.result;
                 step.values.conversation.push(step.result);
                 await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
 
-                // End the dialog, returning the user info.
                 return await step.endDialog(step.values);
             }
         ]));
