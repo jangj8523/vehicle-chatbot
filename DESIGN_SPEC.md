@@ -1,10 +1,10 @@
-##Amicus Design Spec
+## Amicus Design Spec
 
 Useful guidelines to standardize Amicus infra.
 
 Just a draft, work in progress. 
 
-######Color Codes
+##### Color Codes
 
 Cod Gray: #2F2F2F
 
