@@ -17,14 +17,15 @@ const { MyBot } = require('./bot');
 
 
 //  Azure DB Storage
-// const CosmosClient = require('@azure/cosmos').CosmosClient;
-// const config = require('./util/config');
-// const endpoint = config.endpoint;
-// const masterKey = config.primaryKey;
-// const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey } });
-// const HttpStatusCodes = { NOTFOUND: 404 };
-// const databaseId = config.database.id;
-// const containerId = config.container.id;
+const CosmosClient = require('@azure/cosmos').CosmosClient;
+const config = require('./util/config');
+const endpoint = config.endpoint;
+const masterKey = config.primaryKey;
+const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey } });
+const HttpStatusCodes = { NOTFOUND: 404 };
+const databaseId = config.database.id;
+const containerId = config.container.id;
+
 //  async function createDatabase() {
 //   const { database } = await client.databases.createIfNotExists({ id: databaseId });
 //   console.log(`Created database:\n${database.id}\n`);
@@ -35,7 +36,7 @@ const { MyBot } = require('./bot');
 //   .then(() => { exit(`Completed successfully`); })
 //   .catch((error) => { exit(`Completed with error ${JSON.stringify(error) }`) });
 
-// require('dotenv').config()
+require('dotenv').config()
 // const storage = require('azure-storage');
 
 // Read botFilePath and botFileSecret from .env file
@@ -61,7 +62,7 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 // .bot file path
 const BOT_FILE = path.join(__dirname, (process.env.botFilePath || ''));
-
+console.log(__dirname)
 // Read bot configuration from .bot file.
 let botConfig;
 try {
