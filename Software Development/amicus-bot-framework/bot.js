@@ -61,13 +61,10 @@ class MyBot {
         const response = await fetch(intentApi);
         const intentResponse = await response.json()
         console.log (intentResponse)
-<<<<<<< HEAD:bot.js
         let topScoreIntent = intentResponse.topScoringIntent.intent
         let sentiment = intentResponse.sentimentAnalysis.score
-=======
-        let topScoreIntent = intentResponse['topScoringIntent']['intent']
-        let sentiment = intentResponse['sentimentAnalysis']['score']
->>>>>>> 6e5e7744f62a57ee919576ba0f39f88c0ce25d0b:Software Development/amicus-bot-framework/bot.js
+        // let topScoreIntent = intentResponse['topScoringIntent']['intent']
+        // let sentiment = intentResponse['sentimentAnalysis']['score']
         return [topScoreIntent, sentiment, intentResponse]
     }
 
@@ -99,7 +96,6 @@ class MyBot {
         user.conversation.push(step.result);
         console.log(user.conversation);
 
-<<<<<<< HEAD:bot.js
         if (user.topScoreIntent.includes("GetDestinationItem")) {
             return await step.beginDialog('controlCarFeature', user);
         } else if (user.topScoreIntent.includes("CarActionItems")) {
@@ -111,27 +107,25 @@ class MyBot {
 
         
         
-=======
 
 
-        if (step.result.includes("turn on")) {
-            return await step.beginDialog('controlCarFeature', user);
-        } else if (step.result.includes("list of restaurant")) {
-            return await step.beginDialog('checkInDialog', user);
-        } else if (step.result.includes("tough day")) {
-            await step.beginDialog('chooseMusic', user);
-        } else if (step.result.includes("dinner tonight")) {
-            await step.beginDialog('reserveRestaurant', user);
-        } else if (step.result.includes("choose music")) {
-            await step.beginDialog('chooseMusic', user);
-        } else if (step.result.includes("take me")){
-            await step.beginDialog('conversationDialog', user);
-        } else {
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
+        // if (step.result.includes("turn on")) {
+        //     return await step.beginDialog('controlCarFeature', user);
+        // } else if (step.result.includes("list of restaurant")) {
+        //     return await step.beginDialog('checkInDialog', user);
+        // } else if (step.result.includes("tough day")) {
+        //     await step.beginDialog('chooseMusic', user);
+        // } else if (step.result.includes("dinner tonight")) {
+        //     await step.beginDialog('reserveRestaurant', user);
+        // } else if (step.result.includes("choose music")) {
+        //     await step.beginDialog('chooseMusic', user);
+        // } else if (step.result.includes("take me")){
+        //     await step.beginDialog('conversationDialog', user);
+        // } else {
+        //     await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
               
-        }
+        // }
         
->>>>>>> 6e5e7744f62a57ee919576ba0f39f88c0ce25d0b:Software Development/amicus-bot-framework/bot.js
     }
 
     async saveResult(step) {
@@ -141,16 +135,10 @@ class MyBot {
             if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
-<<<<<<< HEAD:bot.js
             } 
             if (step.result.conversation != null && step.result.conversation.length) {
-=======
-            } else if (step.result.alarm) {
-                // Store the results of the set-wake-up-call dialog.
-                user.alarm = step.result.alarm;
-            } 
-            if (step.result.conversation.length) {
->>>>>>> 6e5e7744f62a57ee919576ba0f39f88c0ce25d0b:Software Development/amicus-bot-framework/bot.js
+
+            } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
                     user.conversation.push(step.result.conversation[i]);
                 }
