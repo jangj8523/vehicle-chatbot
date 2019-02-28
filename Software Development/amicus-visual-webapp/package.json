@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "pubnub": "^4.21.7",
+    "pubnub-react": "^1.2.0",
     "react": "^16.8.2",
     "react-activity": "^1.2.2",
     "react-bootstrap": "^1.0.0-beta.5",

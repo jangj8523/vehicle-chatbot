@@ -4,6 +4,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
+const PubNub = require('pubnub');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
@@ -15,6 +16,13 @@ const { BotConfiguration } = require('botframework-config');
 // This bot's main dialog.
 const { MyBot } = require('./bot');
 
+//PubNub
+//const { PubNubClient } = require('./pubnub/');
+//const pubnub = new PubNubClient();
+const pubnub = new PubNub({
+    publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
+    subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
+});
 
 //  Azure DB Storage
 const CosmosClient = require('@azure/cosmos').CosmosClient;
@@ -54,6 +62,7 @@ const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
 
 // Create HTTP server
 const server = restify.createServer();
+server.use(restify.plugins.bodyParser({ mapParams: true }));
 server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
@@ -101,10 +110,10 @@ let userState;
 //CAUTION:: Use local development for testing
 
 
-//Add CosmosDB 
+//Add CosmosDB
 // const storage = new CosmosDbStorage({
-//     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT, 
-//     authKey: process.env.ACTUAL_AUTH_KEY, 
+//     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT,
+//     authKey: process.env.ACTUAL_AUTH_KEY,
 //     databaseId: process.env.DATABASE,
 //     collectionId: process.env.COLLECTION
 // })
@@ -121,6 +130,37 @@ let userState;
 // userState = new UserState(storage);
 // adapter.use(conversationState);
 
+//PubNub WebSocket
+pubnub.subscribe({ channels: ['amicus_global'] });
+pubnub.addListener({
+  status: function(statusEvent) {
+      if (statusEvent.category === "PNConnectedCategory") {
+          //publishSampleMessage();
+      }
+  },
+  message: function(msg) {
+      console.log(msg);
+      //console.log(msg.message.title);
+      //console.log(msg.message.description);
+  },
+  presence: function(presenceEvent) {
+      // handle presence
+  }
+})
+
+function publishSampleMessage() {
+    console.log("Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish.");
+    var publishConfig = {
+        channel : "amicus_global",
+        message : {
+            title: "Test",
+            description: "Message Description"
+        }
+    }
+    pubnub.publish(publishConfig, function(status, response) {
+        //console.log(status, response);
+    })
+}
 
 
 // For local development, in-memory storage is used.
@@ -133,8 +173,20 @@ const conversationState = new ConversationState(memoryStorage);
 // Create the main dialog.
 const myBot = new MyBot(conversationState, userState);
 
+server.post('/api/v1/web/messages', (req, res, next) => {
+    console.log(req.params);
+    adapter.processActivity(req, res, async (context) => {
+        // Route to main dialog.
+        await myBot.onTurn(context);
+    });
+    //res.send(200, Math.random().toString(36).substr(3, 8));
+    return next();
+});
+
 // Listen for incoming requests.
 server.post('/api/messages', (req, res) => {
+    //console.log("[INCOMING]");
+    //console.log(req.params);
     adapter.processActivity(req, res, async (context) => {
         // Route to main dialog.
         await myBot.onTurn(context);
