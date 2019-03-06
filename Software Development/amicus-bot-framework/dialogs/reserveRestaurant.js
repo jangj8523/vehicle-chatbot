@@ -3,8 +3,8 @@
 const { ActivityTypes } = require('botbuilder');
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
-
 class ReserveRestaurant  extends ComponentDialog {
+
 	constructor(dialogId) {
         super(dialogId);
 
@@ -17,6 +17,7 @@ class ReserveRestaurant  extends ComponentDialog {
 
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
+
             async function (step) {
                 // Clear the user information and prompt for the user's name.
                 if (step.values.conversation == null){
@@ -30,7 +31,6 @@ class ReserveRestaurant  extends ComponentDialog {
                 };
                 step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
-                
             },
 
             async function (step) {
@@ -39,13 +39,15 @@ class ReserveRestaurant  extends ComponentDialog {
                 step.values.conversation.push(step.result.value);
                 await step.context.sendActivity(`Great! We will head over to "${step.result.value}!"`);
 
+
                 // End the dialog, returning the user info.
                 return await step.endDialog(step.values);
             }
+
         ]));
     }
 
-    
+
 
 
 }
@@ -55,7 +57,7 @@ module.exports.ReserveRestaurant = ReserveRestaurant;
 // async function (step) {
     //     // Clear the user information and prompt for the user's name.
     //     step.values.userInfo = {};
-    //     // result.send("Might be nice to destress and enjoy your favorites!?");   
+    //     // result.send("Might be nice to destress and enjoy your favorites!?");
     //     await step.context.sendActivity("Might be nice to destress and enjoy your favorites!?")
     //     const promptOptions = {
     //         prompt: `Here's a list. What about Rubiano’s, the Italian place from last week?`,

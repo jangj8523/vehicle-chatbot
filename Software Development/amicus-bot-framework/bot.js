@@ -15,10 +15,15 @@ const { ConversationDialog } = require("./dialogs/conversationDialog.js");
 const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
 
+//TODO working on simplifying this
+const PubNub = require('pubnub');
+const pubnub = new PubNub({
+    publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
+    subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
+});
 
 class MyBot {
 
-    
     constructor(conversationState, userState) {
         // Record the conversation and user state management objects.
         this.conversationState = conversationState;
@@ -42,16 +47,14 @@ class MyBot {
     ]));
     }
 
-  
-
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
 
         if (!user.firstTime) {
             user.firstTime = true;
-            user.userName = "Jaewoo";
+            user.userName = "Santi";
             await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
-        } 
+        }
         return Dialog.EndOfTurn;
     }
 
@@ -71,8 +74,6 @@ class MyBot {
         return [topScoreIntent, sentiment, intentResponse, entities]
     }
 
-
-
     async startChildDialog(step) {
         // Get the user's info.
         const user = await this.userInfoAccessor.get(step.context);
@@ -80,17 +81,21 @@ class MyBot {
         // Pass in the user info when starting either of the child dialogs.
         if (!user.userInfo) {
             user.userInfo = {};
-        } 
+        }
         if (!user.conversation) {
             user.conversation = [];
-        } 
+        }
         var sentimentIntentList = await this.findIntent(step);
 
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2]
+<<<<<<< HEAD
         let entities = sentimentIntentList[3]
         // console.log(sentimentIntentList)
+=======
+        //console.log(sentimentIntentList)
+>>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
         /***
         Navigate to its corresponding intent.
         */
@@ -100,7 +105,7 @@ class MyBot {
         user.entities = entities;
 
         user.conversation.push(step.result);
-        console.log(user.conversation);
+        //console.log(user.conversation);
 
 
         /**
@@ -112,13 +117,13 @@ class MyBot {
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
             return await step.beginDialog('reserveRestaurant', user);
         } else {
+<<<<<<< HEAD
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
             return Dialog.EndOfTurn();
+=======
+            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
+>>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
         }
-        
-
-        
-        
 
 
         // if (step.result.includes("turn on")) {
@@ -135,9 +140,9 @@ class MyBot {
         //     await step.beginDialog('conversationDialog', user);
         // } else {
         //     await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
-              
+
         // }
-        
+
     }
 
     async saveResult(step) {
@@ -147,8 +152,13 @@ class MyBot {
             if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
+<<<<<<< HEAD
             } 
             if (step.result.conversation != null && step.result.conversation.length != null) {
+=======
+            }
+            if (step.result.conversation != null && step.result.conversation.length) {
+>>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
 
             } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
@@ -168,15 +178,36 @@ class MyBot {
      */
     async onTurn(turnContext) {
 
+        turnContext.onSendActivities(async (context, activities, next) => {
+          const responses = await next();
+
+          if (activities[0] !== null && activities[0].text !== null) {
+            const response = activities[0].text; //Welcome back, Jaewoo
+
+            var payload = {
+                channel : "amicus_global",
+                message : { title: "Amicus Message", description: response }
+            }
+            pubnub.publish(payload, function(status, response) {
+                //console.log(status, response);
+            })
+          }
+
+          return responses;
+        });
+
         if (turnContext.activity.type === ActivityTypes.Message) {
             const user = await this.userInfoAccessor.get(turnContext, {});
             const dc = await this.dialogs.createContext(turnContext);
 
             const dialogTurnResult = await dc.continueDialog();
 
+<<<<<<< HEAD
             // Talking Bot
             // await dc.context.sendActivity("Welcome to Amicus. I am your B", "<speak>Sorry, I don\'t understand</speak>");
 
+=======
+>>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.
                 await dc.continueDialog();
@@ -188,13 +219,9 @@ class MyBot {
             }
             // Save state changes
             await this.conversationState.saveChanges(turnContext);
-            await this.userState.saveChanges(turnContext);    
-            } 
-            
+            await this.userState.saveChanges(turnContext);
+        }
     }
-
-
-
 
     async sendWelcomeMessage(turnContext) {
         // If any new membmers added to the conversation
@@ -203,15 +230,15 @@ class MyBot {
             async function welcomeUserFunc(conversationMember) {
                 // Greet anyone that was not the target (recipient) of this message.
                 // The bot is the recipient of all events from the channel, including all ConversationUpdate-type activities
-                // turnContext.activity.membersAdded !== turnContext.activity.aecipient.id indicates 
-                // a user was added to the conversation 
+                // turnContext.activity.membersAdded !== turnContext.activity.aecipient.id indicates
+                // a user was added to the conversation
                 if (conversationMember.id !== this.activity.recipient.id) {
                     // Because the TurnContext was bound to this function, the bot can call
                     // `TurnContext.sendActivity` via `this.sendActivity`;
                     await this.sendActivity('Welcome to Amicus. I am your BMW Chatbot. Let\'s introduce each other shall we? What\'s is your name?');
                 }
             }
-    
+
             // Prepare Promises to greet the  user.
             // The current TurnContext is bound so `replyForReceivedAttachments` can also send replies.
             const replyPromises = turnContext.activity.membersAdded.map(welcomeUserFunc.bind(turnContext));

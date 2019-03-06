@@ -22,6 +22,7 @@
         "botbuilder-dialogs": "^4.2.1",
         "botframework-config": "^4.2.0",
         "dotenv": "^6.2.0",
+        "pubnub": "^4.21.7",
         "readline-sync": "^1.4.9",
         "request": "^2.88.0",
         "restify": "^7.2.3"
