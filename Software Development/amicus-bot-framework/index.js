@@ -117,15 +117,13 @@ let userState;
 
 //For Azure Development, access and save Azure memory
 //CAUTION:: Use local development for testing
-<<<<<<< HEAD
 // http://localhost:3978/api/messages
 //keys encrypted: MbaGQD5Acy7+p6UBXvNBEQWV8nAqSs+F768cnKYKmJc=
 //Add CosmosDB 
-=======
 
 
 //Add CosmosDB
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+
 // const storage = new CosmosDbStorage({
 //     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT,
 //     authKey: process.env.ACTUAL_AUTH_KEY,
@@ -178,6 +176,7 @@ function publishSampleMessage() {
 }
 
 
+
 // For local development, in-memory storage is used.
 // CAUTION: The Memory Storage used here is for local bot debugging only. When the bot
 // is restarted, anything stored in memory will be gone.
@@ -189,7 +188,7 @@ const conversationState = new ConversationState(memoryStorage);
 const myBot = new MyBot(conversationState, userState);
 
 server.post('/api/v1/web/messages', (req, res, next) => {
-    console.log(req.params);
+    // console.log(req.params);
     adapter.processActivity(req, res, async (context) => {
         // Route to main dialog.
         await myBot.onTurn(context);

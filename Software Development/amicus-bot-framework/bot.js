@@ -90,12 +90,9 @@ class MyBot {
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2]
-<<<<<<< HEAD
         let entities = sentimentIntentList[3]
         // console.log(sentimentIntentList)
-=======
-        //console.log(sentimentIntentList)
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+
         /***
         Navigate to its corresponding intent.
         */
@@ -117,12 +114,9 @@ class MyBot {
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
             return await step.beginDialog('reserveRestaurant', user);
         } else {
-<<<<<<< HEAD
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
             return Dialog.EndOfTurn();
-=======
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+
         }
 
 
@@ -152,14 +146,9 @@ class MyBot {
             if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
-<<<<<<< HEAD
             } 
             if (step.result.conversation != null && step.result.conversation.length != null) {
-=======
-            }
-            if (step.result.conversation != null && step.result.conversation.length) {
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
-
+            
             } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
                     user.conversation.push(step.result.conversation[i]);
@@ -202,12 +191,10 @@ class MyBot {
 
             const dialogTurnResult = await dc.continueDialog();
 
-<<<<<<< HEAD
             // Talking Bot
             // await dc.context.sendActivity("Welcome to Amicus. I am your B", "<speak>Sorry, I don\'t understand</speak>");
 
-=======
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.
                 await dc.continueDialog();

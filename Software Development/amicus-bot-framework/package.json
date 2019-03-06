@@ -25,7 +25,8 @@
         "pubnub": "^4.21.7",
         "readline-sync": "^1.4.9",
         "request": "^2.88.0",
-        "restify": "^7.2.3"
+        "restify": "^7.2.3",
+        "say": "^0.15.0"
     },
     "devDependencies": {
         "eslint": "^5.8.0",
