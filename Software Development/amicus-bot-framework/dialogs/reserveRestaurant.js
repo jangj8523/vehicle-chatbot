@@ -19,20 +19,25 @@ class ReserveRestaurant  extends ComponentDialog {
         this.addDialog(new WaterfallDialog(dialogId, [
             async function (step) {
                 // Clear the user information and prompt for the user's name.
-                step.values.userInfo = {};
-                step.values.conversation = [];
+                if (step.values.conversation == null){
+                    step.values.conversation = []
+                } 
+
+                var dest_entity = step.options.entities[0].entity;
                 const promptOptions = {
-                    prompt: `Ok, here is a list of restaurants near you.`,
-                    choices: ["Nola", "Pompous", "Izakaya", "L&L", "Circles"]
+                    prompt: `Ok, there are more than one "` + dest_entity + `". Which one are you referring to?`,
+                    choices: ["BMW: Mt View Office", "BMW PA Bimmer", "Stevens Creek BMW", "Peter Pan"]
                 };
+                step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
                 
             },
 
             async function (step) {
                 
-                step.values.activity = step.result;
-                await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
+                step.values.activity = step.result.value;
+                step.values.conversation.push(step.result.value);
+                await step.context.sendActivity(`Great! We will head over to "${step.result.value}!"`);
 
                 // End the dialog, returning the user info.
                 return await step.endDialog(step.values);

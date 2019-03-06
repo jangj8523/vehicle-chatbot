@@ -59,16 +59,11 @@ class MyBot {
         let intentApi = intentUri;
         intentApi += step.result;
         const response = await fetch(intentApi);
-        const intentResponse = await response.json();
-        console.log (intentResponse);
-
-        
-        let topScoreIntent = intentResponse.topScoringIntent.intent;
-        let sentiment = intentResponse.sentimentAnalysis.score;
-        let entities = intentResponse.entities 
-        // let topScoreIntent = intentResponse['topScoringIntent']['intent']
-        // let sentiment = intentResponse['sentimentAnalysis']['score']
-        return [topScoreIntent, sentiment, intentResponse, entities]
+        const intentResponse = await response.json()
+        console.log (intentResponse)
+        let topScoreIntent = intentResponse.topScoringIntent.intent
+        let sentiment = intentResponse.sentimentAnalysis.score
+        return [topScoreIntent, sentiment, intentResponse]
     }
 
 
@@ -89,7 +84,6 @@ class MyBot {
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2]
-        let entities = sentimentIntentList[3]
         // console.log(sentimentIntentList)
         /***
         Navigate to its corresponding intent.
@@ -97,46 +91,19 @@ class MyBot {
         user.topScoreIntent = topScoreIntent;
         user.sentiment = sentiment;
         user.response = response;
-        user.entities = entities;
-
         user.conversation.push(step.result);
         console.log(user.conversation);
 
-
-        /**
-        LUIS URL: https://www.luis.ai/applications/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc/versions/0.1/manage/endpoints
-        */
-
-        if (user.topScoreIntent.includes("CarActionItems")) {
+        if (user.topScoreIntent.includes("GetDestinationItem")) {
             return await step.beginDialog('controlCarFeature', user);
-        } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            return await step.beginDialog('reserveRestaurant', user);
+        } else if (user.topScoreIntent.includes("CarActionItems")) {
+            await step.beginDialog('reserveRestaurant', user);
         } else {
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
-            return Dialog.EndOfTurn();
+            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");   
         }
         
 
         
-        
-
-
-        // if (step.result.includes("turn on")) {
-        //     return await step.beginDialog('controlCarFeature', user);
-        // } else if (step.result.includes("list of restaurant")) {
-        //     return await step.beginDialog('checkInDialog', user);
-        // } else if (step.result.includes("tough day")) {
-        //     await step.beginDialog('chooseMusic', user);
-        // } else if (step.result.includes("dinner tonight")) {
-        //     await step.beginDialog('reserveRestaurant', user);
-        // } else if (step.result.includes("choose music")) {
-        //     await step.beginDialog('chooseMusic', user);
-        // } else if (step.result.includes("take me")){
-        //     await step.beginDialog('conversationDialog', user);
-        // } else {
-        //     await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
-              
-        // }
         
     }
 
@@ -149,8 +116,6 @@ class MyBot {
                 user.userName = step.result.userName;
             } 
             if (step.result.conversation != null && step.result.conversation.length != null) {
-
-            } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
                     user.conversation.push(step.result.conversation[i]);
                 }
@@ -171,11 +136,10 @@ class MyBot {
         if (turnContext.activity.type === ActivityTypes.Message) {
             const user = await this.userInfoAccessor.get(turnContext, {});
             const dc = await this.dialogs.createContext(turnContext);
-
+            await dc.context.sendActivity('Welcome to Amicus. I am your B');
             const dialogTurnResult = await dc.continueDialog();
+            
 
-            // Talking Bot
-            // await dc.context.sendActivity("Welcome to Amicus. I am your B", "<speak>Sorry, I don\'t understand</speak>");
 
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.

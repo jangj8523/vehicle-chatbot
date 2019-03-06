@@ -8,6 +8,7 @@ const restify = require('restify');
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter, UserState, MemoryStorage, ConversationState } = require('botbuilder');
+var builder = require('botbuilder');
 
 // Import required bot configuration.
 const { BotConfiguration } = require('botframework-config');
@@ -25,7 +26,6 @@ const { MyBot } = require('./bot');
 // const HttpStatusCodes = { NOTFOUND: 404 };
 // const databaseId = config.database.id;
 // const containerId = config.container.id;
-
 //  async function createDatabase() {
 //   const { database } = await client.databases.createIfNotExists({ id: databaseId });
 //   console.log(`Created database:\n${database.id}\n`);
@@ -36,7 +36,7 @@ const { MyBot } = require('./bot');
 //   .then(() => { exit(`Completed successfully`); })
 //   .catch((error) => { exit(`Completed with error ${JSON.stringify(error) }`) });
 
-require('dotenv').config()
+// require('dotenv').config()
 // const storage = require('azure-storage');
 
 // Read botFilePath and botFileSecret from .env file
@@ -54,7 +54,6 @@ const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
 
 // Create HTTP server
 const server = restify.createServer();
-
 server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
@@ -63,7 +62,7 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 // .bot file path
 const BOT_FILE = path.join(__dirname, (process.env.botFilePath || ''));
-// console.log(__dirname)
+
 // Read bot configuration from .bot file.
 let botConfig;
 try {
@@ -81,18 +80,15 @@ const endpointConfig = botConfig.findServiceByNameOrId(BOT_CONFIGURATION);
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about .bot file its use and bot configuration.
-const adapter = new BotFrameworkAdapter({
-    appId: endpointConfig.appId || process.env.microsoftAppID,
-    appPassword: endpointConfig.appPassword || process.env.microsoftAppPassword
+// const adapter = new BotFrameworkAdapter({
+//     appId: endpointConfig.appId || process.env.microsoftAppID,
+//     appPassword: endpointConfig.appPassword || process.env.microsoftAppPassword
+// });
+var connector = new builder.ChatConnector({
+    appId: process.env.MicrosoftAppId,
+    appPassword: process.env.MicrosoftAppPassword
 });
-// console.log("list");
-// console.log(process.env.microsoftAppID);
-// console.log(process.env.microsoftAppPassword);
-// console.log("done");
-// console.log(BOT_CONFIGURATION);
-// console.log(endpointConfig.appId);
-// console.log(endpointConfig.appPassword );
-// console.log(endpointConfig);
+
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
@@ -108,8 +104,8 @@ let userState;
 
 //For Azure Development, access and save Azure memory
 //CAUTION:: Use local development for testing
-// http://localhost:3978/api/messages
-//keys encrypted: MbaGQD5Acy7+p6UBXvNBEQWV8nAqSs+F768cnKYKmJc=
+
+
 //Add CosmosDB 
 // const storage = new CosmosDbStorage({
 //     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT, 
@@ -144,7 +140,7 @@ const myBot = new MyBot(conversationState, userState);
 
 // Listen for incoming requests.
 server.post('/api/messages', (req, res) => {
-    adapter.processActivity(req, res, async (context) => {
+    connector.processActivity(req, res, async (context) => {
         // Route to main dialog.
         await myBot.onTurn(context);
     });

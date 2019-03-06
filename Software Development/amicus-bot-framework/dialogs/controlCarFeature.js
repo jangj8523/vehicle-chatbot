@@ -28,20 +28,20 @@ class ControlCarFeature  extends ComponentDialog {
                 // var list = step.options
                 // var sentimentList = args.sentimentIntent;
                 step.values.conversation = [];
-                if (step.options.sentiment > 0.5) {
-                    console.log("user is happy");
-                } else if (step.options.sentiment < 0.5) {
-                    console.log(`user is sad: ${step.options.sentiment}`);
-                } else {
-                    console.log(`user is neutral: ${step.options.sentiment}`);
-                }
+                // if (step.options.sentiment > 0.5) {
+                //     console.log("user is happy");
+                // } else if (step.options.sentiment < 0.5) {
+                //     console.log(`user is sad: ${step.options.sentiment}`);
+                // } else {
+                //     console.log(`user is neutral: ${step.options.sentiment}`);
+                // }
                 if (step.context.activity.type === 'message') {
                     console.log('hi');
                 }
                 // step.context.activity.text = 'There is a snake';
                 // step.context.activity.speak = 'There is a snake';
                 // var message = step.context.activity.AsMessageActivity();
-                return await step.prompt('textPrompt', `${step.options.userName}. What is your name?`);
+                return await step.prompt('textPrompt', `${step.options.userName}. Sure should I open the right or the left rear window?`);
             },
             async function (step) {
                 // Save the name and prompt for the room number.
