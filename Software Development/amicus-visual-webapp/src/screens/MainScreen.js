@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import PubNubReact from 'pubnub-react';
+
+import SpeechRecognition from 'react-speech-recognition';
 
 import Sentry from 'react-activity/lib/Sentry';
 
@@ -39,6 +42,13 @@ class MainScreen extends Component {
           console.log(msg);
       });
 
+      const { startListening, resetTranscript, browserSupportsSpeechRecognition } = this.props;
+      if (browserSupportsSpeechRecognition) {
+        console.log("[MainScreen] Browser supports speech recognition");
+        resetTranscript();
+        //startListening();
+      }
+
       /*this.pubnub.getStatus((st) => {
           this.pubnub.publish({
               message: 'hello world from react',
@@ -65,6 +75,17 @@ class MainScreen extends Component {
   }
 
 
+  debugSend = () => {
+    const { transcript, listening, resetTranscript } = this.props;
+    if (!listening) return;
+
+    this.pubnub.publish({
+        message: transcript,
+        channel: 'amicus_delivery'
+    });
+
+    resetTranscript();
+  }
 
   render() {
 
@@ -75,20 +96,18 @@ class MainScreen extends Component {
           <div className="font-light text-2xl mx-auto">amicus</div>
           <div className="flex flex-col bg-grey-darkest rounded-lg shadow-lg p-5">
             {this.viewAvatar()}
+            {this.viewSpokenText()}
             {this.viewResponse()}
             {this.sayDialog()}
             <Sentry className="mx-auto mt-3" color="#FFFFFF" size={20}/>
+            {this.viewDebug()}
           </div>
         </div>
       </div>
     );
   }
 
-  debugPrint = () => {
-    let { response } = this.state;
 
-    console.log(response);
-  }
 
   sayDialog = () => {
     let { response } = this.state;
@@ -107,6 +126,17 @@ class MainScreen extends Component {
     );
   }
 
+  viewSpokenText = () => {
+    const { transcript, listening } = this.props;
+    if (!listening) return;
+
+    return (
+      <div className="text-white text-center mx-auto mt-3">
+        {transcript}
+      </div>
+    );
+  }
+
   viewResponse = () => {
     let { response } = this.state;
 
@@ -122,6 +152,25 @@ class MainScreen extends Component {
     );
   }
 
+  viewDebug = () => {
+    return (
+      <div className="text-grey text-center mx-auto mt-3">
+        <button className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+          onClick={this.debugSend}>
+          Debug Send
+        </button>
+      </div>
+    );
+  }
+
 }
 
-export default MainScreen;
+MainScreen.propTypes = {
+  // Props injected by SpeechRecognition
+  transcript: PropTypes.string,
+  resetTranscript: PropTypes.func,
+  browserSupportsSpeechRecognition: PropTypes.bool
+};
+
+const options = { autoStart: false }
+export default SpeechRecognition(options)(MainScreen)
