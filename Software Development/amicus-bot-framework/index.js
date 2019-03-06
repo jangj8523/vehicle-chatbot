@@ -25,14 +25,14 @@ const pubnub = new PubNub({
 });
 
 //  Azure DB Storage
-// const CosmosClient = require('@azure/cosmos').CosmosClient;
-// const config = require('./util/config');
-// const endpoint = config.endpoint;
-// const masterKey = config.primaryKey;
-// const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey } });
-// const HttpStatusCodes = { NOTFOUND: 404 };
-// const databaseId = config.database.id;
-// const containerId = config.container.id;
+const CosmosClient = require('@azure/cosmos').CosmosClient;
+const config = require('./util/config');
+const endpoint = config.endpoint;
+const masterKey = config.primaryKey;
+const client = new CosmosClient({ endpoint: endpoint, auth: { masterKey: masterKey } });
+const HttpStatusCodes = { NOTFOUND: 404 };
+const databaseId = config.database.id;
+const containerId = config.container.id;
 
 //  async function createDatabase() {
 //   const { database } = await client.databases.createIfNotExists({ id: databaseId });
@@ -62,8 +62,11 @@ const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
 
 // Create HTTP server
 const server = restify.createServer();
+<<<<<<< HEAD
 
 server.use(restify.plugins.bodyParser({ mapParams: true }));
+=======
+>>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
 server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
@@ -72,7 +75,7 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 // .bot file path
 const BOT_FILE = path.join(__dirname, (process.env.botFilePath || ''));
-// console.log(__dirname)
+console.log(__dirname)
 // Read bot configuration from .bot file.
 let botConfig;
 try {
@@ -94,14 +97,6 @@ const adapter = new BotFrameworkAdapter({
     appId: endpointConfig.appId || process.env.microsoftAppID,
     appPassword: endpointConfig.appPassword || process.env.microsoftAppPassword
 });
-// console.log("list");
-// console.log(process.env.microsoftAppID);
-// console.log(process.env.microsoftAppPassword);
-// console.log("done");
-// console.log(BOT_CONFIGURATION);
-// console.log(endpointConfig.appId);
-// console.log(endpointConfig.appPassword );
-// console.log(endpointConfig);
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
@@ -117,8 +112,8 @@ let userState;
 
 //For Azure Development, access and save Azure memory
 //CAUTION:: Use local development for testing
-// http://localhost:3978/api/messages
-//keys encrypted: MbaGQD5Acy7+p6UBXvNBEQWV8nAqSs+F768cnKYKmJc=
+
+
 //Add CosmosDB 
 
 

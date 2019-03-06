@@ -62,16 +62,13 @@ class MyBot {
         let intentApi = intentUri;
         intentApi += step.result;
         const response = await fetch(intentApi);
-        const intentResponse = await response.json();
-        console.log (intentResponse);
-
-        
-        let topScoreIntent = intentResponse.topScoringIntent.intent;
-        let sentiment = intentResponse.sentimentAnalysis.score;
-        let entities = intentResponse.entities 
+        const intentResponse = await response.json()
+        console.log (intentResponse)
+        let topScoreIntent = intentResponse.topScoringIntent.intent
+        let sentiment = intentResponse.sentimentAnalysis.score
         // let topScoreIntent = intentResponse['topScoringIntent']['intent']
         // let sentiment = intentResponse['sentimentAnalysis']['score']
-        return [topScoreIntent, sentiment, intentResponse, entities]
+        return [topScoreIntent, sentiment, intentResponse]
     }
 
     async startChildDialog(step) {
@@ -91,7 +88,10 @@ class MyBot {
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2]
 <<<<<<< HEAD
+<<<<<<< HEAD
         let entities = sentimentIntentList[3]
+=======
+>>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
         // console.log(sentimentIntentList)
 =======
         //console.log(sentimentIntentList)
@@ -102,27 +102,24 @@ class MyBot {
         user.topScoreIntent = topScoreIntent;
         user.sentiment = sentiment;
         user.response = response;
-        user.entities = entities;
-
         user.conversation.push(step.result);
         //console.log(user.conversation);
 
-
-        /**
-        LUIS URL: https://www.luis.ai/applications/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc/versions/0.1/manage/endpoints
-        */
-
-        if (user.topScoreIntent.includes("CarActionItems")) {
+        if (user.topScoreIntent.includes("GetDestinationItem")) {
             return await step.beginDialog('controlCarFeature', user);
-        } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            return await step.beginDialog('reserveRestaurant', user);
+        } else if (user.topScoreIntent.includes("CarActionItems")) {
+            await step.beginDialog('reserveRestaurant', user);
         } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
             return Dialog.EndOfTurn();
 =======
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
 >>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+=======
+            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");   
+>>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
         }
 
 
@@ -154,11 +151,15 @@ class MyBot {
                 user.userName = step.result.userName;
 <<<<<<< HEAD
             } 
+<<<<<<< HEAD
             if (step.result.conversation != null && step.result.conversation.length != null) {
 =======
             }
             if (step.result.conversation != null && step.result.conversation.length) {
 >>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+=======
+            if (step.result.conversation != null && step.result.conversation.length) {
+>>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
 
             } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
@@ -201,6 +202,7 @@ class MyBot {
             const dc = await this.dialogs.createContext(turnContext);
 
             const dialogTurnResult = await dc.continueDialog();
+<<<<<<< HEAD
 
 <<<<<<< HEAD
             // Talking Bot
@@ -208,6 +210,9 @@ class MyBot {
 
 =======
 >>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+=======
+            
+>>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.
                 await dc.continueDialog();

@@ -20,24 +20,19 @@ class ReserveRestaurant  extends ComponentDialog {
 
             async function (step) {
                 // Clear the user information and prompt for the user's name.
-                if (step.values.conversation == null){
-                    step.values.conversation = []
-                } 
-
-                var dest_entity = step.options.entities[0].entity;
+                step.values.userInfo = {};
+                step.values.conversation = [];
                 const promptOptions = {
-                    prompt: `Ok, there are more than one "` + dest_entity + `". Which one are you referring to?`,
-                    choices: ["BMW: Mt View Office", "BMW PA Bimmer", "Stevens Creek BMW", "Peter Pan"]
+                    prompt: `Ok, here is a list of restaurants near you.`,
+                    choices: ["Nola", "Pompous", "Izakaya", "L&L", "Circles"]
                 };
-                step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
             },
 
             async function (step) {
                 
-                step.values.activity = step.result.value;
-                step.values.conversation.push(step.result.value);
-                await step.context.sendActivity(`Great! We will head over to "${step.result.value}!"`);
+                step.values.activity = step.result;
+                await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
 
 
                 // End the dialog, returning the user info.
