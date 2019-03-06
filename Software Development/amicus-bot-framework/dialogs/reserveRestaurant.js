@@ -5,7 +5,7 @@ const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, C
 
 class ReserveRestaurant  extends ComponentDialog {
 
-	constructor(dialogId) {
+    constructor(dialogId) {
         super(dialogId);
 
         // ID of the child dialog that should be started anytime the component is started.

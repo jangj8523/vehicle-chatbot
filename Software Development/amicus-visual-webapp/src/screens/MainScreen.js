@@ -18,8 +18,6 @@ class MainScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.msg = new SpeechSynthesisUtterance();
-    this.voices = window.speechSynthesis.getVoices();
     this.avatarStates = [bmwThinking, bmwSad];
     this.pubnub = new PubNubReact({
         publishKey: 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
@@ -64,14 +62,16 @@ class MainScreen extends Component {
   }
 
   say(message) {
-    this.msg.voice = this.voices[4];
-    this.msg.voiceURI = "native";
-    this.msg.volume = 1;
-    this.msg.rate = 1;
-    this.msg.pitch = 0.8;
-    this.msg.text = message;
-    this.msg.lang = 'en-US';
-    speechSynthesis.speak(this.msg);
+    var msg = new SpeechSynthesisUtterance();
+    var voices = window.speechSynthesis.getVoices();
+    msg.voice = voices[10];
+    msg.voiceURI = "native";
+    msg.volume = 1;
+    msg.rate = 1.0;
+    msg.pitch = 0.8;
+    msg.text = message;
+    msg.lang = 'en-US';
+    speechSynthesis.speak(msg);
   }
 
 

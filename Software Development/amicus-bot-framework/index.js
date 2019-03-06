@@ -63,7 +63,9 @@ const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
 // Create HTTP server
 const server = restify.createServer();
 
+
 server.use(restify.plugins.bodyParser({ mapParams: true }));
+
 server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
@@ -72,7 +74,7 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 // .bot file path
 const BOT_FILE = path.join(__dirname, (process.env.botFilePath || ''));
-// console.log(__dirname)
+console.log(__dirname)
 // Read bot configuration from .bot file.
 let botConfig;
 try {
@@ -94,14 +96,6 @@ const adapter = new BotFrameworkAdapter({
     appId: endpointConfig.appId || process.env.microsoftAppID,
     appPassword: endpointConfig.appPassword || process.env.microsoftAppPassword
 });
-// console.log("list");
-// console.log(process.env.microsoftAppID);
-// console.log(process.env.microsoftAppPassword);
-// console.log("done");
-// console.log(BOT_CONFIGURATION);
-// console.log(endpointConfig.appId);
-// console.log(endpointConfig.appPassword );
-// console.log(endpointConfig);
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
@@ -119,10 +113,10 @@ let userState;
 //CAUTION:: Use local development for testing
 // http://localhost:3978/api/messages
 //keys encrypted: MbaGQD5Acy7+p6UBXvNBEQWV8nAqSs+F768cnKYKmJc=
-//Add CosmosDB 
 
 
-//Add CosmosDB
+
+
 
 // const storage = new CosmosDbStorage({
 //     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT,

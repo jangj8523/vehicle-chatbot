@@ -68,10 +68,10 @@ class MyBot {
         
         let topScoreIntent = intentResponse.topScoringIntent.intent;
         let sentiment = intentResponse.sentimentAnalysis.score;
-        let entities = intentResponse.entities 
+        let entities = intentResponse.entities;
         // let topScoreIntent = intentResponse['topScoringIntent']['intent']
         // let sentiment = intentResponse['sentimentAnalysis']['score']
-        return [topScoreIntent, sentiment, intentResponse, entities]
+        return [topScoreIntent, sentiment, intentResponse, entities];
     }
 
     async startChildDialog(step) {
@@ -91,6 +91,7 @@ class MyBot {
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2]
         let entities = sentimentIntentList[3]
+
         // console.log(sentimentIntentList)
 
         /***
@@ -100,19 +101,14 @@ class MyBot {
         user.sentiment = sentiment;
         user.response = response;
         user.entities = entities;
-
         user.conversation.push(step.result);
         //console.log(user.conversation);
-
-
-        /**
-        LUIS URL: https://www.luis.ai/applications/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc/versions/0.1/manage/endpoints
-        */
+        console.log(user.conversation);
 
         if (user.topScoreIntent.includes("CarActionItems")) {
             return await step.beginDialog('controlCarFeature', user);
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            return await step.beginDialog('reserveRestaurant', user);
+            await step.beginDialog('reserveRestaurant', user);
         } else {
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
             return Dialog.EndOfTurn();
@@ -147,8 +143,9 @@ class MyBot {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
             } 
+
             if (step.result.conversation != null && step.result.conversation.length != null) {
-            
+
             } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
                     user.conversation.push(step.result.conversation[i]);
