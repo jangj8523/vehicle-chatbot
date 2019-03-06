@@ -87,15 +87,11 @@ class MyBot {
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2]
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         let entities = sentimentIntentList[3]
-=======
->>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
+
         // console.log(sentimentIntentList)
-=======
-        //console.log(sentimentIntentList)
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
+
         /***
         Navigate to its corresponding intent.
         */
@@ -104,22 +100,15 @@ class MyBot {
         user.response = response;
         user.conversation.push(step.result);
         //console.log(user.conversation);
+        console.log(user.conversation);
 
         if (user.topScoreIntent.includes("GetDestinationItem")) {
             return await step.beginDialog('controlCarFeature', user);
         } else if (user.topScoreIntent.includes("CarActionItems")) {
             await step.beginDialog('reserveRestaurant', user);
         } else {
-<<<<<<< HEAD
-<<<<<<< HEAD
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
             return Dialog.EndOfTurn();
-=======
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
-=======
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");   
->>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
         }
 
 
@@ -149,17 +138,10 @@ class MyBot {
             if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
-<<<<<<< HEAD
             } 
-<<<<<<< HEAD
+
             if (step.result.conversation != null && step.result.conversation.length != null) {
-=======
-            }
-            if (step.result.conversation != null && step.result.conversation.length) {
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
-=======
-            if (step.result.conversation != null && step.result.conversation.length) {
->>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
+
 
             } else if (step.result.conversation.length) {
                 for (var i = 0; i < step.result.conversation.length; i++) {
@@ -202,17 +184,11 @@ class MyBot {
             const dc = await this.dialogs.createContext(turnContext);
 
             const dialogTurnResult = await dc.continueDialog();
-<<<<<<< HEAD
 
-<<<<<<< HEAD
             // Talking Bot
             // await dc.context.sendActivity("Welcome to Amicus. I am your B", "<speak>Sorry, I don\'t understand</speak>");
 
-=======
->>>>>>> cc548b62127e8d781f9d8acd43b77f0c2cdb09a6
-=======
-            
->>>>>>> parent of 13fa6b5... added speech delivery without azure cognitive api
+
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.
                 await dc.continueDialog();
