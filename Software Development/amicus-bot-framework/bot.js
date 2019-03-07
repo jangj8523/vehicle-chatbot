@@ -63,7 +63,7 @@ class MyBot {
         intentApi += step.result;
         const response = await fetch(intentApi);
         const intentResponse = await response.json();
-        console.log (intentResponse);
+        // console.log (intentResponse);
 
         
         let topScoreIntent = intentResponse.topScoringIntent.intent;
@@ -89,8 +89,8 @@ class MyBot {
 
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
-        let response = sentimentIntentList[2]
-        let entities = sentimentIntentList[3]
+        let response = sentimentIntentList[2];
+        let entities = sentimentIntentList[3];
 
         // console.log(sentimentIntentList)
 

@@ -61,6 +61,13 @@ class MainScreen extends Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.response !== prevState.response) {
+      this.sayDialog()
+    }
+
+  }
+
   say(message) {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
@@ -98,7 +105,6 @@ class MainScreen extends Component {
             {this.viewAvatar()}
             {this.viewSpokenText()}
             {this.viewResponse()}
-            {this.sayDialog()}
             <Sentry className="mx-auto mt-3" color="#FFFFFF" size={20}/>
             {this.viewDebug()}
           </div>
