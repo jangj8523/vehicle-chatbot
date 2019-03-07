@@ -27,7 +27,7 @@ class ReserveRestaurant  extends ComponentDialog {
                 var dest_entity = step.options.entities[0].entity;
                 const promptOptions = {
                     prompt: `Ok, there are more than one "` + dest_entity + `". Which one are you referring to?`,
-                    choices: ["BMW: Mt View Office", "BMW PA Bimmer", "Stevens Creek BMW", "Peter Pan"]
+                    choices: [dest_entity +": Mt View Office", dest_entity + ": PA Bimmer", "Stevens Creek: " + dest_entity, "Peter Pan: " + dest_entity]
                 };
                 step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);

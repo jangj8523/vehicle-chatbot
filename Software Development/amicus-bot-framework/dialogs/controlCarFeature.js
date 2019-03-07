@@ -19,7 +19,7 @@ class ControlCarFeature  extends ComponentDialog {
 
         // Define the prompts used in this conversation flow.
         this.addDialog(new TextPrompt('textPrompt'));
-
+        this.addDialog(new ChoicePrompt('choicePrompt'));
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
             async function (step) {
@@ -40,20 +40,37 @@ class ControlCarFeature  extends ComponentDialog {
                 }
                 // step.context.activity.text = 'There is a snake';
                 // step.context.activity.speak = 'There is a snake';
-                // var message = step.context.activity.AsMessageActivity();
-                return await step.prompt('textPrompt', `${step.options.userName}. Sure should I open the right or the left rear window?`);
+                var windowDoor = step.options.entities[0].entity;
+                step.values.windowDoor = windowDoor;
+                const promptOptions = {
+                    prompt: `Ok, there are multiple "` + windowDoor + `". Which one are you referring to?`,
+                    choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
+                };
+                return await step.prompt('choicePrompt', promptOptions);
             },
             async function (step) {
                 // Save the name and prompt for the room number.
-                step.values.userName = step.result;
-                step.values.conversation.push(step.result);
-                return await step.prompt('textPrompt', `Hi ${step.result}. What would you like to do?`);
+                step.values.activity = step.result.value;
+                step.values.conversation.push(step.result.value);
+
+                const promptOptions = {
+                    prompt: `Sure, ` + step.values.activity + ` ` +  step.values.windowDoor + ` it is. How far do you want it down?`,
+                    choices: ["All the way down", "Half way", "All the way up"]
+                };
+
+                return await step.prompt('choicePrompt', promptOptions);
             },
             async function (step) {
                 // Save the room number and "sign off".
                 step.values.activity = step.result;
                 step.values.conversation.push(step.result);
-                await step.context.sendActivity(`Great! I will do that for you ${step.result}!`);
+                var windowDoor = step.values.windowDoor;
+
+                var verb = "pull";
+                if (step.result.value == "All the way down") {
+                    verb = "close";
+                }  
+                await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` ${step.result.value}`);
 
                 // End the dialog, returning the user info.
                 return await step.endDialog(step.values);

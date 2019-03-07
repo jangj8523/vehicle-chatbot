@@ -54,8 +54,10 @@ class MyBot {
             user.firstTime = true;
             user.userName = "Santi";
             await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
-        }
-        return Dialog.EndOfTurn;
+        } else {
+            await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
+        }   
+        
     }
 
     async findIntent (step) {
@@ -63,7 +65,7 @@ class MyBot {
         intentApi += step.result;
         const response = await fetch(intentApi);
         const intentResponse = await response.json();
-        // console.log (intentResponse);
+        console.log (intentResponse);
 
         
         let topScoreIntent = intentResponse.topScoringIntent.intent;
@@ -105,13 +107,18 @@ class MyBot {
         //console.log(user.conversation);
         console.log(user.conversation);
 
+        // if (user.topScoreIntent.includes("RevisitItems")) {
+        //     await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
+
+        // } 
+
+
         if (user.topScoreIntent.includes("CarActionItems")) {
             return await step.beginDialog('controlCarFeature', user);
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            await step.beginDialog('reserveRestaurant', user);
+            return await step.beginDialog('reserveRestaurant', user);
         } else {
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
-            return Dialog.EndOfTurn();
 
         }
 
@@ -142,20 +149,23 @@ class MyBot {
             if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
+
             } 
 
-            if (step.result.conversation != null && step.result.conversation.length != null) {
+            user.finishConvo = true;
 
-            } else if (step.result.conversation.length) {
-                for (var i = 0; i < step.result.conversation.length; i++) {
-                    user.conversation.push(step.result.conversation[i]);
+            if (step.result.conversation != null) {
+                if (step.result.conversation.length != null) {
+                    for (var i = 0; i < step.result.conversation.length; i++) {
+                        user.conversation.push(step.result.conversation[i]);
+                    }
                 }
-            }
-
+            } 
+            await step.prompt('textPrompt', `Let me know if you need anything else, ${user.userName}`);
             await this.userInfoAccessor.set(step.context, user);
         }
         // Restart the main menu dialog.
-        return await step.replaceDialog('mainDialog'); // Show the menu again
+        // return await step.replaceDialog('mainDialog'); // Show the menu again
     }
 
     /**
