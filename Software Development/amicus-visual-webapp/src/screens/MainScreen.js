@@ -5,9 +5,14 @@ import PubNubReact from 'pubnub-react';
 import SpeechRecognition from 'react-speech-recognition';
 
 import Sentry from 'react-activity/lib/Sentry';
+import Spinner from 'react-activity/lib/Spinner';
+import Dots from 'react-activity/lib/Dots';
 
+import microphone from '../images/microphone.png';
 import bmwThinking from '../images/bmw_thinking.gif';
 import bmwSad from '../images/bmw_sad.gif';
+
+import "../css/MainScreen.css";
 
 class MainScreen extends Component {
 
@@ -95,26 +100,31 @@ class MainScreen extends Component {
     resetTranscript();
   }
 
+  startListeningAPI = () => {
+
+  }
+
   render() {
 
     return (
       <div className="flex h-full bg-woodsmoke text-grey-lighter">
-
-        <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '20rem'}}>
-          <div className="font-light text-2xl mx-auto">amicus</div>
-          <div className="flex flex-col bg-grey-darkest rounded-lg shadow-lg p-5">
+        <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '40rem'}}>
+          <div className="flex flex-col p-5">
             {this.viewAvatar()}
+            <div className="h-5"/>
+            {this.viewIntro()}
+            <div className="h-5"/>
             {this.viewSpokenText()}
             {this.viewResponse()}
-            <Sentry className="mx-auto mt-3" color="#FFFFFF" size={20}/>
-            {this.viewDebug()}
+            <Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>
+            <div className="h-5"/>
+            {this.viewFeedback()}
           </div>
         </div>
+        {this.viewDebug()}
       </div>
     );
   }
-
-
 
   sayDialog = () => {
     let { response } = this.state;
@@ -126,10 +136,37 @@ class MainScreen extends Component {
     );
   }
 
+  viewIntro = () => {
+    return (
+      <div className="font-light text-2xl mx-auto text-center">hey there! my name is
+        <div className="syncopate text-5xl">amicus</div>
+      </div>
+    );
+  }
+
   viewAvatar = () => {
     let source = this.avatarStates[Math.floor(Math.random() * this.avatarStates.length)];
     return (
-      <img src={source} alt="Smile" className="m-3 w-48 h-48 rounded-full"/>
+      <div className="flex content-center bg-pitch-black w-full rounded-lg">
+        <img src={source} alt="Smile" className="invert-img w-64 h-64 mx-auto rounded-full"/>
+      </div>
+    );
+  }
+
+  viewFeedback = () => {
+    const { transcript, listening } = this.props;
+
+    return (
+      <div className="mx-auto text-center text-grey-dark">
+        <button className="flex flex-col relative bg-grey-light hover:bg-grey-dark w-16 h-16 rounded-full"
+                onClick={this.startListeningAPI()}>
+          <img src={microphone} className="z-10 absolute pin-l pin-r pin-b pin-t w-16 h-16 p-2"/>
+          {/*!listening && <Sentry className="z-0 w-16 h-16" color="#FFFFFF" size={30}/>*/}
+          {listening && <Spinner className="z-0" color="#FFFFFF" size={47}/>}
+        </button>
+        <div className="h-3"/>
+        <div className="text-sm">let's talk</div>
+      </div>
     );
   }
 
@@ -161,7 +198,7 @@ class MainScreen extends Component {
 
   viewDebug = () => {
     return (
-      <div className="text-grey text-center mx-auto mt-3">
+      <div className="absolute pin-b pin-r m-3 text-grey text-center">
         <button className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
           onClick={this.debugSend}>
           Debug Send
