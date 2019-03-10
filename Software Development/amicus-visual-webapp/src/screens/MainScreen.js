@@ -4,7 +4,7 @@ import PubNubReact from 'pubnub-react';
 
 import SpeechRecognition from 'react-speech-recognition';
 
-import Sentry from 'react-activity/lib/Sentry';
+//import Sentry from 'react-activity/lib/Sentry';
 import Spinner from 'react-activity/lib/Spinner';
 import Dots from 'react-activity/lib/Dots';
 
@@ -18,7 +18,10 @@ class MainScreen extends Component {
 
   state = {
     loading: true,
-    response: ''
+    response: '',
+    hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
+    currentHint: 0,
+    isListening: false,
   }
 
   constructor(props) {
@@ -51,6 +54,11 @@ class MainScreen extends Component {
         resetTranscript();
         //startListening();
       }
+
+      this.timeout = setInterval(() => {
+        const { currentHint } = this.state;
+        this.setState({currentHint: currentHint+1});
+      }, 5000);
 
       /*this.pubnub.getStatus((st) => {
           this.pubnub.publish({
@@ -101,7 +109,8 @@ class MainScreen extends Component {
   }
 
   startListeningAPI = () => {
-
+    console.log("press");
+    //this.setState({isListening: true});
   }
 
   render() {
@@ -154,18 +163,21 @@ class MainScreen extends Component {
   }
 
   viewFeedback = () => {
-    const { transcript, listening } = this.props;
+    const { transcript, listening, isListening } = this.props;
+    const { currentHint, hints } = this.state;
+
+    const hintText = hints[currentHint % hints.length];
 
     return (
-      <div className="mx-auto text-center text-grey-dark">
-        <button className="flex flex-col relative bg-grey-light hover:bg-grey-dark w-16 h-16 rounded-full"
-                onClick={this.startListeningAPI()}>
-          <img src={microphone} className="z-10 absolute pin-l pin-r pin-b pin-t w-16 h-16 p-2"/>
+      <div className="w-full text-center text-grey-dark">
+        <button className="flex flex-col mx-auto relative bg-grey-light hover:bg-grey-dark w-16 h-16 rounded-full"
+                onClick={() => {this.startListeningAPI()}}>
+          <img src={microphone} alt="Mic" className="z-10 absolute pin-l pin-r pin-b pin-t w-16 h-16 p-2"/>
           {/*!listening && <Sentry className="z-0 w-16 h-16" color="#FFFFFF" size={30}/>*/}
-          {listening && <Spinner className="z-0" color="#FFFFFF" size={47}/>}
+          <Spinner className="z-0" color="#FFFFFF" size={47}/>
         </button>
         <div className="h-3"/>
-        <div className="text-sm">let's talk</div>
+        <div className="text-sm" key={hintText}>{hintText}</div>
       </div>
     );
   }
