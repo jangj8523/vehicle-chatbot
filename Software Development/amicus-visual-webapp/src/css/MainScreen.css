@@ -6,3 +6,7 @@
 .syncopate {
   font-family: 'Syncopate', sans-serif;
 }
+
+button {
+  outline: none !important;
+}
