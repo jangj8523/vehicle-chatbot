@@ -1,0 +1,34 @@
+
+#countdown {
+  margin: auto;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+}
+
+svg {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+svg circle {
+  stroke-dasharray: 85px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 3px;
+  stroke: white;
+  fill: none;
+  animation: countdown 3s linear forwards;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 85px;
+  }
+}

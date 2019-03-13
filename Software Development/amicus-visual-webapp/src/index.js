@@ -5,8 +5,11 @@ import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 import './css/tailwind.css';
-import 'react-activity/lib/Sentry/Sentry.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import 'react-activity/lib/Sentry/Sentry.css';
+import 'react-activity/lib/Spinner/Spinner.css';
+import 'react-activity/lib/Dots/Dots.css';
 
 import WebFont from 'webfontloader';
 

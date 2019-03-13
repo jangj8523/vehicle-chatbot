@@ -551,6 +551,10 @@ table {
   background-color: transparent;
 }
 
+.bg-pitch-black {
+  background-color: #000;
+}
+
 .bg-black {
   background-color: #22292f;
 }
@@ -851,6 +855,10 @@ table {
   background-color: transparent;
 }
 
+.hover\:bg-pitch-black:hover {
+  background-color: #000;
+}
+
 .hover\:bg-black:hover {
   background-color: #22292f;
 }
@@ -1149,6 +1157,10 @@ table {
 
 .focus\:bg-transparent:focus {
   background-color: transparent;
+}
+
+.focus\:bg-pitch-black:focus {
+  background-color: #000;
 }
 
 .focus\:bg-black:focus {
@@ -1523,6 +1535,10 @@ table {
   border-color: transparent;
 }
 
+.border-pitch-black {
+  border-color: #000;
+}
+
 .border-black {
   border-color: #22292f;
 }
@@ -1823,6 +1839,10 @@ table {
   border-color: transparent;
 }
 
+.hover\:border-pitch-black:hover {
+  border-color: #000;
+}
+
 .hover\:border-black:hover {
   border-color: #22292f;
 }
@@ -2121,6 +2141,10 @@ table {
 
 .focus\:border-transparent:focus {
   border-color: transparent;
+}
+
+.focus\:border-pitch-black:focus {
+  border-color: #000;
 }
 
 .focus\:border-black:focus {
@@ -4948,6 +4972,10 @@ table {
   color: transparent;
 }
 
+.text-pitch-black {
+  color: #000;
+}
+
 .text-black {
   color: #22292f;
 }
@@ -5248,6 +5276,10 @@ table {
   color: transparent;
 }
 
+.hover\:text-pitch-black:hover {
+  color: #000;
+}
+
 .hover\:text-black:hover {
   color: #22292f;
 }
@@ -5546,6 +5578,10 @@ table {
 
 .focus\:text-transparent:focus {
   color: transparent;
+}
+
+.focus\:text-pitch-black:focus {
+  color: #000;
 }
 
 .focus\:text-black:focus {
@@ -6282,6 +6318,10 @@ table {
     background-color: transparent;
   }
 
+  .sm\:bg-pitch-black {
+    background-color: #000;
+  }
+
   .sm\:bg-black {
     background-color: #22292f;
   }
@@ -6582,6 +6622,10 @@ table {
     background-color: transparent;
   }
 
+  .sm\:hover\:bg-pitch-black:hover {
+    background-color: #000;
+  }
+
   .sm\:hover\:bg-black:hover {
     background-color: #22292f;
   }
@@ -6880,6 +6924,10 @@ table {
 
   .sm\:focus\:bg-transparent:focus {
     background-color: transparent;
+  }
+
+  .sm\:focus\:bg-pitch-black:focus {
+    background-color: #000;
   }
 
   .sm\:focus\:bg-black:focus {
@@ -7246,6 +7294,10 @@ table {
     border-color: transparent;
   }
 
+  .sm\:border-pitch-black {
+    border-color: #000;
+  }
+
   .sm\:border-black {
     border-color: #22292f;
   }
@@ -7546,6 +7598,10 @@ table {
     border-color: transparent;
   }
 
+  .sm\:hover\:border-pitch-black:hover {
+    border-color: #000;
+  }
+
   .sm\:hover\:border-black:hover {
     border-color: #22292f;
   }
@@ -7844,6 +7900,10 @@ table {
 
   .sm\:focus\:border-transparent:focus {
     border-color: transparent;
+  }
+
+  .sm\:focus\:border-pitch-black:focus {
+    border-color: #000;
   }
 
   .sm\:focus\:border-black:focus {
@@ -10655,6 +10715,10 @@ table {
     color: transparent;
   }
 
+  .sm\:text-pitch-black {
+    color: #000;
+  }
+
   .sm\:text-black {
     color: #22292f;
   }
@@ -10955,6 +11019,10 @@ table {
     color: transparent;
   }
 
+  .sm\:hover\:text-pitch-black:hover {
+    color: #000;
+  }
+
   .sm\:hover\:text-black:hover {
     color: #22292f;
   }
@@ -11253,6 +11321,10 @@ table {
 
   .sm\:focus\:text-transparent:focus {
     color: transparent;
+  }
+
+  .sm\:focus\:text-pitch-black:focus {
+    color: #000;
   }
 
   .sm\:focus\:text-black:focus {
@@ -11990,6 +12062,10 @@ table {
     background-color: transparent;
   }
 
+  .md\:bg-pitch-black {
+    background-color: #000;
+  }
+
   .md\:bg-black {
     background-color: #22292f;
   }
@@ -12290,6 +12366,10 @@ table {
     background-color: transparent;
   }
 
+  .md\:hover\:bg-pitch-black:hover {
+    background-color: #000;
+  }
+
   .md\:hover\:bg-black:hover {
     background-color: #22292f;
   }
@@ -12588,6 +12668,10 @@ table {
 
   .md\:focus\:bg-transparent:focus {
     background-color: transparent;
+  }
+
+  .md\:focus\:bg-pitch-black:focus {
+    background-color: #000;
   }
 
   .md\:focus\:bg-black:focus {
@@ -12954,6 +13038,10 @@ table {
     border-color: transparent;
   }
 
+  .md\:border-pitch-black {
+    border-color: #000;
+  }
+
   .md\:border-black {
     border-color: #22292f;
   }
@@ -13254,6 +13342,10 @@ table {
     border-color: transparent;
   }
 
+  .md\:hover\:border-pitch-black:hover {
+    border-color: #000;
+  }
+
   .md\:hover\:border-black:hover {
     border-color: #22292f;
   }
@@ -13552,6 +13644,10 @@ table {
 
   .md\:focus\:border-transparent:focus {
     border-color: transparent;
+  }
+
+  .md\:focus\:border-pitch-black:focus {
+    border-color: #000;
   }
 
   .md\:focus\:border-black:focus {
@@ -16363,6 +16459,10 @@ table {
     color: transparent;
   }
 
+  .md\:text-pitch-black {
+    color: #000;
+  }
+
   .md\:text-black {
     color: #22292f;
   }
@@ -16663,6 +16763,10 @@ table {
     color: transparent;
   }
 
+  .md\:hover\:text-pitch-black:hover {
+    color: #000;
+  }
+
   .md\:hover\:text-black:hover {
     color: #22292f;
   }
@@ -16961,6 +17065,10 @@ table {
 
   .md\:focus\:text-transparent:focus {
     color: transparent;
+  }
+
+  .md\:focus\:text-pitch-black:focus {
+    color: #000;
   }
 
   .md\:focus\:text-black:focus {
@@ -17698,6 +17806,10 @@ table {
     background-color: transparent;
   }
 
+  .lg\:bg-pitch-black {
+    background-color: #000;
+  }
+
   .lg\:bg-black {
     background-color: #22292f;
   }
@@ -17998,6 +18110,10 @@ table {
     background-color: transparent;
   }
 
+  .lg\:hover\:bg-pitch-black:hover {
+    background-color: #000;
+  }
+
   .lg\:hover\:bg-black:hover {
     background-color: #22292f;
   }
@@ -18296,6 +18412,10 @@ table {
 
   .lg\:focus\:bg-transparent:focus {
     background-color: transparent;
+  }
+
+  .lg\:focus\:bg-pitch-black:focus {
+    background-color: #000;
   }
 
   .lg\:focus\:bg-black:focus {
@@ -18662,6 +18782,10 @@ table {
     border-color: transparent;
   }
 
+  .lg\:border-pitch-black {
+    border-color: #000;
+  }
+
   .lg\:border-black {
     border-color: #22292f;
   }
@@ -18962,6 +19086,10 @@ table {
     border-color: transparent;
   }
 
+  .lg\:hover\:border-pitch-black:hover {
+    border-color: #000;
+  }
+
   .lg\:hover\:border-black:hover {
     border-color: #22292f;
   }
@@ -19260,6 +19388,10 @@ table {
 
   .lg\:focus\:border-transparent:focus {
     border-color: transparent;
+  }
+
+  .lg\:focus\:border-pitch-black:focus {
+    border-color: #000;
   }
 
   .lg\:focus\:border-black:focus {
@@ -22071,6 +22203,10 @@ table {
     color: transparent;
   }
 
+  .lg\:text-pitch-black {
+    color: #000;
+  }
+
   .lg\:text-black {
     color: #22292f;
   }
@@ -22371,6 +22507,10 @@ table {
     color: transparent;
   }
 
+  .lg\:hover\:text-pitch-black:hover {
+    color: #000;
+  }
+
   .lg\:hover\:text-black:hover {
     color: #22292f;
   }
@@ -22669,6 +22809,10 @@ table {
 
   .lg\:focus\:text-transparent:focus {
     color: transparent;
+  }
+
+  .lg\:focus\:text-pitch-black:focus {
+    color: #000;
   }
 
   .lg\:focus\:text-black:focus {
@@ -23406,6 +23550,10 @@ table {
     background-color: transparent;
   }
 
+  .xl\:bg-pitch-black {
+    background-color: #000;
+  }
+
   .xl\:bg-black {
     background-color: #22292f;
   }
@@ -23706,6 +23854,10 @@ table {
     background-color: transparent;
   }
 
+  .xl\:hover\:bg-pitch-black:hover {
+    background-color: #000;
+  }
+
   .xl\:hover\:bg-black:hover {
     background-color: #22292f;
   }
@@ -24004,6 +24156,10 @@ table {
 
   .xl\:focus\:bg-transparent:focus {
     background-color: transparent;
+  }
+
+  .xl\:focus\:bg-pitch-black:focus {
+    background-color: #000;
   }
 
   .xl\:focus\:bg-black:focus {
@@ -24370,6 +24526,10 @@ table {
     border-color: transparent;
   }
 
+  .xl\:border-pitch-black {
+    border-color: #000;
+  }
+
   .xl\:border-black {
     border-color: #22292f;
   }
@@ -24670,6 +24830,10 @@ table {
     border-color: transparent;
   }
 
+  .xl\:hover\:border-pitch-black:hover {
+    border-color: #000;
+  }
+
   .xl\:hover\:border-black:hover {
     border-color: #22292f;
   }
@@ -24968,6 +25132,10 @@ table {
 
   .xl\:focus\:border-transparent:focus {
     border-color: transparent;
+  }
+
+  .xl\:focus\:border-pitch-black:focus {
+    border-color: #000;
   }
 
   .xl\:focus\:border-black:focus {
@@ -27779,6 +27947,10 @@ table {
     color: transparent;
   }
 
+  .xl\:text-pitch-black {
+    color: #000;
+  }
+
   .xl\:text-black {
     color: #22292f;
   }
@@ -28079,6 +28251,10 @@ table {
     color: transparent;
   }
 
+  .xl\:hover\:text-pitch-black:hover {
+    color: #000;
+  }
+
   .xl\:hover\:text-black:hover {
     color: #22292f;
   }
@@ -28377,6 +28553,10 @@ table {
 
   .xl\:focus\:text-transparent:focus {
     color: transparent;
+  }
+
+  .xl\:focus\:text-pitch-black:focus {
+    color: #000;
   }
 
   .xl\:focus\:text-black:focus {

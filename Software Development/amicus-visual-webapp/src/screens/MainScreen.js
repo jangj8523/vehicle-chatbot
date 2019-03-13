@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import PubNubReact from 'pubnub-react';
 
-import SpeechRecognition from 'react-speech-recognition';
+import RecordComponent from '../components/RecordComponent';
+import AvatarComponent from '../components/AvatarComponent';
 
-import Sentry from 'react-activity/lib/Sentry';
+//import Sentry from 'react-activity/lib/Sentry';
+import Dots from 'react-activity/lib/Dots';
 
-import bmwThinking from '../images/bmw_thinking.gif';
-import bmwSad from '../images/bmw_sad.gif';
+import "../css/MainScreen.css";
 
 class MainScreen extends Component {
 
   state = {
     loading: true,
-    response: ''
+    response: '',
+    hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
+    currentHint: 0,
   }
 
   constructor(props) {
     super(props);
-    this.avatarStates = [bmwThinking, bmwSad];
     this.pubnub = new PubNubReact({
         publishKey: 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
         subscribeKey: 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
@@ -40,19 +41,10 @@ class MainScreen extends Component {
           console.log(msg);
       });
 
-      const { startListening, resetTranscript, browserSupportsSpeechRecognition } = this.props;
-      if (browserSupportsSpeechRecognition) {
-        console.log("[MainScreen] Browser supports speech recognition");
-        resetTranscript();
-        //startListening();
-      }
-
-      /*this.pubnub.getStatus((st) => {
-          this.pubnub.publish({
-              message: 'hello world from react',
-              channel: 'amicus_global'
-          });
-      });*/
+      this.timeout = setInterval(() => {
+        const { currentHint } = this.state;
+        this.setState({currentHint: currentHint+1});
+      }, 5000);
   }
 
   componentWillUnmount() {
@@ -68,6 +60,15 @@ class MainScreen extends Component {
 
   }
 
+  pubnubPublish = (message) => {
+    if (message === "") return;
+
+    this.pubnub.publish({
+        message: message,
+        channel: 'amicus_delivery'
+    });
+  }
+
   say(message) {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
@@ -81,39 +82,29 @@ class MainScreen extends Component {
     speechSynthesis.speak(msg);
   }
 
-
-  debugSend = () => {
-    const { transcript, listening, resetTranscript } = this.props;
-    if (!listening) return;
-
-    this.pubnub.publish({
-        message: transcript,
-        channel: 'amicus_delivery'
-    });
-
-    resetTranscript();
-  }
-
   render() {
-
     return (
       <div className="flex h-full bg-woodsmoke text-grey-lighter">
+        <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '40rem'}}>
+          <div className="flex flex-col p-5">
+            <AvatarComponent/>
+            <div className="h-5"/>
 
-        <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '20rem'}}>
-          <div className="font-light text-2xl mx-auto">amicus</div>
-          <div className="flex flex-col bg-grey-darkest rounded-lg shadow-lg p-5">
-            {this.viewAvatar()}
-            {this.viewSpokenText()}
+            {this.viewIntro()}
+            <div className="h-5"/>
+
             {this.viewResponse()}
-            <Sentry className="mx-auto mt-3" color="#FFFFFF" size={20}/>
-            {this.viewDebug()}
+            <Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>
+            <div className="h-5"/>
+
+            <RecordComponent onPublish={(msg) => {this.pubnubPublish(msg)}}/>
+
+            {this.viewFeedback()}
           </div>
         </div>
       </div>
     );
   }
-
-
 
   sayDialog = () => {
     let { response } = this.state;
@@ -125,20 +116,22 @@ class MainScreen extends Component {
     );
   }
 
-  viewAvatar = () => {
-    let source = this.avatarStates[Math.floor(Math.random() * this.avatarStates.length)];
+  viewIntro = () => {
     return (
-      <img src={source} alt="Smile" className="m-3 w-48 h-48 rounded-full"/>
+      <div className="font-light text-2xl mx-auto text-center">hey there! my name is
+        <div className="syncopate text-5xl">amicus</div>
+      </div>
     );
   }
 
-  viewSpokenText = () => {
-    const { transcript, listening } = this.props;
-    if (!listening) return;
+  viewFeedback = () => {
+    const { currentHint, hints } = this.state;
+
+    const hintText = hints[currentHint % hints.length];
 
     return (
-      <div className="text-white text-center mx-auto mt-3">
-        {transcript}
+      <div className="w-full mt-3 text-center text-grey-dark">
+        <div className="text-sm" key={hintText}>{hintText}</div>
       </div>
     );
   }
@@ -158,25 +151,6 @@ class MainScreen extends Component {
     );
   }
 
-  viewDebug = () => {
-    return (
-      <div className="text-grey text-center mx-auto mt-3">
-        <button className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-          onClick={this.debugSend}>
-          Debug Send
-        </button>
-      </div>
-    );
-  }
-
 }
 
-MainScreen.propTypes = {
-  // Props injected by SpeechRecognition
-  transcript: PropTypes.string,
-  resetTranscript: PropTypes.func,
-  browserSupportsSpeechRecognition: PropTypes.bool
-};
-
-const options = { autoStart: false }
-export default SpeechRecognition(options)(MainScreen)
+export default MainScreen;
