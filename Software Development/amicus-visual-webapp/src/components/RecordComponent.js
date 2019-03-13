@@ -5,6 +5,7 @@ import stringSimilarity from 'string-similarity';
 import SpeechRecognition from 'react-speech-recognition';
 
 import Spinner from 'react-activity/lib/Spinner';
+import Digital from 'react-activity/lib/Digital';
 
 import microphone from '../images/microphone.png';
 
@@ -18,12 +19,17 @@ class RecordComponent extends Component {
     speechTimerShown: false,
   }
 
+  constructor(props) {
+    super(props);
+    this.timeoutRef = null;
+  }
+
   componentWillMount() {
     const { startListening, resetTranscript, browserSupportsSpeechRecognition } = this.props;
     if (browserSupportsSpeechRecognition) {
       console.log("[MainScreen] Browser supports speech recognition");
       resetTranscript();
-      startListening();
+      //startListening();
     }
   }
 
@@ -58,7 +64,10 @@ class RecordComponent extends Component {
   startSpeechTimer = () => {
     this.setState({speechTimerShown: true});
 
-    setTimeout(() => {
+    if (this.timeoutRef !== null) {
+      clearTimeout(this.timeoutRef);
+    }
+    this.timeoutRef = setTimeout(() => {
       this.setState({speechTimerShown: false});
       this.debugSend();
     }, 3000);
@@ -74,6 +83,18 @@ class RecordComponent extends Component {
     const { resetTranscript } = this.props;
     this.setState({isListening: true});
     resetTranscript();
+  }
+
+  toggleRecording = () => {
+      const { startListening, stopListening, resetTranscript, listening, browserSupportsSpeechRecognition } = this.props;
+      if (!browserSupportsSpeechRecognition) return;
+      resetTranscript();
+
+      if (!listening) {
+        startListening();
+      } else {
+        stopListening();
+      }
   }
 
   render() {
@@ -117,22 +138,23 @@ class RecordComponent extends Component {
     if (!speechTimerShown) return;
 
     return (
-      <div id="countdown">
-        <div id="countdown-number"></div>
-        <svg>
-          <circle r="13" cx="15" cy="15"></circle>
-        </svg>
-      </div>
+      <Digital color="#FFFFFF" size={15}/>
     );
   }
 
   viewDebug = () => {
     return (
       <div className="absolute pin-b pin-r m-3 text-grey text-center">
-        <button className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-          onClick={this.debugSend}>
-          Debug Send
-        </button>
+        <div className="flex flex-col">
+          <button className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+            onClick={this.toggleRecording}>
+            Toggle Recording
+          </button>
+          <button className="bg-blue hover:bg-blue-dark text-white font-bold mt-3 py-2 px-4 rounded"
+            onClick={this.debugSend}>
+            Debug Send
+          </button>
+        </div>
       </div>
     );
   }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
+import { Message } from 'react-chat-ui';
 
 import RecordComponent from '../components/RecordComponent';
 import AvatarComponent from '../components/AvatarComponent';
+import MessageChatComponent from '../components/MessageChatComponent';
 
 //import Sentry from 'react-activity/lib/Sentry';
 import Dots from 'react-activity/lib/Dots';
@@ -16,6 +18,7 @@ class MainScreen extends Component {
     response: '',
     hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
     currentHint: 0,
+    messages: [],
   }
 
   constructor(props) {
@@ -36,6 +39,7 @@ class MainScreen extends Component {
       this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
             this.setState({response: msg.message.description, loading: false});
+            this.recordMessage(msg.message.description, true);
             console.log(msg.message.description);
           }
           console.log(msg);
@@ -67,6 +71,15 @@ class MainScreen extends Component {
         message: message,
         channel: 'amicus_delivery'
     });
+
+    this.recordMessage(message, false);
+  }
+
+  recordMessage = (msg, isFromBot) => {
+    const { messages } = this.state;
+    let newMessages = messages;
+    newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
+    this.setState({messages: newMessages});
   }
 
   say(message) {
@@ -83,6 +96,8 @@ class MainScreen extends Component {
   }
 
   render() {
+    const { messages } = this.state;
+
     return (
       <div className="flex h-full bg-woodsmoke text-grey-lighter">
         <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '40rem'}}>
@@ -94,7 +109,10 @@ class MainScreen extends Component {
             <div className="h-5"/>
 
             {this.viewResponse()}
-            <Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>
+            {/*<Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>*/}
+            <div className="h-5"/>
+
+            <MessageChatComponent messages={messages}/>
             <div className="h-5"/>
 
             <RecordComponent onPublish={(msg) => {this.pubnubPublish(msg)}}/>
