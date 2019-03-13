@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-activity/lib/Sentry/Sentry.css';
 import 'react-activity/lib/Spinner/Spinner.css';
 import 'react-activity/lib/Dots/Dots.css';
+import 'react-activity/lib/Digital/Digital.css';
 
 import WebFont from 'webfontloader';
 
