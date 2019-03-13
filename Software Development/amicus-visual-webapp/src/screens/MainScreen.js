@@ -123,7 +123,7 @@ class MainScreen extends Component {
       </div>
     );
   }
-  
+
   viewFeedback = () => {
     const { currentHint, hints } = this.state;
 
