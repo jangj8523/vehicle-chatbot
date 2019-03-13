@@ -79,6 +79,9 @@ class MainScreen extends Component {
     const { messages } = this.state;
     let newMessages = messages;
     newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
+
+    //there needs to be a limit
+
     this.setState({messages: newMessages});
   }
 
@@ -108,9 +111,9 @@ class MainScreen extends Component {
             {this.viewIntro()}
             <div className="h-5"/>
 
-            {this.viewResponse()}
+            {/*this.viewResponse()*/}
             {/*<Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>*/}
-            <div className="h-5"/>
+            {/*<div className="h-5"/>*/}
 
             <MessageChatComponent messages={messages}/>
             <div className="h-5"/>

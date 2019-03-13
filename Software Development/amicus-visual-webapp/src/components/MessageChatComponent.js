@@ -27,11 +27,10 @@ class MessageChatComponent extends Component {
             {
               text: {
                 fontSize: 14,
-                color: '#ffffff',
               },
               chatbubble: {
                 borderRadius: 15,
-                padding: 10
+                padding: 10,
               }
             }
           }
