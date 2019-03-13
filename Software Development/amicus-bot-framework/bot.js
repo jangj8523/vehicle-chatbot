@@ -71,9 +71,10 @@ class MyBot {
         let topScoreIntent = intentResponse.topScoringIntent.intent;
         let sentiment = intentResponse.sentimentAnalysis.score;
         let entities = intentResponse.entities;
+        let query = intentResponse.query;
         // let topScoreIntent = intentResponse['topScoringIntent']['intent']
         // let sentiment = intentResponse['sentimentAnalysis']['score']
-        return [topScoreIntent, sentiment, intentResponse, entities];
+        return [topScoreIntent, sentiment, intentResponse, entities, query];
     }
 
     async startChildDialog(step) {
@@ -93,6 +94,7 @@ class MyBot {
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2];
         let entities = sentimentIntentList[3];
+        let query = sentimentIntentList[4];
 
         // console.log(sentimentIntentList)
 
@@ -103,6 +105,7 @@ class MyBot {
         user.sentiment = sentiment;
         user.response = response;
         user.entities = entities;
+        user.query = query;
         user.conversation.push(step.result);
         //console.log(user.conversation);
         console.log(user.conversation);
@@ -168,6 +171,36 @@ class MyBot {
         // return await step.replaceDialog('mainDialog'); // Show the menu again
     }
 
+
+    async retrieveEmotions(response){
+        const emotions = ['positive', 'negative', 'neutral'];
+        return emotions[0];
+    }
+
+    async modifyText(response) {
+        return response;
+    }
+
+    async modifyPitch(emotion){
+        var pitch = 0.0; 
+        var rate = 0.0; 
+        var volume = 0.0;
+
+        if (emotion === 'neutral') {
+            volume = 1;
+            rate = 1.0;
+            pitch = 0.8;
+        } else if (emotion === 'negative') {
+            volume = 0.8; 
+            rate = 0.75; 
+            pitch = 0.55;
+        } else if (emotion === 'positive') {
+            volume = 1.0; 
+            rate = 1.15; 
+            pitch = 0.9;
+        }
+        return [volume, rate, pitch]
+    }
     /**
      *
      * @param {TurnContext} on turn context object.
@@ -178,11 +211,24 @@ class MyBot {
           const responses = await next();
 
           if (activities[0] !== null && activities[0].text !== null) {
-            const response = activities[0].text; //Welcome back, Jaewoo
+            var response = activities[0].text; //Welcome back, Jaewoo
+
+            if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
+                var optionList = activities[0].suggestedActions.actions;
+                console.log(activities[0].suggestedActions.actions)
+                for (var i = 0; i < optionList.length; i++) {
+                    response += "\n"
+                    response += optionList[i].value + ".";
+                }
+            }
+
+            const emotion = await this.retrieveEmotions(response);
+            const text = await this.modifyText(response);
+            const setting = await this.modifyPitch(emotion);
 
             var payload = {
                 channel : "amicus_global",
-                message : { title: "Amicus Message", description: response }
+                message : { title: "Amicus Message", description: response, volume: setting[0], rate: setting[1], pitch: setting[2]}
             }
             pubnub.publish(payload, function(status, response) {
                 //console.log(status, response);

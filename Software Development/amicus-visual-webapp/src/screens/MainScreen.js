@@ -14,6 +14,9 @@ class MainScreen extends Component {
   state = {
     loading: true,
     response: '',
+    pitch: 0.0, 
+    volume: 0.0, 
+    rate: 0.0,
     hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
     currentHint: 0,
   }
@@ -36,6 +39,7 @@ class MainScreen extends Component {
       this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
             this.setState({response: msg.message.description, loading: false});
+            this.setState({pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate})
             console.log(msg.message.description);
           }
           console.log(msg);
@@ -70,13 +74,14 @@ class MainScreen extends Component {
   }
 
   say(message) {
+    let { pitch, volume, rate } = this.state;
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[10];
     msg.voiceURI = "native";
-    msg.volume = 1;
-    msg.rate = 1.0;
-    msg.pitch = 0.8;
+    msg.volume = volume;
+    msg.rate = rate;
+    msg.pitch = pitch;
     msg.text = message;
     msg.lang = 'en-US';
     speechSynthesis.speak(msg);

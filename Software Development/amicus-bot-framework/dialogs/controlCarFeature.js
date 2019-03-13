@@ -40,7 +40,7 @@ class ControlCarFeature  extends ComponentDialog {
                 // step.context.activity.speak = 'There is a snake';
 
 
-                if (step.options.entities[0].entity.includes("open") || step.options.entities[0].entity.includes("close")) {
+                if (step.options.entities[0].entity.includes("open") || (step.options.query.includes("roll") && step.options.entities[0].entity.includes("down"))) {
                     step.values.verb = "open";
                 } else {
                     step.values.verb = "close";
@@ -68,7 +68,7 @@ class ControlCarFeature  extends ComponentDialog {
 
                 var promptChoiceA = open; 
                 var promptChoiceB = half;
-                if (step.values.verb.includes("close") || step.values.verb.includes("up")) {
+                if (step.values.verb.includes("close")) {
                     promptChoiceA = close;
                 }
 
@@ -94,12 +94,13 @@ class ControlCarFeature  extends ComponentDialog {
                 if (step.values.windowDoor === "window") {
                     await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` ${step.result.value}`);
                 } else {
-                    await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} `);
+                    await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` on the` + ` ${step.values.activity}`);
                 }
 
                 // End the dialog, returning the user info.
                 return await step.endDialog(step.values);
             }
+
         ]));
     }
 
