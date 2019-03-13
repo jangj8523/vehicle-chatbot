@@ -1,0 +1,418 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1533FFF041DC9B1F96CFE59A /* Pods_MicrosoftBotHack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36F47F2F48B77F7B0918B50 /* Pods_MicrosoftBotHack.framework */; };
+		8E2050882239ABF800312E66 /* ProgramWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2050872239ABF800312E66 /* ProgramWindow.swift */; };
+		8E31C954222F480D00E1AA9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C953222F480D00E1AA9B /* AppDelegate.swift */; };
+		8E31C956222F480D00E1AA9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C955222F480D00E1AA9B /* ViewController.swift */; };
+		8E31C958222F480E00E1AA9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E31C957222F480E00E1AA9B /* Assets.xcassets */; };
+		8E31C95B222F480E00E1AA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E31C959222F480E00E1AA9B /* Main.storyboard */; };
+		8E31C964222F4FB200E1AA9B /* PubNubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C963222F4FB200E1AA9B /* PubNubClient.swift */; };
+		8E31C96A222F581F00E1AA9B /* PasteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C969222F581F00E1AA9B /* PasteManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		88B815916FED003D188ABB4F /* Pods-MicrosoftBotHack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MicrosoftBotHack.release.xcconfig"; path = "Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack.release.xcconfig"; sourceTree = "<group>"; };
+		8E2050872239ABF800312E66 /* ProgramWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramWindow.swift; sourceTree = "<group>"; };
+		8E31C950222F480D00E1AA9B /* Amicus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amicus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E31C953222F480D00E1AA9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8E31C955222F480D00E1AA9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8E31C957222F480E00E1AA9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8E31C95A222F480E00E1AA9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8E31C95C222F480E00E1AA9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E31C95D222F480E00E1AA9B /* MicrosoftBotHack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MicrosoftBotHack.entitlements; sourceTree = "<group>"; };
+		8E31C963222F4FB200E1AA9B /* PubNubClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubNubClient.swift; sourceTree = "<group>"; };
+		8E31C969222F581F00E1AA9B /* PasteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteManager.swift; sourceTree = "<group>"; };
+		C1725387F37CF147E8E3FA3C /* Pods-MicrosoftBotHack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MicrosoftBotHack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack.debug.xcconfig"; sourceTree = "<group>"; };
+		C36F47F2F48B77F7B0918B50 /* Pods_MicrosoftBotHack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MicrosoftBotHack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8E31C94D222F480D00E1AA9B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1533FFF041DC9B1F96CFE59A /* Pods_MicrosoftBotHack.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8E31C947222F480D00E1AA9B = {
+			isa = PBXGroup;
+			children = (
+				8E31C952222F480D00E1AA9B /* AmicusDeliveryInterface */,
+				8E31C951222F480D00E1AA9B /* Products */,
+				EF0D3C06001510ECA364EA4D /* Pods */,
+				DD7F1788518C93244F96245F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8E31C951222F480D00E1AA9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8E31C950222F480D00E1AA9B /* Amicus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8E31C952222F480D00E1AA9B /* AmicusDeliveryInterface */ = {
+			isa = PBXGroup;
+			children = (
+				8E31C953222F480D00E1AA9B /* AppDelegate.swift */,
+				8E31C955222F480D00E1AA9B /* ViewController.swift */,
+				8E31C957222F480E00E1AA9B /* Assets.xcassets */,
+				8E31C959222F480E00E1AA9B /* Main.storyboard */,
+				8E31C95C222F480E00E1AA9B /* Info.plist */,
+				8E31C95D222F480E00E1AA9B /* MicrosoftBotHack.entitlements */,
+				8E31C963222F4FB200E1AA9B /* PubNubClient.swift */,
+				8E31C969222F581F00E1AA9B /* PasteManager.swift */,
+				8E2050872239ABF800312E66 /* ProgramWindow.swift */,
+			);
+			path = AmicusDeliveryInterface;
+			sourceTree = "<group>";
+		};
+		DD7F1788518C93244F96245F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C36F47F2F48B77F7B0918B50 /* Pods_MicrosoftBotHack.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EF0D3C06001510ECA364EA4D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C1725387F37CF147E8E3FA3C /* Pods-MicrosoftBotHack.debug.xcconfig */,
+				88B815916FED003D188ABB4F /* Pods-MicrosoftBotHack.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8E31C94F222F480D00E1AA9B /* AmicusDeliveryInterface */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E31C960222F480E00E1AA9B /* Build configuration list for PBXNativeTarget "AmicusDeliveryInterface" */;
+			buildPhases = (
+				E06E2D97FA0535C7C5E77D05 /* [CP] Check Pods Manifest.lock */,
+				8E31C94C222F480D00E1AA9B /* Sources */,
+				8E31C94D222F480D00E1AA9B /* Frameworks */,
+				8E31C94E222F480D00E1AA9B /* Resources */,
+				B74E81D084EDD39EF16A2718 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AmicusDeliveryInterface;
+			productName = MicrosoftBotHack;
+			productReference = 8E31C950222F480D00E1AA9B /* Amicus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8E31C948222F480D00E1AA9B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = zent;
+				TargetAttributes = {
+					8E31C94F222F480D00E1AA9B = {
+						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 8E31C94B222F480D00E1AA9B /* Build configuration list for PBXProject "AmicusDeliveryInterface" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8E31C947222F480D00E1AA9B;
+			productRefGroup = 8E31C951222F480D00E1AA9B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8E31C94F222F480D00E1AA9B /* AmicusDeliveryInterface */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8E31C94E222F480D00E1AA9B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E31C958222F480E00E1AA9B /* Assets.xcassets in Resources */,
+				8E31C95B222F480E00E1AA9B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B74E81D084EDD39EF16A2718 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PubNub/PubNub.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PubNub.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E06E2D97FA0535C7C5E77D05 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MicrosoftBotHack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8E31C94C222F480D00E1AA9B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E31C956222F480D00E1AA9B /* ViewController.swift in Sources */,
+				8E31C96A222F581F00E1AA9B /* PasteManager.swift in Sources */,
+				8E2050882239ABF800312E66 /* ProgramWindow.swift in Sources */,
+				8E31C954222F480D00E1AA9B /* AppDelegate.swift in Sources */,
+				8E31C964222F4FB200E1AA9B /* PubNubClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8E31C959222F480E00E1AA9B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E31C95A222F480E00E1AA9B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8E31C95E222F480E00E1AA9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8E31C95F222F480E00E1AA9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		8E31C961222F480E00E1AA9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1725387F37CF147E8E3FA3C /* Pods-MicrosoftBotHack.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = F7K5P4SPBK;
+				INFOPLIST_FILE = AmicusDeliveryInterface/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flozent.AmicusDeliveryInterface;
+				PRODUCT_NAME = Amicus;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		8E31C962222F480E00E1AA9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88B815916FED003D188ABB4F /* Pods-MicrosoftBotHack.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = F7K5P4SPBK;
+				INFOPLIST_FILE = AmicusDeliveryInterface/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flozent.AmicusDeliveryInterface;
+				PRODUCT_NAME = Amicus;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8E31C94B222F480D00E1AA9B /* Build configuration list for PBXProject "AmicusDeliveryInterface" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E31C95E222F480E00E1AA9B /* Debug */,
+				8E31C95F222F480E00E1AA9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E31C960222F480E00E1AA9B /* Build configuration list for PBXNativeTarget "AmicusDeliveryInterface" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E31C961222F480E00E1AA9B /* Debug */,
+				8E31C962222F480E00E1AA9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8E31C948222F480D00E1AA9B /* Project object */;
+}
