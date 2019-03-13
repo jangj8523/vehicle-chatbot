@@ -1,9 +1,20 @@
 
 
 const { ActivityTypes } = require('botbuilder');
+const apiKey = 'AIzaSyAuPYGjxn_FBJk2WMPsJ9wdd4Le42obkSU';
+const googleMapsClient = require('@google/maps').createClient({
+  key: apiKey
+});
+const zlib = require('zlib');
+var request = require('request');
+
+
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
 class GoToDestination  extends ComponentDialog {
+
+
+    
 
     constructor(dialogId) {
         super(dialogId);
@@ -24,7 +35,46 @@ class GoToDestination  extends ComponentDialog {
                     step.values.conversation = []
                 } 
 
+                
+
+                
+                // async findNearbyLocation (destination) {
+                let NearbyMapsApi = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+                NearbyMapsApi += "location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key="
+                NearbyMapsApi += apiKey 
+
+                // var options = {
+                //     uri : "https://maps.googleapis.com/maps/api/place/nearbysearch/",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     params : "location=-33.8670522,151.1957362&radius=150&type=restaurant&keyword=cruise&key=" + apiKey,
+                //     gzip : true
+
+                // }
+
+                var responseBody = request(NearbyMapsApi, function(err, response, body) {  
+                    console.log(body);
+                    return body;
+                });
+
+                // console.log(responseBody);
+
+
+                // const response = await fetch(NearbyMapsApi);
+                // console.log(response);
+
+                // var results = response.results;
+                // for (var i = 0; i < results.length; i++) {
+                //     console.log(results[i].name);
+                // }
+                //     return response;
+                // }
+
+
                 var dest_entity = step.options.entities[0].entity;
+                // var destination = this.findNearbyLocation(dest_entity);
+
                 const promptOptions = {
                     prompt: `Ok, there are more than one "` + dest_entity + `". Which one are you referring to?`,
                     choices: [dest_entity +": Mt View Office", dest_entity + ": PA Bimmer", "Stevens Creek: " + dest_entity, "Peter Pan: " + dest_entity]

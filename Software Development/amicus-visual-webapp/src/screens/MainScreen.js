@@ -62,7 +62,6 @@ class MainScreen extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    //this.say("go home");
     if (this.state.response !== prevState.response) {
       this.sayDialog();
     }

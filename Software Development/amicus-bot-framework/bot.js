@@ -10,7 +10,7 @@ const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 const { CheckInDialog } = require("./dialogs/checkInDialog.js");
 const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { ChooseMusic } = require("./dialogs/chooseMusic.js");
-const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
+const { GoToDestination } = require("./dialogs/goToDestination.js");
 const { ConversationDialog } = require("./dialogs/conversationDialog.js");
 const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
@@ -39,7 +39,7 @@ class MyBot {
         .add(new ControlCarFeature('controlCarFeature'))
         .add(new ChooseMusic('chooseMusic'))
         .add(new ConversationDialog('conversationDialog'))
-        .add(new ReserveRestaurant('reserveRestaurant'))
+        .add(new GoToDestination('goToDestination'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
             this.startChildDialog.bind(this),
@@ -113,10 +113,10 @@ class MyBot {
         // } 
 
 
-        if (user.topScoreIntent.includes("CarActionItems")) {
+        if (user.topScoreIntent.includes("WindowDoorItems")) {
             return await step.beginDialog('controlCarFeature', user);
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            return await step.beginDialog('reserveRestaurant', user);
+            return await step.beginDialog('goToDestination', user);
         } else {
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
 

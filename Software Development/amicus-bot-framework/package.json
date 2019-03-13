@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@azure/cosmos": "^2.1.2",
+        "@google/maps": "^0.5.5",
         "botbuilder": "^4.2.0",
         "botbuilder-azure": "^4.2.1",
         "botbuilder-dialogs": "^4.2.1",
