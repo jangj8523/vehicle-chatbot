@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_MicrosoftBotHackVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_MicrosoftBotHackVersionString[];
+FOUNDATION_EXPORT double Pods_AmicusDeliveryInterfaceVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_AmicusDeliveryInterfaceVersionString[];
 

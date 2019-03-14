@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1533FFF041DC9B1F96CFE59A /* Pods_MicrosoftBotHack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C36F47F2F48B77F7B0918B50 /* Pods_MicrosoftBotHack.framework */; };
 		8E2050882239ABF800312E66 /* ProgramWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2050872239ABF800312E66 /* ProgramWindow.swift */; };
 		8E31C954222F480D00E1AA9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C953222F480D00E1AA9B /* AppDelegate.swift */; };
 		8E31C956222F480D00E1AA9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C955222F480D00E1AA9B /* ViewController.swift */; };
@@ -15,9 +14,13 @@
 		8E31C95B222F480E00E1AA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E31C959222F480E00E1AA9B /* Main.storyboard */; };
 		8E31C964222F4FB200E1AA9B /* PubNubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C963222F4FB200E1AA9B /* PubNubClient.swift */; };
 		8E31C96A222F581F00E1AA9B /* PasteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31C969222F581F00E1AA9B /* PasteManager.swift */; };
+		C5E21ED93EEFF275A5893057 /* Pods_AmicusDeliveryInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8A85CBC14AD867B851F42 /* Pods_AmicusDeliveryInterface.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2648B471E39DEB25591DE3CC /* Pods-AmicusDeliveryInterface.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmicusDeliveryInterface.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AmicusDeliveryInterface/Pods-AmicusDeliveryInterface.debug.xcconfig"; sourceTree = "<group>"; };
+		2DD06E4992A62B53E71F4A41 /* Pods-AmicusDeliveryInterface.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmicusDeliveryInterface.release.xcconfig"; path = "Pods/Target Support Files/Pods-AmicusDeliveryInterface/Pods-AmicusDeliveryInterface.release.xcconfig"; sourceTree = "<group>"; };
+		4CA8A85CBC14AD867B851F42 /* Pods_AmicusDeliveryInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AmicusDeliveryInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B815916FED003D188ABB4F /* Pods-MicrosoftBotHack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MicrosoftBotHack.release.xcconfig"; path = "Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack.release.xcconfig"; sourceTree = "<group>"; };
 		8E2050872239ABF800312E66 /* ProgramWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramWindow.swift; sourceTree = "<group>"; };
 		8E31C950222F480D00E1AA9B /* Amicus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amicus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1533FFF041DC9B1F96CFE59A /* Pods_MicrosoftBotHack.framework in Frameworks */,
+				C5E21ED93EEFF275A5893057 /* Pods_AmicusDeliveryInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				C36F47F2F48B77F7B0918B50 /* Pods_MicrosoftBotHack.framework */,
+				4CA8A85CBC14AD867B851F42 /* Pods_AmicusDeliveryInterface.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -92,6 +96,8 @@
 			children = (
 				C1725387F37CF147E8E3FA3C /* Pods-MicrosoftBotHack.debug.xcconfig */,
 				88B815916FED003D188ABB4F /* Pods-MicrosoftBotHack.release.xcconfig */,
+				2648B471E39DEB25591DE3CC /* Pods-AmicusDeliveryInterface.debug.xcconfig */,
+				2DD06E4992A62B53E71F4A41 /* Pods-AmicusDeliveryInterface.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -175,7 +181,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-AmicusDeliveryInterface/Pods-AmicusDeliveryInterface-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PubNub/PubNub.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -184,7 +190,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MicrosoftBotHack/Pods-MicrosoftBotHack-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmicusDeliveryInterface/Pods-AmicusDeliveryInterface-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E06E2D97FA0535C7C5E77D05 /* [CP] Check Pods Manifest.lock */ = {
@@ -198,7 +204,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MicrosoftBotHack-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AmicusDeliveryInterface-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -351,7 +357,7 @@
 		};
 		8E31C961222F480E00E1AA9B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C1725387F37CF147E8E3FA3C /* Pods-MicrosoftBotHack.debug.xcconfig */;
+			baseConfigurationReference = 2648B471E39DEB25591DE3CC /* Pods-AmicusDeliveryInterface.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -372,7 +378,7 @@
 		};
 		8E31C962222F480E00E1AA9B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88B815916FED003D188ABB4F /* Pods-MicrosoftBotHack.release.xcconfig */;
+			baseConfigurationReference = 2DD06E4992A62B53E71F4A41 /* Pods-AmicusDeliveryInterface.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
