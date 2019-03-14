@@ -16,8 +16,8 @@ class MainScreen extends Component {
   state = {
     loading: true,
     response: '',
-    pitch: 0.0, 
-    volume: 0.0, 
+    pitch: 0.0,
+    volume: 0.0,
     rate: 0.0,
     emotion: '',
     hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
@@ -65,7 +65,6 @@ class MainScreen extends Component {
     if (this.state.response !== prevState.response) {
       this.sayDialog();
     }
-
   }
 
   pubnubPublish = (message) => {
@@ -95,12 +94,23 @@ class MainScreen extends Component {
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[10];
     msg.voiceURI = "native";
-    msg.volume = volume;
-    msg.rate = rate;
-    msg.pitch = pitch;
+
+    if (volume) {
+      msg.volume = volume;
+    }
+
+    if (rate) {
+      msg.rate = rate;
+    }
+
+    if (pitch) {
+      msg.pitch = pitch;
+    }
+
     msg.text = message;
     msg.lang = 'en-US';
     speechSynthesis.speak(msg);
+    console.log("speaking...");
   }
 
   render() {
