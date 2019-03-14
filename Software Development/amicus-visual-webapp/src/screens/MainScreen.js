@@ -7,9 +7,11 @@ import AvatarComponent from '../components/AvatarComponent';
 import MessageChatComponent from '../components/MessageChatComponent';
 
 //import Sentry from 'react-activity/lib/Sentry';
-import Dots from 'react-activity/lib/Dots';
+//import Dots from 'react-activity/lib/Dots';
 
 import "../css/MainScreen.css";
+
+const MESSAGE_LIMIT = 4;
 
 class MainScreen extends Component {
 
@@ -23,6 +25,7 @@ class MainScreen extends Component {
     hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
     currentHint: 0,
     messages: [],
+    selectedEmotion: 0,
   }
 
   constructor(props) {
@@ -67,6 +70,12 @@ class MainScreen extends Component {
     }
   }
 
+  selectEmotion = (index) => {
+    if (this.state.selectedEmotion !== index) {
+      this.setState({selectedEmotion: index});
+    }
+  }
+
   pubnubPublish = (message) => {
     if (message === "") return;
 
@@ -81,10 +90,13 @@ class MainScreen extends Component {
   recordMessage = (msg, isFromBot) => {
     const { messages } = this.state;
     let newMessages = messages;
-    newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
 
+    if (newMessages.length >= MESSAGE_LIMIT) { //4 max
+      newMessages.splice(0,1);
+    }
     //there needs to be a limit
 
+    newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
     this.setState({messages: newMessages});
   }
 
@@ -110,14 +122,23 @@ class MainScreen extends Component {
     msg.text = message;
     msg.lang = 'en-US';
     speechSynthesis.speak(msg);
-    console.log("speaking...");
+  }
+
+  sayDialog = () => {
+    let { response } = this.state;
+
+    return (
+      <div className="voice">
+        {this.say(response)}
+      </div>
+    );
   }
 
   render() {
     const { messages } = this.state;
 
     return (
-      <div className="flex h-full bg-woodsmoke text-grey-lighter">
+      <div className="flex h-full bg-pitch-black text-grey-lighter">
         <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '40rem'}}>
           <div className="flex flex-col p-5">
             <AvatarComponent/>
@@ -130,25 +151,25 @@ class MainScreen extends Component {
             {/*<Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>*/}
             {/*<div className="h-5"/>*/}
 
+            {this.viewHistory()}
             <MessageChatComponent messages={messages}/>
             <div className="h-5"/>
 
             <RecordComponent onPublish={(msg) => {this.pubnubPublish(msg)}}/>
 
             {this.viewFeedback()}
+            {this.viewStateButtons()}
           </div>
         </div>
       </div>
     );
   }
 
-  sayDialog = () => {
-    let { response } = this.state;
+  viewHistory = () => {
+    if (this.state.messages.length < MESSAGE_LIMIT) return;
 
     return (
-      <div className="voice">
-        {this.say(response)}
-      </div>
+      <div className="text-grey-dark text-sm text-center mx-auto">[no prior message history available]</div>
     );
   }
 
@@ -183,6 +204,35 @@ class MainScreen extends Component {
     return (
       <div className={classMod}>
         {response}
+      </div>
+    );
+  }
+
+  viewStateButtons = () => {
+
+    const { selectedEmotion } = this.state;
+
+    const globalClassName = " font-bold py-2 px-4 rounded mt-2";
+    const selectedClassName = " bg-red hover:bg-red-dark text-white" + globalClassName;
+    const neutralClassName = " bg-grey hover:bg-grey-dark text-black" + globalClassName;
+
+    return (
+      <div className="absolute pin-t pin-r m-3 mt-5 text-center">
+        <div className="flex flex-col">
+          <div>Simulate</div>
+          <button className={selectedEmotion === 0 ? selectedClassName : neutralClassName}
+            onClick={() => this.selectEmotion(0)}>
+            Happy
+          </button>
+          <button className={selectedEmotion === 1 ? selectedClassName : neutralClassName}
+            onClick={() => this.selectEmotion(1)}>
+            Sad
+          </button>
+          <button className={selectedEmotion === 2 ? selectedClassName : neutralClassName}
+            onClick={() => this.selectEmotion(2)}>
+            Neutral
+          </button>
+        </div>
       </div>
     );
   }
