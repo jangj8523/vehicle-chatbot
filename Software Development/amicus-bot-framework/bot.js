@@ -65,7 +65,6 @@ class MyBot {
         intentApi += step.result;
         const response = await fetch(intentApi);
         const intentResponse = await response.json();
-        console.log (intentResponse);
 
         
         let topScoreIntent = intentResponse.topScoringIntent.intent;
@@ -215,7 +214,6 @@ class MyBot {
 
             if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
                 var optionList = activities[0].suggestedActions.actions;
-                console.log(activities[0].suggestedActions.actions)
                 for (var i = 0; i < optionList.length; i++) {
                     response += "\n"
                     response += optionList[i].value + ".";
@@ -228,7 +226,7 @@ class MyBot {
 
             var payload = {
                 channel : "amicus_global",
-                message : { title: "Amicus Message", description: response, volume: setting[0], rate: setting[1], pitch: setting[2]}
+                message : { title: "Amicus Message", description: response, volume: setting[0], rate: setting[1], pitch: setting[2], emotion: emotion}
             }
             pubnub.publish(payload, function(status, response) {
                 //console.log(status, response);

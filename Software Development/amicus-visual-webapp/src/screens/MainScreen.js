@@ -19,6 +19,7 @@ class MainScreen extends Component {
     pitch: 0.0, 
     volume: 0.0, 
     rate: 0.0,
+    emotion: '',
     hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
     currentHint: 0,
     messages: [],
@@ -41,7 +42,7 @@ class MainScreen extends Component {
 
       this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
-            this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate})
+            this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate, emotion: msg.message.emotion})
             this.recordMessage(msg.message.description, true);
             console.log(msg.message.description);
           }
