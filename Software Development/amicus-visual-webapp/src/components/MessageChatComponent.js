@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ChatFeed, Message } from 'react-chat-ui';
+import { ChatFeed } from 'react-chat-ui';
 import PropTypes from 'prop-types';
 
 class MessageChatComponent extends Component {
@@ -8,29 +8,28 @@ class MessageChatComponent extends Component {
     is_typing: false,
   }
 
-  constructor(props) {
-    super(props);
-
-  }
-
   render() {
 
     return (
       <div>
         <ChatFeed
-          messages={this.props.messages} // Boolean: list of message objects
-          isTyping={this.state.is_typing} // Boolean: is the recipient typing
-          hasInputField={false} // Boolean: use our input, or use your own
-          bubblesCentered={true} //Boolean should the bubbles be centered in the feed?
-          // JSON: Custom bubble styles
+          messages={this.props.messages}
+          isTyping={this.state.is_typing}
+          hasInputField={false}
+          bubblesCentered={true}
           bubbleStyles={
             {
               text: {
                 fontSize: 14,
               },
+              textRecipient: {
+                fontSize: 14,
+                color: '#100910',
+              },
               chatbubble: {
-                borderRadius: 15,
+                borderRadius: 10,
                 padding: 10,
+                marginTop: 5,
               }
             }
           }
