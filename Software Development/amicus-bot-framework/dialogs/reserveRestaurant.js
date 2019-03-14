@@ -3,7 +3,7 @@
 const { ActivityTypes } = require('botbuilder');
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
-class GoToDestination  extends ComponentDialog {
+class ReserveRestaurant  extends ComponentDialog {
 
     constructor(dialogId) {
         super(dialogId);
@@ -26,8 +26,8 @@ class GoToDestination  extends ComponentDialog {
 
                 var dest_entity = step.options.entities[0].entity;
                 const promptOptions = {
-                    prompt: `Ok, there are more than one "` + dest_entity + `". Which one are you referring to?`,
-                    choices: [dest_entity +": Mt View Office", dest_entity + ": PA Bimmer", "Stevens Creek: " + dest_entity, "Peter Pan: " + dest_entity]
+                    prompt: `Ok, here are the five restaurants you visited most often. Where would you like to go?`,
+                    choices: ["Izakaya", "Pompous", "Yaoui", "Circles", "Nola"]
                 };
                 step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
@@ -52,7 +52,7 @@ class GoToDestination  extends ComponentDialog {
 
 }
 
-module.exports.GoToDestination = GoToDestination;
+module.exports.ReserveRestaurant = ReserveRestaurant;
 
 // async function (step) {
     //     // Clear the user information and prompt for the user's name.

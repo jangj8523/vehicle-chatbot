@@ -9,8 +9,14 @@ const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
 const { CheckInDialog } = require("./dialogs/checkInDialog.js");
 const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
+const { ControlCarFeaturePositive } = require("./dialogs/controlCarFeaturePositive.js");
+
 const { ChooseMusic } = require("./dialogs/chooseMusic.js");
 const { GoToDestination } = require("./dialogs/goToDestination.js");
+const { GoToDestinationNegative } = require("./dialogs/goToDestinationNegative.js");
+const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
+
+
 const { ConversationDialog } = require("./dialogs/conversationDialog.js");
 const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
@@ -29,17 +35,22 @@ class MyBot {
         this.conversationState = conversationState;
         this.userState = userState;
         this.textToSpeech = new TextToSpeech();
+
+
+        this.emotion = 1.0;
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
 
         this.dialogs = new DialogSet(this.dialogStateAccessor)
-        .add(new CheckInDialog('checkInDialog'))
         .add(new TextPrompt('textPrompt'))
         .add(new ControlCarFeature('controlCarFeature'))
         .add(new ChooseMusic('chooseMusic'))
         .add(new ConversationDialog('conversationDialog'))
         .add(new GoToDestination('goToDestination'))
+        .add(new ReserveRestaurant('reserveRestaurant'))
+        .add(new GoToDestinationNegative('goToDestinationNegative'))
+        .add(new ControlCarFeaturePositive('controlCarFeaturePositive'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
             this.startChildDialog.bind(this),
@@ -116,9 +127,20 @@ class MyBot {
 
 
         if (user.topScoreIntent.includes("WindowDoorItems")) {
-            return await step.beginDialog('controlCarFeature', user);
+            if (this.emotion == 0) {
+                return await step.beginDialog('controlCarFeature', user);
+            } else {
+                return await step.beginDialog('controlCarFeaturePositive', user);
+            }
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            return await step.beginDialog('goToDestination', user);
+            if (this.emotion == 0) {
+                return await step.beginDialog('goToDestination', user);
+            } else {
+                return await step.beginDialog('goToDestinationNegative', user);
+            }
+            
+        } else if (user.topScoreIntent.includes("ReserveRestaurantItem")) {
+            return await step.beginDialog('reserveRestaurant', user);
         } else {
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
 
@@ -163,7 +185,14 @@ class MyBot {
                     }
                 }
             } 
-            await step.prompt('textPrompt', `Let me know if you need anything else, ${user.userName}`);
+            if(this.emotion == 0) {
+                await step.prompt('textPrompt', `Let me know if you need anything else, ${user.userName}`);
+            } else if (this.emotion == -1) {
+                await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}`)
+            } else {
+                await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}. Let’s have a fabulous day!`)
+            }
+            //await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}`)
             await this.userInfoAccessor.set(step.context, user);
         }
         // Restart the main menu dialog.
@@ -173,6 +202,12 @@ class MyBot {
 
     async retrieveEmotions(response){
         const emotions = ['positive', 'negative', 'neutral'];
+        let index = 0
+        if (this.emotion == 0) {
+            index = 2;
+        } else if (this.emotion == -1) {
+            index = 1;
+        }
         return emotions[2];
     }
 
@@ -190,9 +225,9 @@ class MyBot {
             rate = 1.0;
             pitch = 0.8;
         } else if (emotion === 'negative') {
-            volume = 0.8; 
-            rate = 0.75; 
-            pitch = 0.55;
+            volume = 0.7; 
+            rate = 0.65; 
+            pitch = 0.45;
         } else if (emotion === 'positive') {
             volume = 1.0; 
             rate = 1.15; 
