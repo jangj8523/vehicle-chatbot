@@ -30,10 +30,8 @@ class AvatarComponent extends Component {
   }
 
   neutral = () => {
-    return this.loading(); //TODO: remove
-
-    /*const { currentAnimation } = this.state;
-    return <img alt="neutral" src={ require('../images/animations/' + currentAnimation + '-neutral.png')} className="w-64 h-64 mx-auto" />*/
+    const { currentAnimation } = this.state;
+    return <img alt="neutral" src={ require('../images/animations/' + currentAnimation + '-neutral.gif')} className="w-64 h-64 mx-auto" />
   }
 
   loading = () => {
@@ -42,7 +40,7 @@ class AvatarComponent extends Component {
   }
 
   render() {
-    let source = this.avatarStates[Math.floor(Math.random() * this.avatarStates.length)];
+    //let source = this.avatarStates[Math.floor(Math.random() * this.avatarStates.length)];
 
     return (
       <div>
