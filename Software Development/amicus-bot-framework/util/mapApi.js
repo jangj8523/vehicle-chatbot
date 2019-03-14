@@ -8,6 +8,13 @@ var request = require('request');
 
 
 class MapApi {
+    constructor() {
+        let NearbyMapsApi = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+        NearbyMapsApi += "location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key="
+        NearbyMapsApi += apiKey 
+    }
+
+    
 
 }
 
