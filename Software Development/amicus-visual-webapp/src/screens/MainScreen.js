@@ -12,6 +12,7 @@ import MessageChatComponent from '../components/MessageChatComponent';
 import "../css/MainScreen.css";
 
 const MESSAGE_LIMIT = 4;
+export const EMOTIONS_ENUM = Object.freeze({"loading": 0, "happy":1, "sad":2, "neutral":3})
 
 class MainScreen extends Component {
 
@@ -25,7 +26,7 @@ class MainScreen extends Component {
     hints: ["let's talk", "ask me about the weather", "say \"hey Amicus\""],
     currentHint: 0,
     messages: [],
-    selectedEmotion: 0,
+    selectedEmotion: EMOTIONS_ENUM.neutral,
   }
 
   constructor(props) {
@@ -66,6 +67,9 @@ class MainScreen extends Component {
 
   componentDidUpdate(prevProps, prevState){
     if (this.state.response !== prevState.response) {
+      //TODO: jae, the response is no longer what should used for speech
+      //alternative: get messages[] from the state and read the last ones with the bot ID
+      //reasoning: response only includes on message, but the bot could've sent multiple
       this.sayDialog();
     }
   }
@@ -135,21 +139,17 @@ class MainScreen extends Component {
   }
 
   render() {
-    const { messages } = this.state;
+    const { messages, selectedEmotion } = this.state;
 
     return (
       <div className="flex h-full bg-pitch-black text-grey-lighter">
         <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '40rem'}}>
           <div className="flex flex-col p-5">
-            <AvatarComponent/>
+            <AvatarComponent emotion={selectedEmotion}/>
             <div className="h-5"/>
 
             {this.viewIntro()}
             <div className="h-5"/>
-
-            {/*this.viewResponse()*/}
-            {/*<Dots className="mx-auto mt-3" color="#FFFFFF" size={20}/>*/}
-            {/*<div className="h-5"/>*/}
 
             {this.viewHistory()}
             <MessageChatComponent messages={messages}/>
@@ -193,21 +193,6 @@ class MainScreen extends Component {
     );
   }
 
-  viewResponse = () => {
-    let { response } = this.state;
-
-    let classMod = "text-grey text-center mx-auto mt-3"
-    /*if (response === "") {
-      response = "I'm listening to you";
-    }*/
-
-    return (
-      <div className={classMod}>
-        {response}
-      </div>
-    );
-  }
-
   viewStateButtons = () => {
 
     const { selectedEmotion } = this.state;
@@ -220,16 +205,16 @@ class MainScreen extends Component {
       <div className="absolute pin-t pin-r m-3 mt-5 text-center">
         <div className="flex flex-col">
           <div>Simulate</div>
-          <button className={selectedEmotion === 0 ? selectedClassName : neutralClassName}
-            onClick={() => this.selectEmotion(0)}>
+          <button className={selectedEmotion === EMOTIONS_ENUM.happy ? selectedClassName : neutralClassName}
+            onClick={() => this.selectEmotion(EMOTIONS_ENUM.happy)}>
             Happy
           </button>
-          <button className={selectedEmotion === 1 ? selectedClassName : neutralClassName}
-            onClick={() => this.selectEmotion(1)}>
+          <button className={selectedEmotion === EMOTIONS_ENUM.sad ? selectedClassName : neutralClassName}
+            onClick={() => this.selectEmotion(EMOTIONS_ENUM.sad)}>
             Sad
           </button>
-          <button className={selectedEmotion === 2 ? selectedClassName : neutralClassName}
-            onClick={() => this.selectEmotion(2)}>
+          <button className={selectedEmotion === EMOTIONS_ENUM.neutral ? selectedClassName : neutralClassName}
+            onClick={() => this.selectEmotion(EMOTIONS_ENUM.neutral)}>
             Neutral
           </button>
         </div>

@@ -39,30 +39,35 @@ class RecordComponent extends Component {
     if (this.props.transcript !== prevProps.transcript) {
       const { transcript } = this.props;
       console.log("[componentDidUpdate] transcript delta: " + transcript);
-      //console.log(stringSimilarity.compareTwoStrings(transcript, triggerPhrase));
-      if (this.isTriggerValid(transcript)) {
+
+      const { isListening } = this.state;
+      if (this.isTriggerValid(transcript) && !isListening) {
         console.log("[componentDidUpdate] Amicus recognized");
         this.startListeningAPI();
+      } else {
+        this.startSpeechTimer(() => {
+          if(this.sendPendingMessage()) {
+            this.stopListeningAPI();
+          }
+        });
       }
-
-      this.startSpeechTimer(() => {
-        this.sendPendingMessage();
-        this.stopListeningAPI();
-      });
     }
 
   }
 
   sendPendingMessage = () => {
     const { transcript, listening, resetTranscript } = this.props;
-    if (!listening) return; /*if the browser is listening */
-    if (transcript === "") return;
+    if (!listening) return false; /*if the browser is listening */
+    if (transcript === "") return false;
 
     if (this.props.onPublish && this.state.isListening) { /*if AMICUS is listening */
       this.props.onPublish(transcript);
+      resetTranscript();
+      return true;
     }
 
     resetTranscript();
+    return false;
   }
 
   startSpeechTimer = (callback) => {
@@ -90,10 +95,15 @@ class RecordComponent extends Component {
     return false;
   }
 
+  /* app listening */
+  /* once you say "hey amicus," or press the speak button, amicus actually listens */
   toggleListeningAPI = () => {
-    const { resetTranscript } = this.props;
-    this.setState({isListening: !this.state.isListening});
-    resetTranscript();
+    const { isListening } = this.state;
+    if (!isListening) {
+      this.startListeningAPI();
+    } else {
+      this.stopListeningAPI();
+    }
   }
 
   startListeningAPI = () => {
@@ -102,7 +112,7 @@ class RecordComponent extends Component {
 
     const { resetTranscript } = this.props;
     this.setState({isListening: true});
-    //this.startBrowserRecording();
+    this.startBrowserRecording();
     resetTranscript();
   }
 
@@ -115,8 +125,11 @@ class RecordComponent extends Component {
     //this.stopBrowserRecording();
     resetTranscript();
   }
+  /* [END] app listening */
 
-  /*stopBrowserRecording = () => {
+  /* browser listening */
+  /* chrome must always be listening in order to pick-up a "hey amicus" phrase. */
+  stopBrowserRecording = () => {
     const { stopListening, resetTranscript, listening, browserSupportsSpeechRecognition } = this.props;
     if (!browserSupportsSpeechRecognition) return;
 
@@ -134,19 +147,19 @@ class RecordComponent extends Component {
       resetTranscript();
       startListening();
     }
-  }*/
-  
+  }
+
   toggleBrowserRecording = () => {
-      const { startListening, stopListening, resetTranscript, listening, browserSupportsSpeechRecognition } = this.props;
+      const { listening, browserSupportsSpeechRecognition } = this.props;
       if (!browserSupportsSpeechRecognition) return;
-      resetTranscript();
 
       if (!listening) {
-        startListening();
+        this.startBrowserRecording();
       } else {
-        stopListening();
+        this.stopBrowserRecording();
       }
   }
+  /* [END] browser listening */
 
   render() {
     const { isListening } = this.state;
