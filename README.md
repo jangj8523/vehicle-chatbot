@@ -1,5 +1,4 @@
-<img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/50739364_1318699318270340_5766741017973751808_n.jpg?_nc_cat=107&_nc_eui2=AeG1WWLG402AIcB3eHIQ6fmlqOuH2U-tg8nQzZJp0wJJ-7_TwoJEeJgQjluXdXlgjBe7cgttHsyuC0pRfKGhAXgJ0yfuLvz4A-OGuZwTsUB8bQ&_nc_ht=scontent-lax3-2.xx&oh=042fba7b241d6023dfed176b4aa64e9a&oe=5CF48198" alt="amicus logo" width="400">
-<img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/50861971_1318699328270339_5453801093672730624_n.jpg?_nc_cat=111&_nc_eui2=AeEooq7qyJihFo8RxMrN0XNDj24cg8rZawfdgRFw6X4q-UKEc9oQQZv5JLGRID0vncXrRV2jmvzrs2cO7rsx4EqK94vE_ltorTY2QysWAnkjsg&_nc_ht=scontent-lax3-2.xx&oh=c7275c01ccc0a21071f03d489b02c20c&oe=5CF66E66" alt="amicus logo with BMW wheel" width="200">
+<img src="https://github.com/cs210/BMW-2/blob/amicus-visual-munich/Public%20Assets/amicus_logo.png?raw=true" alt="amicus logo" width="400">
 
 Project Synopsis
 ------
@@ -33,7 +32,7 @@ Ryan Jae | Python/C++/Java/LaTeX, basic AI (at level of 221) | Photography/video
 Jae Woo Jang | Python, Keras, Pytorch, Mobile and C/C++ Networking | Basketball, gym, documentation and writing | Sarcastic | risk-taking mindset | UI/UX, Design  | Black 
 Nitya Mani | Math, optimization, machine learning, Python/C++/Java/MATLAB | Presentation, teaching, writing  | Organized, enthusiastic, teammate | Project management | UI/UX/Frontend development | Blue Hat 
 Sharman Tan | AI (machine learning, natural language processing), Python, C++ | Modular origami, English calligraphy, Visual art and design, Tennis, Adventures | Creative, Open minded, Hard working | Driving end-to-end product development | UI/UX/Front End/Being outspoken | Yellow-Green Hat 
-Santi Gutierrez | software architect; full-stack; iOS; android; react native; web (+reactJS); backend (golang, nodeJS, etc); hci; databases (SQL and noSQL); instructor (two Stanford courses, both programming); previously a CTO | photo/video editing (photoshop, after effects, XD prototyping); graphic designer; music enthusiast; DJ |  diligent; team-player; big picture. | team building from the upmost level | sometimes too optimistic; need to re-asses better based on deadlines | green
+Santi Gutierrez | software architect; full-stack; iOS; android; react native; web (+reactJS); backend (golang, nodeJS, etc); hci; databases (SQL and noSQL) | photo/video editing (photoshop, after effects, XD prototyping); graphic designer; music enthusiast; DJ |  diligent; team-player; big picture. | team building from the upmost level | sometimes too optimistic; need to re-asses better based on deadlines | green
 
 Team Communication
 ------
