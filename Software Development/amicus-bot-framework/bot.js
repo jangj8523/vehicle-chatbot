@@ -173,7 +173,7 @@ class MyBot {
 
     async retrieveEmotions(response){
         const emotions = ['positive', 'negative', 'neutral'];
-        return emotions[0];
+        return emotions[2];
     }
 
     async modifyText(response) {
@@ -186,7 +186,7 @@ class MyBot {
         var volume = 0.0;
 
         if (emotion === 'neutral') {
-            volume = 1;
+            volume = 1.0;
             rate = 1.0;
             pitch = 0.8;
         } else if (emotion === 'negative') {
