@@ -21,6 +21,20 @@ const { ConversationDialog } = require("./dialogs/conversationDialog.js");
 const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
 
+
+/**
+DEMO Dialogs
+*/
+
+const { GoToBurger } = require("./dialogs/DemoDialog/goToBurger.js"); 
+const { GoToBurgerPositive } = require("./dialogs/DemoDialog/goToBurgerPositive.js"); 
+const { GoToBurgerNegative } = require("./dialogs/DemoDialog/goToBurgerNegative.js"); 
+const { CheckScore } = require("./dialogs/DemoDialog/checkScore.js"); 
+const { CheckScorePositive } = require("./dialogs/DemoDialog/checkScorePositive.js"); 
+const { CheckScoreNegative } = require("./dialogs/DemoDialog/checkScoreNegative.js"); 
+
+
+
 //TODO working on simplifying this
 const PubNub = require('pubnub');
 const pubnub = new PubNub({
@@ -37,7 +51,7 @@ class MyBot {
         this.textToSpeech = new TextToSpeech();
 
 
-        this.emotion = 0;
+        this.emotion = 1;
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
@@ -51,6 +65,12 @@ class MyBot {
         .add(new ReserveRestaurant('reserveRestaurant'))
         .add(new GoToDestinationNegative('goToDestinationNegative'))
         .add(new ControlCarFeaturePositive('controlCarFeaturePositive'))
+        .add(new GoToBurger('goToBurger'))
+        .add(new GoToBurgerPositive('goToBurgerPositive'))
+        .add(new GoToBurgerNegative('goToBurgerNegative'))
+        .add(new CheckScorePositive('checkScorePositive'))
+        .add(new CheckScoreNegative('checkScoreNegative'))
+        .add(new CheckScore('checkScore'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
             this.startChildDialog.bind(this),
@@ -80,8 +100,12 @@ class MyBot {
         
         let topScoreIntent = intentResponse.topScoringIntent.intent;
         let sentiment = intentResponse.sentimentAnalysis.score;
-        let entities = intentResponse.entities;
+        let entities = null;
+        if (intentResponse.entities != null) {
+            entities = intentResponse.entities;
+        }
         let query = intentResponse.query;
+        console.log(intentResponse)
         // let topScoreIntent = intentResponse['topScoringIntent']['intent']
         // let sentiment = intentResponse['sentimentAnalysis']['score']
         return [topScoreIntent, sentiment, intentResponse, entities, query];
@@ -105,7 +129,6 @@ class MyBot {
         let response = sentimentIntentList[2];
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
-
         // console.log(sentimentIntentList)
 
         /***
@@ -125,25 +148,42 @@ class MyBot {
 
         // } 
 
+        if (query.includes("hungry") || query.includes("burger")){
+            if (this.emotion == 0) {
+                return await step.beginDialog('goToBurger', user);
+            } else if (this.emotion == -1) {
+                return await step.beginDialog('goToBurgerNegative', user);
+            } else {
+                return await step.beginDialog('goToBurgerPositive', user);
+            }
 
-        if (user.topScoreIntent.includes("WindowDoorItems")) {
+        } else if (query.includes("score")){
+            if (this.emotion == 0) {
+                return await step.beginDialog('checkScore', user);
+            } else if (this.emotion == -1) {
+                return await step.beginDialog('checkScoreNegative', user);
+            } else {
+                return await step.beginDialog('checkScorePositive', user);
+            }
+        } else if (user.topScoreIntent.includes("WindowDoorItems")) {
             if (this.emotion == 0) {
                 return await step.beginDialog('controlCarFeature', user);
             } else {
                 return await step.beginDialog('controlCarFeaturePositive', user);
             }
+
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
             if (this.emotion == 0) {
                 return await step.beginDialog('goToDestination', user);
             } else {
                 return await step.beginDialog('goToDestinationNegative', user);
-            }
-            
+            }   
+
         } else if (user.topScoreIntent.includes("ReserveRestaurantItem")) {
             return await step.beginDialog('reserveRestaurant', user);
         } else {
             await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
-
+            return step.endDialog();
         }
 
 
@@ -188,9 +228,9 @@ class MyBot {
             if(this.emotion == 0) {
                 await step.prompt('textPrompt', `Let me know if you need anything else, ${user.userName}`);
             } else if (this.emotion == -1) {
-                await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}`)
+                await step.prompt('textPrompt', `Just let me know if there’s anything else I can help with, ${user.userName}`)
             } else {
-                await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}. Let’s have a fabulous day!`)
+                await step.prompt('textPrompt', `Just let me know if there’s anything else I can help with, ${user.userName}.`)
             }
             //await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}`)
             await this.userInfoAccessor.set(step.context, user);
@@ -208,7 +248,7 @@ class MyBot {
         } else if (this.emotion == -1) {
             index = 1;
         }
-        return emotions[2];
+        return emotions[index];
     }
 
     async modifyText(response) {
