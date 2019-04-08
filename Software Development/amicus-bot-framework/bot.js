@@ -51,7 +51,7 @@ class MyBot {
         this.textToSpeech = new TextToSpeech();
 
 
-        this.emotion = 1;
+        this.emotion = 0;
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
