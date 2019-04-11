@@ -204,7 +204,7 @@ class MainScreen extends Component {
     const neutralClassName = " bg-grey hover:bg-grey-dark text-black" + globalClassName;
 
     return (
-      <div className="absolute pin-t pin-r m-3 mt-5 text-center">
+      <div className="absolute pin-t pin-l m-3 mt-5 text-center">
         <div className="flex flex-col">
           <div>Simulate</div>
           <button className={selectedEmotion === EMOTIONS_ENUM.happy ? selectedClassName : neutralClassName}
