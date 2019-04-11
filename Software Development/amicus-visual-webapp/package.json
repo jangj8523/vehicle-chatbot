@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "dat.gui": "^0.7.6",
     "pubnub": "^4.21.7",
     "pubnub-react": "^1.2.0",
     "react": "^16.8.2",
@@ -16,6 +17,8 @@
     "react-speech-recognition": "^1.0.7",
     "say": "^0.15.0",
     "string-similarity": "^3.0.0",
+    "three": "^0.103.0",
+    "three-gltf-loader": "^1.103.0",
     "webfontloader": "^1.6.28"
   },
   "scripts": {

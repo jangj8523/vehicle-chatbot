@@ -4,6 +4,7 @@ import { Message } from 'react-chat-ui';
 
 import RecordComponent from '../components/RecordComponent';
 import AvatarComponent from '../components/AvatarComponent';
+import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
 import MessageChatComponent from '../components/MessageChatComponent';
 
 //import Sentry from 'react-activity/lib/Sentry';
@@ -142,11 +143,12 @@ class MainScreen extends Component {
     const { messages, selectedEmotion } = this.state;
 
     return (
-      <div className="flex h-full bg-pitch-black text-grey-lighter">
-        <div className="flex flex-col h-auto mx-auto my-auto" style={{width: '40rem'}}>
-          <div className="flex flex-col p-5">
-            <AvatarComponent emotion={selectedEmotion}/>
-            <div className="h-5"/>
+      <div className="flex flex-col h-full bg-pitch-black text-grey-lighter">
+        <div className="flex flex-col h-auto my-auto">
+          <ThreeAvatarComponent emotion={selectedEmotion}/>
+          <div className="flex flex-col mx-auto p-2" style={{width: '40rem'}}>
+            {/*<AvatarComponent emotion={selectedEmotion}/>*/}
+            {/*<div className="h-5"/>*/}
 
             {this.viewIntro()}
             <div className="h-5"/>
