@@ -11,8 +11,7 @@ As Amicus is currently a part of BMW software, attracting such individuals to BM
 
 RCP #1: Kent Vainio
 ------
-
-<img src="https://github.com/cs210/BMW-2/blob/master/RCP_Frank_Zheng.jpg" alt="Kent Vainio" width="175">
+<img src="https://github.com/cs210/BMW-2/blob/master/RCP_Kent_Vainio.jpg" alt="Kent Vainio">
 
 As one such example of an ideal customer, we interviewed *Kent Vainio*, a junior at Stanford University who has owned a 2010 BMW 3 Series since September 2017. Kent, who identifies as an American Finnish Londoner, was born in California and stayed in California for a couple of years, but he mainly grew up in London. He is majoring in Computer Science and minoring in Japanese at Stanford. In his free time, Kent enjoys the outdoors, golfing, rock climbing, driving around, and playing video games. He is also interested in technology in general. Kent owns luxury items in addition to his BMW vehicle, such as brand name clothing. He is active on various social media platforms, such as Facebook and occasionally Instagram and Twitter, and is often on YouTube and gaming websites like Kotaku and reddit.
 
@@ -32,3 +31,4 @@ Although his parents bought his current car, Kent notes that as a working profes
 
 RCP #2:  Frank Zheng
 ------
+<img src="https://github.com/cs210/BMW-2/blob/master/RCP_Frank_Zheng.jpg" alt="Frank Zheng">
