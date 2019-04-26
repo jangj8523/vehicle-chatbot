@@ -3,7 +3,7 @@ import PubNubReact from 'pubnub-react';
 import { Message } from 'react-chat-ui';
 
 import RecordComponent from '../components/RecordComponent';
-import AvatarComponent from '../components/AvatarComponent';
+//import AvatarComponent from '../components/AvatarComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
 import MessageChatComponent from '../components/MessageChatComponent';
 
@@ -28,6 +28,7 @@ class MainScreen extends Component {
     currentHint: 0,
     messages: [],
     selectedEmotion: EMOTIONS_ENUM.neutral,
+    avatarActions: {},
   }
 
   constructor(props) {
@@ -48,6 +49,7 @@ class MainScreen extends Component {
       this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
             this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate, emotion: msg.message.emotion})
+            //TODO: set state with new avatarActions object
             this.recordMessage(msg.message.description, true);
             console.log(msg.message.description);
           }
@@ -78,6 +80,16 @@ class MainScreen extends Component {
   selectEmotion = (index) => {
     if (this.state.selectedEmotion !== index) {
       this.setState({selectedEmotion: index});
+    }
+
+    if (index === EMOTIONS_ENUM.loading) {
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Idle', emotes: ['Jump'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.0}}});
+    } else if (index === EMOTIONS_ENUM.happy) {
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Walking', emotes: ['Yes'], expressions: {angry: 0.0, surprised: 0.5, sad: 0.0}}});
+    } else if (index === EMOTIONS_ENUM.sad) {
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Dance', emotes: ['No'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.5}}});
+    } else if (index === EMOTIONS_ENUM.neutral) {
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Running', emotes: ['ThumbsUp'], expressions: {angry: 0.5, surprised: 0.0, sad: 0.0}}});
     }
   }
 
@@ -140,12 +152,12 @@ class MainScreen extends Component {
   }
 
   render() {
-    const { messages, selectedEmotion } = this.state;
+    const { messages } = this.state;
 
     return (
       <div className="flex flex-col h-full bg-pitch-black text-grey-lighter">
         <div className="flex flex-col h-auto my-auto">
-          <ThreeAvatarComponent emotion={selectedEmotion}/>
+          <ThreeAvatarComponent actions={this.state.avatarActions}/>
           <div className="flex flex-col mx-auto p-2" style={{width: '40rem'}}>
             {/*<AvatarComponent emotion={selectedEmotion}/>*/}
             {/*<div className="h-5"/>*/}

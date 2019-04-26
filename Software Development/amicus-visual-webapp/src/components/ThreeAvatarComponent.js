@@ -18,8 +18,48 @@ class ThreeAvatarComponent extends React.Component {
     this.three = React.createRef();
     this.state = {
       width: window.innerWidth,
-      height: window.innerWidth/4
+      height: window.innerWidth/4,
+      currentActions: {timestamp: new Date(), state: 'Idle', emotes: ['Jump'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.0}}
     }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    this.triggerNewActions(this.props.actions);
+  }
+
+  triggerNewActions = (newActionsParent) => {
+    const {currentActions} = this.state;
+    let newActions = newActionsParent;
+
+    if (!newActions.state || !newActions.emotes || !newActions.expressions || !newActions.timestamp) {
+      console.log("ERROR: new actions are incomplete.");
+      return;
+    }
+
+    if (currentActions.timestamp >= newActions.timestamp) {
+      return; //do nothing...
+    }
+
+      //console.log(this.state.currentActions);
+      //console.log(this.props.actions);
+      //console.log("\n");
+
+    if (currentActions.state !== newActions.state) {
+      this.api.state = newActions.state;
+      this.fadeToAction( this.api.state, 0.5 );
+    }
+
+    if ((currentActions.emotes !== newActions.emotes) && newActions.emotes.length > 0) {
+      if (this.api[newActions.emotes[0]]){
+        this.api[newActions.emotes[0]]();
+      }
+    }
+
+    this.face.morphTargetInfluences[0] = newActions.expressions.angry;
+    this.face.morphTargetInfluences[1] = newActions.expressions.surprised;
+    this.face.morphTargetInfluences[2] = newActions.expressions.sad;
+
+    this.setState({currentActions: newActions});
   }
 
   /**
@@ -58,9 +98,9 @@ class ThreeAvatarComponent extends React.Component {
     this.directionalLight.position.set( 0, 20, 10 );
     this.scene.add( this.directionalLight );
 
-    this.api = { state: 'Walking' };
+    this.api = { state: 'Idle' };
     var loader = new GLTFLoader();
-		loader.load('./models/gltf/RobotExpressive/RobotExpressive.glb', ( gltf ) => {
+		loader.load('./models/gltf/RobotExpressive/RobotExpressive.gltf', ( gltf ) => {
 			var model = gltf.scene;
 			this.scene.add(model);
 			this.createGUI(model, gltf.animations);
@@ -82,6 +122,7 @@ class ThreeAvatarComponent extends React.Component {
     var states = [ 'Idle', 'Walking', 'Running', 'Dance', 'Death', 'Sitting', 'Standing' ];
 		var emotes = [ 'Jump', 'Yes', 'No', 'Wave', 'Punch', 'ThumbsUp' ];
 		this.gui = new dat.GUI();
+    this.gui.closed = true;
 		this.mixer = new THREE.AnimationMixer( model );
 
     this.actions = {};
@@ -126,14 +167,14 @@ class ThreeAvatarComponent extends React.Component {
 		emoteFolder.open();
 
     // expressions
-    var face = model.getObjectByName( 'Head_2' );
-    var expressions = Object.keys( face.morphTargetDictionary );
+    this.face = model.getObjectByName( 'Head_2' );
+    var expressions = Object.keys( this.face.morphTargetDictionary );
     var expressionFolder = this.gui.addFolder('Expressions');
     for ( var ind = 0; ind < expressions.length; ind++ ) {
-      expressionFolder.add( face.morphTargetInfluences, ind, 0, 1, 0.01 ).name( expressions[ ind ] );
+      expressionFolder.add( this.face.morphTargetInfluences, ind, 0, 1, 0.01 ).name( expressions[ ind ] );
     }
 
-    this.activeAction = this.actions['Walking'];
+    this.activeAction = this.actions['Idle'];
     this.activeAction.play();
     expressionFolder.open();
   }
@@ -198,7 +239,7 @@ class ThreeAvatarComponent extends React.Component {
 }
 
 ThreeAvatarComponent.propTypes = {
-  emotion: PropTypes.number,
+  actions: PropTypes.object,
 };
 
 export default ThreeAvatarComponent;
