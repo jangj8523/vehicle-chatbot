@@ -83,13 +83,13 @@ class MainScreen extends Component {
     }
 
     if (index === EMOTIONS_ENUM.loading) {
-      this.setState({avatarActions: {timestamp: new Date(), state: 'Idle', emotes: ['Jump'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.0}}});
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Walking', emotes: ['ThumbsUp'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.0}}});
     } else if (index === EMOTIONS_ENUM.happy) {
-      this.setState({avatarActions: {timestamp: new Date(), state: 'Walking', emotes: ['Yes'], expressions: {angry: 0.0, surprised: 0.5, sad: 0.0}}});
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Dance', emotes: ['Wave'], expressions: {angry: 0.0, surprised: 0.5, sad: 0.0}}});
     } else if (index === EMOTIONS_ENUM.sad) {
-      this.setState({avatarActions: {timestamp: new Date(), state: 'Dance', emotes: ['No'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.5}}});
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Idle', emotes: ['No'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.8}}});
     } else if (index === EMOTIONS_ENUM.neutral) {
-      this.setState({avatarActions: {timestamp: new Date(), state: 'Running', emotes: ['ThumbsUp'], expressions: {angry: 0.5, surprised: 0.0, sad: 0.0}}});
+      this.setState({avatarActions: {timestamp: new Date(), state: 'Idle', emotes: ['ThumbsUp'], expressions: {angry: 0.0, surprised: 0.0, sad: 0.0}}});
     }
   }
 
