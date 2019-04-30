@@ -51,6 +51,7 @@ class MainScreen extends Component {
             this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate, emotion: msg.message.emotion})
             //TODO: set state with new avatarActions object
             this.recordMessage(msg.message.description, true);
+            this.setAvatarParameters(msg.message);
             console.log(msg.message.description);
           }
           console.log(msg);
@@ -75,6 +76,22 @@ class MainScreen extends Component {
       //reasoning: response only includes on message, but the bot could've sent multiple
       this.sayDialog();
     }
+  }
+
+  setAvatarParameters = (source) => {
+    const angryScale = source.expression.angryScale;
+    const sadScale = source.expression.sadScale;
+    const surprisedScale = source.expression.surprisedScale;
+
+    const state = source.state;
+    const emotion = source.emotion;
+
+    if (!angryScale || !sadScale || !surprisedScale || !state || !emotion) {
+      console.log("ERROR: new actions from bot-framework are incomplete.");
+      return; //incomplete
+    }
+
+    this.setState({avatarActions: {timestamp: new Date(), state: state, emotes: [emotion], expressions: {angry: angryScale, surprised: surprisedScale, sad: sadScale}}});
   }
 
   selectEmotion = (index) => {
