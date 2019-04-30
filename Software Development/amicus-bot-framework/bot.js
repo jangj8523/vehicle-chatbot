@@ -129,7 +129,7 @@ class MyBot {
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
         this.emotion = sentimentIntentList[5];
-        // console.log(sentimentIntentList)
+        console.log("EMOTION", this.emotion);
 
         /***
         Navigate to its corresponding intent.
@@ -224,7 +224,7 @@ class MyBot {
 
     async retrieveEmotions(response){
       console.log("Retrieve");
-      var positiveEmotion = ["No"];
+      var negativeEmotion = ["No"];
       var positiveEmotion = ["Jump", "ThumbsUp", "Punch"];
       var neutralEmotion = ["Wave", "Yes"];
 
@@ -244,7 +244,7 @@ class MyBot {
     async retrieveState(response){
         var negativeStates = ['Idle', 'Death'];
         var positiveStates = ['Dance', 'Running'];
-        var neutralStates = ['Standing', 'Sitting', 'Walking'];
+        var neutralStates = ['Standing', 'Sitting', 'Walking', null];
 
         let state = null;
 
@@ -279,7 +279,7 @@ class MyBot {
           surprisedScale = (Math.random() * (0.650 - 0.4200) + 0.4200);
           sadScale = (Math.random() * (0.320 - 0.1200) + 0.1200);
         }
-        expression = [angryScale, surprisedScale, sadScale];
+        expression = {'angryScale':angryScale, 'surprisedScale':surprisedScale, 'sadScale':sadScale}
         return expression;
     }
 
@@ -318,7 +318,6 @@ class MyBot {
 
           if (activities[0] !== null && activities[0].text !== null) {
             var response = activities[0].text; //Welcome back, Jaewoo
-            console.log('undefined eyond');
             if (activities[0]['suggestedActions'] !== null) {
               if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
                 console.log('debug\n');
@@ -329,7 +328,6 @@ class MyBot {
                   }
               }
             }
-            console.log("OUT");
 
             const emotion = await this.retrieveEmotions(response);
             const state = await this.retrieveState(response);
@@ -348,7 +346,7 @@ class MyBot {
             inputMap['emotion'] = emotion;
             inputMap['state'] = state;
             inputMap['expression'] = expression;
-
+            console.log(inputMap);
 
             var payload = {
                 channel : "amicus_global",
