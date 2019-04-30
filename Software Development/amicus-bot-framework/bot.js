@@ -21,17 +21,16 @@ const { ConversationDialog } = require("./dialogs/conversationDialog.js");
 const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
 
-
 /**
 DEMO Dialogs
 */
 
-const { GoToBurger } = require("./dialogs/DemoDialog/goToBurger.js"); 
-const { GoToBurgerPositive } = require("./dialogs/DemoDialog/goToBurgerPositive.js"); 
-const { GoToBurgerNegative } = require("./dialogs/DemoDialog/goToBurgerNegative.js"); 
-const { CheckScore } = require("./dialogs/DemoDialog/checkScore.js"); 
-const { CheckScorePositive } = require("./dialogs/DemoDialog/checkScorePositive.js"); 
-const { CheckScoreNegative } = require("./dialogs/DemoDialog/checkScoreNegative.js"); 
+const { GoToBurger } = require("./dialogs/DemoDialog/goToBurger.js");
+const { GoToBurgerPositive } = require("./dialogs/DemoDialog/goToBurgerPositive.js");
+const { GoToBurgerNegative } = require("./dialogs/DemoDialog/goToBurgerNegative.js");
+const { CheckScore } = require("./dialogs/DemoDialog/checkScore.js");
+const { CheckScorePositive } = require("./dialogs/DemoDialog/checkScorePositive.js");
+const { CheckScoreNegative } = require("./dialogs/DemoDialog/checkScoreNegative.js");
 
 
 
@@ -87,8 +86,8 @@ class MyBot {
             await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
         } else {
             await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
-        }   
-        
+        }
+
     }
 
     async findIntent (step) {
@@ -97,9 +96,10 @@ class MyBot {
         const response = await fetch(intentApi);
         const intentResponse = await response.json();
 
-        
+
         let topScoreIntent = intentResponse.topScoringIntent.intent;
         let sentiment = intentResponse.sentimentAnalysis.score;
+        let userEmotion = intentResponse.sentimentAnalysis.label;
         let entities = null;
         if (intentResponse.entities != null) {
             entities = intentResponse.entities;
@@ -108,7 +108,7 @@ class MyBot {
         console.log(intentResponse)
         // let topScoreIntent = intentResponse['topScoringIntent']['intent']
         // let sentiment = intentResponse['sentimentAnalysis']['score']
-        return [topScoreIntent, sentiment, intentResponse, entities, query];
+        return [topScoreIntent, sentiment, intentResponse, entities, query, userEmotion];
     }
 
     async startChildDialog(step) {
@@ -123,12 +123,12 @@ class MyBot {
             user.conversation = [];
         }
         var sentimentIntentList = await this.findIntent(step);
-
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
         let response = sentimentIntentList[2];
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
+        this.emotion = sentimentIntentList[5];
         // console.log(sentimentIntentList)
 
         /***
@@ -146,65 +146,47 @@ class MyBot {
         // if (user.topScoreIntent.includes("RevisitItems")) {
         //     await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
 
-        // } 
+        // }
 
         if (query.includes("hungry") || query.includes("burger")){
-            if (this.emotion == 0) {
+            if (this.emotion == 'neutral') {
                 return await step.beginDialog('goToBurger', user);
-            } else if (this.emotion == -1) {
+            } else if (this.emotion == 'negative') {
                 return await step.beginDialog('goToBurgerNegative', user);
             } else {
                 return await step.beginDialog('goToBurgerPositive', user);
             }
 
         } else if (query.includes("score")){
-            if (this.emotion == 0) {
+            if (this.emotion == 'neutral') {
                 return await step.beginDialog('checkScore', user);
-            } else if (this.emotion == -1) {
+            } else if (this.emotion == 'negative') {
                 return await step.beginDialog('checkScoreNegative', user);
             } else {
                 return await step.beginDialog('checkScorePositive', user);
             }
         } else if (user.topScoreIntent.includes("WindowDoorItems")) {
-            if (this.emotion == 0) {
+            if (this.emotion == 'neutral') {
                 return await step.beginDialog('controlCarFeature', user);
             } else {
                 return await step.beginDialog('controlCarFeaturePositive', user);
             }
 
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            if (this.emotion == 0) {
+            if (this.emotion == 'neutral') {
                 return await step.beginDialog('goToDestination', user);
             } else {
                 return await step.beginDialog('goToDestinationNegative', user);
-            }   
+            }
 
         } else if (user.topScoreIntent.includes("ReserveRestaurantItem")) {
             return await step.beginDialog('reserveRestaurant', user);
         } else {
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand."); 
+            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
             return step.endDialog();
         }
-
-
-        // if (step.result.includes("turn on")) {
-        //     return await step.beginDialog('controlCarFeature', user);
-        // } else if (step.result.includes("list of restaurant")) {
-        //     return await step.beginDialog('checkInDialog', user);
-        // } else if (step.result.includes("tough day")) {
-        //     await step.beginDialog('chooseMusic', user);
-        // } else if (step.result.includes("dinner tonight")) {
-        //     await step.beginDialog('reserveRestaurant', user);
-        // } else if (step.result.includes("choose music")) {
-        //     await step.beginDialog('chooseMusic', user);
-        // } else if (step.result.includes("take me")){
-        //     await step.beginDialog('conversationDialog', user);
-        // } else {
-        //     await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
-
-        // }
-
     }
+
 
     async saveResult(step) {
         // Process the return value from the child dialog.
@@ -214,7 +196,7 @@ class MyBot {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
 
-            } 
+            }
 
             user.finishConvo = true;
 
@@ -224,10 +206,10 @@ class MyBot {
                         user.conversation.push(step.result.conversation[i]);
                     }
                 }
-            } 
-            if(this.emotion == 0) {
+            }
+            if(this.emotion == 'neutral') {
                 await step.prompt('textPrompt', `Let me know if you need anything else, ${user.userName}`);
-            } else if (this.emotion == -1) {
+            } else if (this.emotion == 'negative') {
                 await step.prompt('textPrompt', `Just let me know if there’s anything else I can help with, ${user.userName}`)
             } else {
                 await step.prompt('textPrompt', `Just let me know if there’s anything else I can help with, ${user.userName}.`)
@@ -241,14 +223,58 @@ class MyBot {
 
 
     async retrieveEmotions(response){
-        const emotions = ['positive', 'negative', 'neutral'];
-        let index = 0
-        if (this.emotion == 0) {
-            index = 2;
-        } else if (this.emotion == -1) {
-            index = 1;
+      console.log("Retrieve");
+      var positiveEmotion = ["No"];
+      var positiveEmotion = ["Jump", "ThumbsUp", "Punch"];
+      var neutralEmotion = ["Wave", "Yes"];
+
+      let emote = null;
+
+      if (this.emotion === 'neutral') {
+        emote = neutralEmotion[Math.floor(Math.random() * neutralEmotion.length)];
+      } else if (this.emotion === 'negative') {
+        emote = negativeEmotion[Math.floor(Math.random() * negativeEmotion.length)];
+      } else {
+        emote = positiveEmotion[Math.floor(Math.random() * positiveEmotion.length)];
+      }
+        console.log("emote: ", emote);
+        return emote;
+    }
+
+    async retrieveState(response){
+        var negativeStates = ['Idle', 'Death'];
+        var positiveStates = ['Dance', 'Running'];
+        var neutralStates = ['Standing', 'Sitting', 'Walking'];
+
+        let state = null;
+
+        if (this.emotion === 'neutral') {
+          state = neutralStates[Math.floor(Math.random() * neutralStates.length)];
+        } else if (this.emotion === 'negative') {
+          state = negativeStates[Math.floor(Math.random() * negativeStates.length)];
+        } else {
+          state = positiveStates[Math.floor(Math.random() * positiveStates.length)];
         }
-        return emotions[index];
+
+        return state;
+    }
+
+    async retrieveExpression(response){
+        var angryScale = ['Idle', 'Death'];
+        var surprisedScale = ['Dance', 'Running'];
+        var sadScale = ['Standing', 'Sitting', 'Walking'];
+
+        let expression = null;
+
+        if (this.emotion === 'neutral') {
+          expression = neutralExpression[Math.floor(Math.random() * neutralExpression.length)];
+        } else if (this.emotion === 'negative') {
+          expression = negativeExpression[Math.floor(Math.random() * negativeExpression.length)];
+        } else {
+          expression = positiveExpression[Math.floor(Math.random() * positiveExpression.length)];
+        }
+
+        return expression;
     }
 
     async modifyText(response) {
@@ -256,21 +282,21 @@ class MyBot {
     }
 
     async modifyPitch(emotion){
-        var pitch = 0.0; 
-        var rate = 0.0; 
+        var pitch = 0.0;
+        var rate = 0.0;
         var volume = 0.0;
 
-        if (emotion === 'neutral') {
+        if (this.emotion === 'neutral') {
             volume = 1.0;
             rate = 1.0;
             pitch = 0.8;
-        } else if (emotion === 'negative') {
-            volume = 0.7; 
-            rate = 0.65; 
+        } else if (this.emotion === 'negative') {
+            volume = 0.7;
+            rate = 0.65;
             pitch = 0.45;
-        } else if (emotion === 'positive') {
-            volume = 1.0; 
-            rate = 1.15; 
+        } else if (this.emotion === 'positive') {
+            volume = 1.0;
+            rate = 1.15;
             pitch = 0.9;
         }
         return [volume, rate, pitch]
@@ -286,22 +312,41 @@ class MyBot {
 
           if (activities[0] !== null && activities[0].text !== null) {
             var response = activities[0].text; //Welcome back, Jaewoo
-
-            if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
-                var optionList = activities[0].suggestedActions.actions;
-                for (var i = 0; i < optionList.length; i++) {
-                    response += "\n"
-                    response += optionList[i].value + ".";
-                }
+            console.log('undefined eyond');
+            if (activities[0]['suggestedActions'] !== null) {
+              if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
+                console.log('debug\n');
+                  var optionList = activities[0].suggestedActions.actions;
+                  for (var i = 0; i < optionList.length; i++) {
+                      response += "\n"
+                      response += optionList[i].value + ".";
+                  }
+              }
             }
+            console.log("OUT");
 
             const emotion = await this.retrieveEmotions(response);
+            const state = await this.retrieveState(response);
             const text = await this.modifyText(response);
-            const setting = await this.modifyPitch(emotion);
+            const expression = await this.retrieveExpression(response);
+            const setting = await this.modifyPitch();
+
+            console.log("problem");
+
+            let inputMap = {};
+            inputMap['title'] = "Amicus Message";
+            inputMap['description'] = response;
+            inputMap['volume'] = setting[0];
+            inputMap['rate'] = setting[1];
+            inputMap['pitch'] = setting[2];
+            inputMap['emotion'] = emotion;
+            inputMap['state'] = state;
+            inputMap['expression'] = expression;
+
 
             var payload = {
                 channel : "amicus_global",
-                message : { title: "Amicus Message", description: response, volume: setting[0], rate: setting[1], pitch: setting[2], emotion: emotion}
+                message : inputMap
             }
             pubnub.publish(payload, function(status, response) {
                 //console.log(status, response);
