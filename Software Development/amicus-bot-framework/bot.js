@@ -260,20 +260,26 @@ class MyBot {
     }
 
     async retrieveExpression(response){
-        var angryScale = ['Idle', 'Death'];
-        var surprisedScale = ['Dance', 'Running'];
-        var sadScale = ['Standing', 'Sitting', 'Walking'];
+        var angryScale = null;
+        var surprisedScale = null;
+        var sadScale = null;
 
         let expression = null;
 
         if (this.emotion === 'neutral') {
-          expression = neutralExpression[Math.floor(Math.random() * neutralExpression.length)];
+          angryScale = (Math.random() * (0.950 - 0.5200) + 0.5200);
+          surprisedScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
+          sadScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
         } else if (this.emotion === 'negative') {
-          expression = negativeExpression[Math.floor(Math.random() * negativeExpression.length)];
+          angryScale = (Math.random() * (0.320 - 0.1200) + 0.1200);
+          surprisedScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
+          sadScale = (Math.random() * (0.950 - 0.5200) + 0.5200);;
         } else {
-          expression = positiveExpression[Math.floor(Math.random() * positiveExpression.length)];
+          angryScale = (Math.random() * (0.650 - 0.4200) + 0.4200);
+          surprisedScale = (Math.random() * (0.650 - 0.4200) + 0.4200);
+          sadScale = (Math.random() * (0.320 - 0.1200) + 0.1200);
         }
-
+        expression = [angryScale, surprisedScale, sadScale];
         return expression;
     }
 
