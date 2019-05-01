@@ -173,10 +173,10 @@ class MyBot {
             }
 
         } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            if (this.emotion == 'neutral') {
-                return await step.beginDialog('goToDestination', user);
-            } else {
+            if (this.emotion == 'negative') {
                 return await step.beginDialog('goToDestinationNegative', user);
+            } else {
+                return await step.beginDialog('goToDestination', user);
             }
 
         } else if (user.topScoreIntent.includes("ReserveRestaurantItem")) {
@@ -267,11 +267,11 @@ class MyBot {
         let expression = null;
 
         if (this.emotion === 'neutral') {
-          angryScale = (Math.random() * (0.950 - 0.5200) + 0.5200);
+          angryScale = (Math.random() * (0.850 - 0.3200) + 0.3200);
           surprisedScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
           sadScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
         } else if (this.emotion === 'negative') {
-          angryScale = (Math.random() * (0.320 - 0.1200) + 0.1200);
+          angryScale = (Math.random() * (0.010 - 0.0500) + 0.0500);
           surprisedScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
           sadScale = (Math.random() * (0.950 - 0.5200) + 0.5200);;
         } else {

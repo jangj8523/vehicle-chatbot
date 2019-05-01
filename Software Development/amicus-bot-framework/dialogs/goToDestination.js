@@ -8,15 +8,16 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 const zlib = require('zlib');
 var request = require('request');
-
+var path = require("path");
+var xlsx = require('node-xlsx');
 
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
 class GoToDestination  extends ComponentDialog {
-
-
-    
-
+    async getMatchingPlaces(location) {
+      console.log("YES");
+      return null;
+    }
     constructor(dialogId) {
         super(dialogId);
 
@@ -31,12 +32,25 @@ class GoToDestination  extends ComponentDialog {
         this.addDialog(new WaterfallDialog(dialogId, [
 
             async function (step) {
+
+                var locationDataExists = true;
                 // Clear the user information and prompt for the user's name.
                 if (step.values.conversation == null){
                     step.values.conversation = []
-                } 
+                }
+                var chainSpecificList = new Map();
+                var chainGeneralList = new Map();
 
-                
+                if (step.values.chainSpecificData == null){
+                    step.values.chainSpecificData  = {};
+                    step.values.chainGeneralData = {};
+                    locationDataExists = false;
+                } else {
+                  chainSpecificList = step.values.chainSpecificData;
+                }
+
+
+
                 var dest_entity = step.options.entities[0].entity;
 
 
@@ -45,11 +59,11 @@ class GoToDestination  extends ComponentDialog {
                 currretLocationApi += apiKey
 
                 /***
-                Get Current Location API: 
+                Get Current Location API:
                 ============================
                 */
 
-                // var locationBody = request(currretLocationApi, function(err, response, body) {  
+                // var locationBody = request(currretLocationApi, function(err, response, body) {
                 //     console.log(body);
                 //     console.log("");
                 //     console.log(response);
@@ -70,41 +84,61 @@ class GoToDestination  extends ComponentDialog {
                 // location = geolocation.getCurrentPosition(onSuccess, onError);
                 // console.log(location);
 
-
-                
                 // async findNearbyLocation (destination) {
                 let NearbyMapsApi = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
                 NearbyMapsApi += "location=-33.8670522,151.1957362&radius=1500&&keyword= " + dest_entity +"&key="
-                NearbyMapsApi += apiKey 
+                NearbyMapsApi += apiKey
 
-                
+
                 /***
-                Get Nearby Location API: 
+                Get Nearby Location API:
                 ============================
                 */
 
-                // var responseBody = request(NearbyMapsApi, function(err, response, body) {  
+                // var responseBody = request(NearbyMapsApi, function(err, response, body) {
                 //     console.log(body);
                 //     return body;
                 // });
-
-
-                
-
-
                 var results = null;
                 var responseBody = null;
                 if (responseBody !== null) {
                     results = responseBody.results;
                 }
-                
+
                 var locationList = []
                 if (results !== null && typeof(results) !== "undefined") {
                     for (var i = 0; i < results.length; i++) {
                         console.log(results[i].name);
                     }
                 }
-                
+
+                // Key: String of the Name of the location
+                // Example: chainSpecificList["Starbucks"] = [Tresidder Memorial,	Stanford Shopping Center,	University Ave, Palo Alto	El Camino Real, Menlo Park]
+                // Value: List of possible places for each location (size is 4)
+                if (locationDataExists !== false) {
+                  var directory = path.resolve("./") + "/resource/food_list.xlsx";
+                  var obj = xlsx.parse(directory);
+
+
+                  for (var i=1; i < obj[0]["data"].length-1; i++) {
+                    var  locationList = [];
+                    var place = obj[0]["data"][i][0];
+                    for (var j = 0; j < obj[0]["data"][0].length; j++) {
+                        if (j === 0) {
+                          continue;
+                        }
+                        locationList.push(obj[0]["data"][i][j]);
+                    }
+                    chainSpecificList.set(place, locationList);
+                  }
+                  step.values.chainSpecificData = chainSpecificList;
+
+                }
+                // var path = document.location.pathname;
+
+
+
+
                 var promptOptions = null;
                 if (locationList.length == 0) {
                     promptOptions = {
@@ -121,13 +155,13 @@ class GoToDestination  extends ComponentDialog {
 
                 // var destination = this.findNearbyLocation(dest_entity);
 
-                
+
                 step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
             },
 
             async function (step) {
-                
+
                 step.values.activity = step.result.value;
                 step.values.conversation.push(step.result.value);
                 await step.context.sendActivity(`Great! We will head over to "${step.result.value}!"`);

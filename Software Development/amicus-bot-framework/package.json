@@ -24,11 +24,13 @@
         "botframework-config": "^4.2.0",
         "dotenv": "^6.2.0",
         "geolocation": "^0.2.0",
+        "node-xlsx": "^0.14.1",
         "pubnub": "^4.21.7",
         "readline-sync": "^1.4.9",
         "request": "^2.88.0",
         "restify": "^7.2.3",
-        "say": "^0.15.0"
+        "say": "^0.15.0",
+        "xlsx": "^0.14.3"
     },
     "devDependencies": {
         "eslint": "^5.8.0",
