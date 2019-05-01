@@ -33,21 +33,6 @@ class GoToDestination  extends ComponentDialog {
 
             async function (step) {
 
-                var locationDataExists = true;
-                // Clear the user information and prompt for the user's name.
-                if (step.values.conversation == null){
-                    step.values.conversation = []
-                }
-                var chainSpecificList = new Map();
-                var chainGeneralList = new Map();
-
-                if (step.values.chainSpecificData == null){
-                    step.values.chainSpecificData  = {};
-                    step.values.chainGeneralData = {};
-                    locationDataExists = false;
-                } else {
-                  chainSpecificList = step.values.chainSpecificData;
-                }
 
 
 
@@ -112,9 +97,29 @@ class GoToDestination  extends ComponentDialog {
                     }
                 }
 
+
+                // Check if location data exists
+                var locationDataExists = true;
+                // Clear the user information and prompt for the user's name.
+                if (step.values.conversation == null){
+                    step.values.conversation = []
+                }
+                var chainSpecificList = new Map();
+                var chainGeneralList = new Map();
+
+                if (step.values.chainSpecificData == null){
+                    step.values.chainSpecificData  = {};
+                    step.values.chainGeneralData = {};
+                    locationDataExists = false;
+                } else {
+                  chainSpecificList = step.values.chainSpecificData;
+                }
+
+
                 // Key: String of the Name of the location
                 // Example: chainSpecificList["Starbucks"] = [Tresidder Memorial,	Stanford Shopping Center,	University Ave, Palo Alto	El Camino Real, Menlo Park]
                 // Value: List of possible places for each location (size is 4)
+
                 if (locationDataExists !== false) {
                   var directory = path.resolve("./") + "/resource/food_list.xlsx";
                   var obj = xlsx.parse(directory);
