@@ -34,9 +34,10 @@ class GoToDestination  extends ComponentDialog {
             async function (step) {
 
 
-
-
-                var dest_entity = step.options.entities[0].entity;
+                var dest_entity = ""
+                if (step.options.entities !== null) {
+                  dest_entity = step.options.entities[0].entity;
+                }
 
 
 

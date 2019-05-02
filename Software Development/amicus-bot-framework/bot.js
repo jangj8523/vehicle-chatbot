@@ -80,10 +80,16 @@ class MyBot {
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
 
+        var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?']
+
         if (!user.firstTime) {
             user.firstTime = true;
-            user.userName = "Santi";
+            user.userName = "Vik"
+            user.noNeedGreetings = false;
             await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
+        } else if (user.noNeedGreetings == true) {
+            var response = clarifyResponse[Math.floor(Math.random() * clarifyResponse.length)];
+            await step.prompt('textPrompt', response);
         } else {
             await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
         }
@@ -101,7 +107,7 @@ class MyBot {
         let sentiment = intentResponse.sentimentAnalysis.score;
         let userEmotion = intentResponse.sentimentAnalysis.label;
         let entities = null;
-        if (intentResponse.entities != null) {
+        if (intentResponse.entities !== null) {
             entities = intentResponse.entities;
         }
         let query = intentResponse.query;
@@ -122,6 +128,18 @@ class MyBot {
         if (!user.conversation) {
             user.conversation = [];
         }
+
+        //Check how many times the user has given an incorrect input
+        if (!user.numInvalidQueries) {
+            user.numInvalidQueries = 0;
+        }
+        user.noNeedGreetings = false;
+        console.log(user.numInvalidQueries);
+
+
+
+
+
         var sentimentIntentList = await this.findIntent(step);
         let topScoreIntent = sentimentIntentList[0];
         let sentiment = sentimentIntentList[1];
@@ -129,7 +147,7 @@ class MyBot {
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
         this.emotion = sentimentIntentList[5];
-        console.log("EMOTION", this.emotion);
+        // console.log("EMOTION", this.emotion);
 
         /***
         Navigate to its corresponding intent.
@@ -141,7 +159,7 @@ class MyBot {
         user.query = query;
         user.conversation.push(step.result);
         //console.log(user.conversation);
-        console.log(user.conversation);
+        // console.log(user.conversation);
 
         // if (user.topScoreIntent.includes("RevisitItems")) {
         //     await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
@@ -149,6 +167,7 @@ class MyBot {
         // }
 
         if (query.includes("hungry") || query.includes("burger")){
+            user.numInvalidQueries = 0;
             if (this.emotion == 'neutral') {
                 return await step.beginDialog('goToBurger', user);
             } else if (this.emotion == 'negative') {
@@ -158,6 +177,7 @@ class MyBot {
             }
 
         } else if (query.includes("score")){
+            user.numInvalidQueries = 0;
             if (this.emotion == 'neutral') {
                 return await step.beginDialog('checkScore', user);
             } else if (this.emotion == 'negative') {
@@ -166,6 +186,7 @@ class MyBot {
                 return await step.beginDialog('checkScorePositive', user);
             }
         } else if (user.topScoreIntent.includes("WindowDoorItems")) {
+            user.numInvalidQueries = 0;
             if (this.emotion == 'neutral') {
                 return await step.beginDialog('controlCarFeature', user);
             } else {
@@ -178,12 +199,22 @@ class MyBot {
             } else {
                 return await step.beginDialog('goToDestination', user);
             }
-
         } else if (user.topScoreIntent.includes("ReserveRestaurantItem")) {
+            user.numInvalidQueries = 0;
             return await step.beginDialog('reserveRestaurant', user);
         } else {
-            await step.context.sendActivity("Sorry I do not understand what you mean. Please understand.");
-            return step.endDialog();
+            user.numInvalidQueries += 1;
+            if (user.numInvalidQueries < 2) {
+              await step.context.sendActivity("Sorry I do not understand what you mean.");
+              user.noNeedGreetings = true;
+              await this.userInfoAccessor.set(step.context, user);
+              await this.promptForChoice(step);
+              return step.endDialog();
+            } else {
+              await step.context.sendActivity("Sorry Vik. You are currently using the Demo mode of the Amicus product. We currently only support navigation to a chosen food destination. Try asking BMW/Amicus to take you to a destination of your choice!");
+              user.numInvalidQueries = 0;
+              return step.endDialog();
+            }
         }
     }
 
@@ -198,8 +229,8 @@ class MyBot {
 
             }
 
+            user.numInvalidQueries = step.result.numInvalidQueries;
             user.finishConvo = true;
-
             if (step.result.conversation != null) {
                 if (step.result.conversation.length != null) {
                     for (var i = 0; i < step.result.conversation.length; i++) {
@@ -223,7 +254,6 @@ class MyBot {
 
 
     async retrieveEmotions(response){
-      console.log("Retrieve");
       var negativeEmotion = ["No"];
       var positiveEmotion = ["Jump", "ThumbsUp", "Punch"];
       var neutralEmotion = ["Wave", "Yes"];
@@ -237,7 +267,6 @@ class MyBot {
       } else {
         emote = positiveEmotion[Math.floor(Math.random() * positiveEmotion.length)];
       }
-        console.log("emote: ", emote);
         return emote;
     }
 
@@ -335,7 +364,6 @@ class MyBot {
             const expression = await this.retrieveExpression(response);
             const setting = await this.modifyPitch();
 
-            console.log("problem");
 
             let inputMap = {};
             inputMap['title'] = "Amicus Message";
@@ -346,7 +374,7 @@ class MyBot {
             inputMap['emotion'] = emotion;
             inputMap['state'] = state;
             inputMap['expression'] = expression;
-            console.log(inputMap);
+            // console.log(inputMap);
 
             var payload = {
                 channel : "amicus_global",

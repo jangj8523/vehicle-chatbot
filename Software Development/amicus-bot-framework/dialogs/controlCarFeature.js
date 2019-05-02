@@ -6,7 +6,7 @@ const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, C
 
 class ControlCarFeature  extends ComponentDialog {
 
-    
+
 
     constructor(dialogId) {
         super(dialogId);
@@ -35,16 +35,21 @@ class ControlCarFeature  extends ComponentDialog {
                 // } else {
                 //     console.log(`user is neutral: ${step.options.sentiment}`);
                 // }
-                
+
                 // step.context.activity.text = 'There is a snake';
                 // step.context.activity.speak = 'There is a snake';
 
-
-                if (step.options.entities[0].entity.includes("open") || (step.options.query.includes("roll") && step.options.entities[0].entity.includes("down"))) {
+                var windowDoor = "";
+                if (step.options.entities !== null) {
+                  dest_entity = step.options.entities[0].entity;
+                } else if (step.options.entities[0].entity.includes("open") || (step.options.query.includes("roll") && step.options.entities[0].entity.includes("down"))) {
                     step.values.verb = "open";
+                    windowDoor = step.options.entities[1].entity;
                 } else {
                     step.values.verb = "close";
+                    windowDoor = step.options.entities[1].entity;
                 }
+
                 var windowDoor = step.options.entities[1].entity;
 
                 step.values.windowDoor = windowDoor;
@@ -64,9 +69,9 @@ class ControlCarFeature  extends ComponentDialog {
 
                 if (step.values.windowDoor === "door") {
                     return await step.next([]);
-                } 
+                }
 
-                var promptChoiceA = open; 
+                var promptChoiceA = open;
                 var promptChoiceB = half;
                 if (step.values.verb.includes("close")) {
                     promptChoiceA = close;
@@ -85,8 +90,8 @@ class ControlCarFeature  extends ComponentDialog {
                 if (step.values.windowDoor === "window") {
                     step.values.activity = step.result;
                     step.values.conversation.push(step.result);
-                } 
-                
+                }
+
                 var windowDoor = step.values.windowDoor;
 
                 var verb = step.values.verb;
@@ -104,7 +109,7 @@ class ControlCarFeature  extends ComponentDialog {
         ]));
     }
 
-    
+
 
 
 }
