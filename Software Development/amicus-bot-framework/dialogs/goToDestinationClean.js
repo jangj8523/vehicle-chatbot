@@ -16,10 +16,7 @@ const entityType = {
 
 class GoToDestinationClean  extends ComponentDialog {
 
-    async getMatchingPlaces(location) {
-      console.log("YES");
-      return null;
-    }
+
 
     constructor(dialogId) {
         super(dialogId);
@@ -42,7 +39,7 @@ class GoToDestinationClean  extends ComponentDialog {
                   return await step.prompt('textPrompt', `I have nothing to work with here. Give me more context.`);
                 }
 
-
+                // console.log(GoToDestinationClean.getMatchingPlaces("YESSSS"));
                 var entity = step.options.entities[0];
                 var entityName = step.options.entities[0].entity;
                 if (entity.type === entityType.CUISINE) {
@@ -160,9 +157,9 @@ class GoToDestinationClean  extends ComponentDialog {
                 if (dest_entity == null) {
                   for (var key of chainGeneralList.keys()) {
                     // console.log("chaingeneralList ", key)
-                    if (!chainGeneralList.hasOwnProperty(key)) {
-                      continue;
-                    }
+                    // if (!chainGeneralList.hasOwnProperty(key)) {
+                    //   continue;
+                    // }
                     if (entityName.includes(key)) {
                       response = [`Ok, we have some similar instance of "`, `". They might not be exact but here are some options that you might like!`]
                       dest_entity = key;
@@ -237,8 +234,9 @@ class GoToDestinationClean  extends ComponentDialog {
               var chainGeneralListLength = 0;
               step.values.chainSpecificData = null;
               step.values.chainGeneralList = null;
-              var entityName = step.result.value;
-              var dest_entity = step.result.value;
+
+              var entityName = step.result;
+              var dest_entity = step.result;
               //var chainGeneralList = new Map();
               console.log("SECOND ITERATION");
               if (step.values.chainSpecificData == null){
@@ -321,11 +319,11 @@ class GoToDestinationClean  extends ComponentDialog {
 
                 for (var key of chainSpecificList.keys()) {
                   // console.log("chainSpecificList ", key)
-                  if (!chainSpecificList.hasOwnProperty(key)|| key == null) {
-                    continue;
-                  }
-                  if (entityName.contains(key)) {
-                    response = [`Ok, there are more than one "`, `". Which one are you referring to?`]
+                  // if (!chainSpecificList.hasOwnProperty(key)|| key == null) {
+                  //   continue;
+                  // }
+                  if (entityName.includes(key)) {
+                    response = [`Ok, there are more than one "`, `". Which one are you referring to? The one in: `]
                     dest_entity = key;
                     locationList = chainSpecificList.get(key);
                   }
@@ -334,10 +332,10 @@ class GoToDestinationClean  extends ComponentDialog {
                 if (dest_entity == null) {
                   for (var key of chainGeneralList.keys()) {
                     // console.log("chaingeneralList ", key)
-                    if (!chainGeneralList.hasOwnProperty(key) || key == null) {
-                      continue;
-                    }
-                    if (entityName.contains(key)) {
+                    // if (!chainGeneralList.hasOwnProperty(key) || key == null) {
+                    //   continue;
+                    // }
+                    if (entityName.includes(key)) {
                       response = [`Ok, we have some similar instance of "`, `". They might not be exact but here are some options that you might like!`]
                       dest_entity = key;
                       locationList = chainGeneralList.get(key);
@@ -381,7 +379,7 @@ class GoToDestinationClean  extends ComponentDialog {
                 if (responseType == 1) {
                     promptOptions = {
                         prompt: response[0] + dest_entity + response[1],
-                        choices: [dest_entity + ': '+ locationList[0], dest_entity + ': '+ locationList[1], dest_entity + ': '+ locationList[2], dest_entity + ': '+ locationList[3]]
+                        choices: [locationList[0], locationList[1], locationList[2], locationList[3]]
                     };
                 } else if (responseType == 2) {
                     promptOptions = {
@@ -390,7 +388,7 @@ class GoToDestinationClean  extends ComponentDialog {
                     };
                 } else {
                   promptOptions = {
-                      prompt: response[0] + entityName + response[1] + suggestion + "s\"?",
+                      prompt: response[0] + entityName + response[1] + suggestion + "\"?",
                       choices: [locationList[0], locationList[1], locationList[2], locationList[3], "Others"]
                   };
                 }

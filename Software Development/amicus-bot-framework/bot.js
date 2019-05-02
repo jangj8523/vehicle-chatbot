@@ -91,7 +91,7 @@ class MyBot {
             user.nameExists = false;
             user.userName = "Vik"
             user.mustClarify = false;
-            await step.prompt('textPrompt', "Welcome! I am Amicus, your friend. Whom am I speaking to?");
+            await step.prompt('textPrompt', "Welcome! I am Amicus, your friend. To get started input your name! ");
         } else if (user.mustClarify == true) {
             var response = clarifyResponse[Math.floor(Math.random() * clarifyResponse.length)];
             await step.prompt('textPrompt', response);
