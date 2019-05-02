@@ -237,7 +237,7 @@ class MyBot {
 
     async saveResult(step) {
         // Process the return value from the child dialog.
-        var closingRemark = ["Let me know if you need anything else, ", "Just let me know if there’s anything else I can help with, ", "If you need something, call me again. See you "];
+        var closingRemark = ["Let me know if you need anything else, ", "Just let me know if there’s anything else I can help with, ", "If you need something, call me with \"Hey\" again. See you "];
         var index = Math.floor(Math.random() * (closingRemark.length-1));
         var response = closingRemark[index]
 

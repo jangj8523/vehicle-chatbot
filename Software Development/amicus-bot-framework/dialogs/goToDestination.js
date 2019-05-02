@@ -142,9 +142,6 @@ class GoToDestination  extends ComponentDialog {
                 }
                 // var path = document.location.pathname;
 
-
-
-
                 var promptOptions = null;
                 if (locationList.length == 0) {
                     promptOptions = {

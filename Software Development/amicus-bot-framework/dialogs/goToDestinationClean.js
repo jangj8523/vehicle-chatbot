@@ -137,7 +137,8 @@ class GoToDestinationClean  extends ComponentDialog {
 
                 //Find similar sounding locations
                 var dest_entity = null;
-                var response = [`Sorry, but I couldn't find a single instance of "`, `". But maybe I can recommend you some places to go? How about some "`];
+
+                var response = ["Umm, interesting. I could not find \"", "\". But here are some similar recommendations! Where would you like to go? You can just say the option number"];
                 var responseType = 1;
                 var locationList = [];
                 var suggestion = null;
@@ -148,7 +149,7 @@ class GoToDestinationClean  extends ComponentDialog {
                   //   continue;
                   // }
                   if (entityName.includes(key)) {
-                    response = [`Ok, there are more than one "`, `". Which one are you referring to?`]
+                    response = [`Ok, there are more than one "`, `". Which one are you referring to? You can just say the option number`]
                     dest_entity = key;
                     locationList = chainSpecificList.get(key);
                   }
@@ -161,7 +162,7 @@ class GoToDestinationClean  extends ComponentDialog {
                     //   continue;
                     // }
                     if (entityName.includes(key)) {
-                      response = [`Ok, we have some similar instance of "`, `". They might not be exact but here are some options that you might like!`]
+                      response = [`Ok, we have some similar instance of "`, `". They might not be exact but here are some options that you might like! You can just say the option number`]
                       dest_entity = key;
                       locationList = chainGeneralList.get(key);
                       responseType = 2;
@@ -198,12 +199,12 @@ class GoToDestinationClean  extends ComponentDialog {
                 if (responseType == 1) {
                     promptOptions = {
                         prompt: response[0] + dest_entity + response[1],
-                        choices: [dest_entity + ': '+ locationList[0], dest_entity + ': '+ locationList[1], dest_entity + ': '+ locationList[2], dest_entity + ': '+ locationList[3]]
+                        choices: locationList,
                     };
                 } else if (responseType == 2) {
                     promptOptions = {
                         prompt: response[0] + dest_entity + response[1],
-                        choices: [dest_entity + ': '+ locationList[0], dest_entity + ': '+ locationList[1], dest_entity + ': '+ locationList[2], dest_entity + ': '+ locationList[3]]
+                        choices: locationList
                     };
                 } else {
                   promptOptions = {
@@ -312,7 +313,7 @@ class GoToDestinationClean  extends ComponentDialog {
 
                 //Find similar sounding locations
                 var dest_entity = null;
-                var response = [`Sorry, but I couldn't find a single instance of "`, `". But maybe I can recommend you some places to go? How about some "`];
+                var response = [`Sorry, but I couldn't find a single instance of "`, `". But maybe I can recommend you some places to go? You can just say the option number"`];
                 var responseType = 1;
                 var locationList = [];
                 var suggestion = null;
@@ -323,7 +324,7 @@ class GoToDestinationClean  extends ComponentDialog {
                   //   continue;
                   // }
                   if (entityName.includes(key)) {
-                    response = [`Ok, there are more than one "`, `". Which one are you referring to? The one in: `]
+                    response = [`Ok, there are more than one "`, `". Which one are you referring to? You can just say the option number`]
                     dest_entity = key;
                     locationList = chainSpecificList.get(key);
                   }
@@ -336,7 +337,7 @@ class GoToDestinationClean  extends ComponentDialog {
                     //   continue;
                     // }
                     if (entityName.includes(key)) {
-                      response = [`Ok, we have some similar instance of "`, `". They might not be exact but here are some options that you might like!`]
+                      response = [`Ok, we have some similar instance of "`, `". They might not be exact but here are some options that you might like! You can just say the option number`]
                       dest_entity = key;
                       locationList = chainGeneralList.get(key);
                       responseType = 2;
@@ -384,7 +385,7 @@ class GoToDestinationClean  extends ComponentDialog {
                 } else if (responseType == 2) {
                     promptOptions = {
                         prompt: response[0] + dest_entity + response[1],
-                        choices: [dest_entity + ': '+ locationList[0], dest_entity + ': '+ locationList[1], dest_entity + ': '+ locationList[2], dest_entity + ': '+ locationList[3]]
+                        choices: [locationList[0], locationList[1], locationList[2], locationList[3]]
                     };
                 } else {
                   promptOptions = {

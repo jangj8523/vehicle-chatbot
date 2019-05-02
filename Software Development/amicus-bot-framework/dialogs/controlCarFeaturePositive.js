@@ -6,7 +6,7 @@ const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, C
 
 class ControlCarFeaturePositive  extends ComponentDialog {
 
-    
+
 
     constructor(dialogId) {
         super(dialogId);
@@ -35,7 +35,7 @@ class ControlCarFeaturePositive  extends ComponentDialog {
                 // } else {
                 //     console.log(`user is neutral: ${step.options.sentiment}`);
                 // }
-                
+
                 // step.context.activity.text = 'There is a snake';
                 // step.context.activity.speak = 'There is a snake';
 
@@ -64,9 +64,9 @@ class ControlCarFeaturePositive  extends ComponentDialog {
 
                 if (step.values.windowDoor === "door") {
                     return await step.next([]);
-                } 
+                }
 
-                var promptChoiceA = open; 
+                var promptChoiceA = open;
                 var promptChoiceB = half;
                 if (step.values.verb.includes("close")) {
                     promptChoiceA = close;
@@ -85,13 +85,13 @@ class ControlCarFeaturePositive  extends ComponentDialog {
                 if (step.values.windowDoor === "window") {
                     step.values.activity = step.result;
                     step.values.conversation.push(step.result);
-                } 
-                
+                }
+
                 var windowDoor = step.values.windowDoor;
 
 
                 await step.context.sendActivity(`Great! ${windowDoor} shut`);
-                
+
 
                 // End the dialog, returning the user info.
                 return await step.endDialog(step.values);
@@ -100,7 +100,7 @@ class ControlCarFeaturePositive  extends ComponentDialog {
         ]));
     }
 
-    
+
 
 
 }
