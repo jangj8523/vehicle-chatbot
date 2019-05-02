@@ -12,8 +12,11 @@ const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { ControlCarFeaturePositive } = require("./dialogs/controlCarFeaturePositive.js");
 
 const { ChooseMusic } = require("./dialogs/chooseMusic.js");
+
 const { GoToDestination } = require("./dialogs/goToDestination.js");
 const { GoToDestinationNegative } = require("./dialogs/goToDestinationNegative.js");
+const { GoToDestinationClean } = require("./dialogs/goToDestinationClean.js");
+
 const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
 
 
@@ -61,6 +64,7 @@ class MyBot {
         .add(new ChooseMusic('chooseMusic'))
         .add(new ConversationDialog('conversationDialog'))
         .add(new GoToDestination('goToDestination'))
+        .add(new GoToDestinationClean('goToDestinationClean'))
         .add(new ReserveRestaurant('reserveRestaurant'))
         .add(new GoToDestinationNegative('goToDestinationNegative'))
         .add(new ControlCarFeaturePositive('controlCarFeaturePositive'))
@@ -80,13 +84,14 @@ class MyBot {
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
 
-        if (!user.firstTime) {
+        await step.prompt('textPrompt', 'Hi! how can I help you?');
+        /*if (!user.firstTime) {
             user.firstTime = true;
             user.userName = "Santi";
             await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
         } else {
             await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
-        }
+        }*/
 
     }
 
@@ -129,7 +134,7 @@ class MyBot {
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
         this.emotion = sentimentIntentList[5];
-        console.log("EMOTION", this.emotion);
+        //console.log("EMOTION", this.emotion);
 
         /***
         Navigate to its corresponding intent.
@@ -141,12 +146,20 @@ class MyBot {
         user.query = query;
         user.conversation.push(step.result);
         //console.log(user.conversation);
-        console.log(user.conversation);
+        //console.log(user.conversation);
 
         // if (user.topScoreIntent.includes("RevisitItems")) {
         //     await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
-
         // }
+
+        console.log("topScoring");
+        console.log(user.topScoreIntent);
+
+        //GetDestinationItem
+        if (user.topScoreIntent.includes("GetDestinationItem")) {
+          console.log("topScoringIntent (launch)");
+          return await step.beginDialog('goToDestinationClean', user);
+        }
 
         if (query.includes("hungry") || query.includes("burger")){
             if (this.emotion == 'neutral') {
@@ -223,7 +236,7 @@ class MyBot {
 
 
     async retrieveEmotions(response){
-      console.log("Retrieve");
+      //console.log("Retrieve");
       var negativeEmotion = ["No"];
       var positiveEmotion = ["Jump", "ThumbsUp", "Punch"];
       var neutralEmotion = ["Wave", "Yes"];
@@ -237,7 +250,7 @@ class MyBot {
       } else {
         emote = positiveEmotion[Math.floor(Math.random() * positiveEmotion.length)];
       }
-        console.log("emote: ", emote);
+        //console.log("emote: ", emote);
         return emote;
     }
 
@@ -320,7 +333,7 @@ class MyBot {
             var response = activities[0].text; //Welcome back, Jaewoo
             if (activities[0]['suggestedActions'] !== null) {
               if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
-                console.log('debug\n');
+                  //console.log('debug\n');
                   var optionList = activities[0].suggestedActions.actions;
                   for (var i = 0; i < optionList.length; i++) {
                       response += "\n"
@@ -335,7 +348,7 @@ class MyBot {
             const expression = await this.retrieveExpression(response);
             const setting = await this.modifyPitch();
 
-            console.log("problem");
+            //console.log("problem");
 
             let inputMap = {};
             inputMap['title'] = "Amicus Message";
@@ -346,7 +359,7 @@ class MyBot {
             inputMap['emotion'] = emotion;
             inputMap['state'] = state;
             inputMap['expression'] = expression;
-            console.log(inputMap);
+            //console.log(inputMap);
 
             var payload = {
                 channel : "amicus_global",
