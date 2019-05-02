@@ -146,7 +146,7 @@ pubnub.addListener({
       }
   },
   message: function(msg) {
-      console.log(msg);
+    //  console.log(msg);
       //console.log(msg.message.title);
       //console.log(msg.message.description);
   },

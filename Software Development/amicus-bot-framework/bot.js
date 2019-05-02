@@ -12,8 +12,11 @@ const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { ControlCarFeaturePositive } = require("./dialogs/controlCarFeaturePositive.js");
 
 const { ChooseMusic } = require("./dialogs/chooseMusic.js");
+
 const { GoToDestination } = require("./dialogs/goToDestination.js");
 const { GoToDestinationNegative } = require("./dialogs/goToDestinationNegative.js");
+const { GoToDestinationClean } = require("./dialogs/goToDestinationClean.js");
+const { RequestNameDialog } = require("./dialogs/requestNameDialog.js");
 const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
 
 
@@ -61,10 +64,12 @@ class MyBot {
         .add(new ChooseMusic('chooseMusic'))
         .add(new ConversationDialog('conversationDialog'))
         .add(new GoToDestination('goToDestination'))
+        .add(new GoToDestinationClean('goToDestinationClean'))
         .add(new ReserveRestaurant('reserveRestaurant'))
         .add(new GoToDestinationNegative('goToDestinationNegative'))
         .add(new ControlCarFeaturePositive('controlCarFeaturePositive'))
         .add(new GoToBurger('goToBurger'))
+        .add(new RequestNameDialog('requestNameDialog'))
         .add(new GoToBurgerPositive('goToBurgerPositive'))
         .add(new GoToBurgerNegative('goToBurgerNegative'))
         .add(new CheckScorePositive('checkScorePositive'))
@@ -80,14 +85,14 @@ class MyBot {
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
 
-        var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?']
+        var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?'];
 
-        if (!user.firstTime) {
-            user.firstTime = true;
+        if (!user.nameExists) {
+            user.nameExists = false;
             user.userName = "Vik"
-            user.noNeedGreetings = false;
-            await step.prompt('textPrompt', `Welcome back, ${user.userName}`);
-        } else if (user.noNeedGreetings == true) {
+            user.mustClarify = false;
+            await step.prompt('textPrompt', "Welcome! I am Amicus, your friend. Whom am I speaking to?");
+        } else if (user.mustClarify == true) {
             var response = clarifyResponse[Math.floor(Math.random() * clarifyResponse.length)];
             await step.prompt('textPrompt', response);
         } else {
@@ -133,10 +138,12 @@ class MyBot {
         if (!user.numInvalidQueries) {
             user.numInvalidQueries = 0;
         }
-        user.noNeedGreetings = false;
+        user.mustClarify = false;
         console.log(user.numInvalidQueries);
 
-
+        if (user.nameExists == false) {
+          return await step.beginDialog('requestNameDialog', user);
+        }
 
 
 
@@ -147,7 +154,7 @@ class MyBot {
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
         this.emotion = sentimentIntentList[5];
-        // console.log("EMOTION", this.emotion);
+        //console.log("EMOTION", this.emotion);
 
         /***
         Navigate to its corresponding intent.
@@ -163,8 +170,17 @@ class MyBot {
 
         // if (user.topScoreIntent.includes("RevisitItems")) {
         //     await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
-
         // }
+
+        console.log("topScoring");
+        console.log(user.topScoreIntent);
+
+
+        //GetDestinationItem
+        if (user.topScoreIntent.includes("GoToDestinationClean")) {
+          console.log("topScoringIntent (launch)");
+          return await step.beginDialog('goToDestinationClean', user);
+        }
 
         if (query.includes("hungry") || query.includes("burger")){
             user.numInvalidQueries = 0;
@@ -206,12 +222,12 @@ class MyBot {
             user.numInvalidQueries += 1;
             if (user.numInvalidQueries < 2) {
               await step.context.sendActivity("Sorry I do not understand what you mean.");
-              user.noNeedGreetings = true;
+              user.mustClarify = true;
               await this.userInfoAccessor.set(step.context, user);
               await this.promptForChoice(step);
               return step.endDialog();
             } else {
-              await step.context.sendActivity("Sorry Vik. You are currently using the Demo mode of the Amicus product. We currently only support navigation to a chosen food destination. Try asking BMW/Amicus to take you to a destination of your choice!");
+              await step.context.sendActivity("Sorry. You are currently using the Demo mode of the Amicus product. We currently only support navigation to a chosen food destination. Try asking BMW/Amicus to take you to a destination of your choice!");
               user.numInvalidQueries = 0;
               return step.endDialog();
             }
@@ -221,12 +237,16 @@ class MyBot {
 
     async saveResult(step) {
         // Process the return value from the child dialog.
+        var closingRemark = ["Let me know if you need anything else, ", "Just let me know if there’s anything else I can help with, ", "If you need something, call me again. See you "];
+        var index = Math.floor(Math.random() * (closingRemark.length-1));
+        var response = closingRemark[index]
+
         if (step.result) {
             const user = await this.userInfoAccessor.get(step.context);
             if (step.result.userName) {
                 // Store the results of the reserve-table dialog.
                 user.userName = step.result.userName;
-
+                user.nameExists = true;
             }
 
             user.numInvalidQueries = step.result.numInvalidQueries;
@@ -238,12 +258,19 @@ class MyBot {
                     }
                 }
             }
+
+            if (step.values.chainGeneralList != null) {
+                user.chainGeneralList = step.values.chainGeneralList;
+                user.chainSpecificList = step.values.chainSpecificList;
+            }
+
+
             if(this.emotion == 'neutral') {
-                await step.prompt('textPrompt', `Let me know if you need anything else, ${user.userName}`);
+                await step.prompt('textPrompt', response +  user.userName);
             } else if (this.emotion == 'negative') {
-                await step.prompt('textPrompt', `Just let me know if there’s anything else I can help with, ${user.userName}`)
+                await step.prompt('textPrompt', response +  user.userName)
             } else {
-                await step.prompt('textPrompt', `Just let me know if there’s anything else I can help with, ${user.userName}.`)
+                await step.prompt('textPrompt', response +  user.userName)
             }
             //await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}`)
             await this.userInfoAccessor.set(step.context, user);
@@ -267,6 +294,7 @@ class MyBot {
       } else {
         emote = positiveEmotion[Math.floor(Math.random() * positiveEmotion.length)];
       }
+        //console.log("emote: ", emote);
         return emote;
     }
 
@@ -349,7 +377,7 @@ class MyBot {
             var response = activities[0].text; //Welcome back, Jaewoo
             if (activities[0]['suggestedActions'] !== null) {
               if (activities[0].suggestedActions !== null && typeof(activities[0].suggestedActions) !== "undefined") {
-                console.log('debug\n');
+                  //console.log('debug\n');
                   var optionList = activities[0].suggestedActions.actions;
                   for (var i = 0; i < optionList.length; i++) {
                       response += "\n"
@@ -364,6 +392,7 @@ class MyBot {
             const expression = await this.retrieveExpression(response);
             const setting = await this.modifyPitch();
 
+            //console.log("problem");
 
             let inputMap = {};
             inputMap['title'] = "Amicus Message";
