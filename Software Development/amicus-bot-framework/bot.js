@@ -9,7 +9,7 @@ const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
 
 
-const { GoToDestinationClean } = require("./dialogs/goToDestinationClean.js");
+const { goToDestinationDialog } = require("./dialogs/goToDestinationDialog.js");
 const { RequestNameDialog } = require("./dialogs/requestNameDialog.js");
 
 
@@ -131,21 +131,15 @@ class MyBot {
         user.entities = entities;
         user.query = query;
         user.conversation.push(step.result);
-        //console.log(user.conversation);
-        // console.log(user.conversation);
-
-        // if (user.topScoreIntent.includes("RevisitItems")) {
-        //     await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
-        // }
 
         console.log("topScoring");
         console.log(user.topScoreIntent);
 
 
         //GetDestinationItem
-        if (user.topScoreIntent.includes("GoToDestinationClean")) {
+        if (user.topScoreIntent.includes("goToDestinationDialog")) {
           console.log("topScoringIntent (launch)");
-          return await step.beginDialog('goToDestinationClean', user);
+          return await step.beginDialog('goToDestinationDialog', user);
         }
 
     }
@@ -164,22 +158,6 @@ class MyBot {
                 user.userName = step.result.userName;
                 user.nameExists = true;
             }
-
-            user.numInvalidQueries = step.result.numInvalidQueries;
-            user.finishConvo = true;
-            if (step.result.conversation != null) {
-                if (step.result.conversation.length != null) {
-                    for (var i = 0; i < step.result.conversation.length; i++) {
-                        user.conversation.push(step.result.conversation[i]);
-                    }
-                }
-            }
-
-            if (step.values.chainGeneralList != null) {
-                user.chainGeneralList = step.values.chainGeneralList;
-                user.chainSpecificList = step.values.chainSpecificList;
-            }
-
 
             if(this.emotion == 'neutral') {
                 await step.prompt('textPrompt', response +  user.userName);

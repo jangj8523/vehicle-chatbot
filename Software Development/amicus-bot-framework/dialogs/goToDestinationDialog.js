@@ -20,7 +20,7 @@ const entityType = {
 const PREFIX = 0;
 const SUFFIX = 1;
 
-class GoToDestinationClean  extends ComponentDialog {
+class goToDestinationDialog  extends ComponentDialog {
     constructor(dialogId) {
         super(dialogId);
 
@@ -103,4 +103,4 @@ class GoToDestinationClean  extends ComponentDialog {
 
 }
 
-module.exports.GoToDestinationClean = GoToDestinationClean;
+module.exports.goToDestinationDialog = goToDestinationDialog;
