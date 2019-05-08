@@ -1,0 +1,1332 @@
+[
+  {
+    "type": "conversationUpdate",
+    "membersAdded": [
+      {
+        "id": "1",
+        "name": "Bot"
+      }
+    ],
+    "channelId": "emulator",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "2399f4d1-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:43:51-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "timestamp": "2019-05-02T23:43:51.453Z",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User"
+    },
+    "locale": "",
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "conversationUpdate",
+    "membersAdded": [
+      {
+        "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+        "name": "User"
+      }
+    ],
+    "channelId": "emulator",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "239a1be0-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:43:51-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "timestamp": "2019-05-02T23:43:51.454Z",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User"
+    },
+    "locale": "",
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "text": "Hey Amicus, what's the weather like today?",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568406555770.kqn12wghydh"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:44:15.580Z",
+    "entities": [
+      {
+        "requiresBotState": true,
+        "supportsListening": true,
+        "supportsTts": true,
+        "type": "ClientCapabilities"
+      }
+    ],
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "31fb71c0-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:44:15-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Welcome! I am Amicus, your friend. To get started input your name! ",
+    "inputHint": "expectingInput",
+    "replyToId": "31fb71c0-6d34-11e9-a4be-dddb1331d87e",
+    "id": "31fd94a0-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:44:15-07:00",
+    "timestamp": "2019-05-02T23:44:15.594Z",
+    "locale": ""
+  },
+  {
+    "text": "Tara",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568407176620.wr6w5gtiew8"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:45:17.665Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "56fd0420-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:45:17-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Ok, Tara! I want to be more exact with your name. Would you mind clarifying please?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "Tara Padma Iyer",
+          "value": "Tara Padma Iyer"
+        },
+        {
+          "type": "imBack",
+          "title": "Benjamin Hannel",
+          "value": "Benjamin Hannel"
+        },
+        {
+          "type": "imBack",
+          "title": "Vikram Pattabi",
+          "value": "Vikram Pattabi"
+        },
+        {
+          "type": "imBack",
+          "title": "Andrew Zhang",
+          "value": "Andrew Zhang"
+        },
+        {
+          "type": "imBack",
+          "title": "Lily Liu",
+          "value": "Lily Liu"
+        }
+      ]
+    },
+    "replyToId": "56fd0420-6d34-11e9-a4be-dddb1331d87e",
+    "id": "56ff2700-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:45:17-07:00",
+    "timestamp": "2019-05-02T23:45:17.680Z",
+    "locale": ""
+  },
+  {
+    "text": "Tara Padma Iyer",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568407297090.zvx4rqdz23"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:45:29.716Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "5e2bb340-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:45:29-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Great! Welcome \"Tara!\"",
+    "inputHint": "acceptingInput",
+    "replyToId": "5e2bb340-6d34-11e9-a4be-dddb1331d87e",
+    "id": "5e302010-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:45:29-07:00",
+    "timestamp": "2019-05-02T23:45:29.745Z",
+    "locale": ""
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Just let me know if there’s anything else I can help with, Tara",
+    "inputHint": "expectingInput",
+    "replyToId": "5e2bb340-6d34-11e9-a4be-dddb1331d87e",
+    "id": "5e31f4d0-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:45:29-07:00",
+    "timestamp": "2019-05-02T23:45:29.757Z",
+    "locale": ""
+  },
+  {
+    "text": "ok! I'm hungry, can you give me some restaurant suggestions nearby?",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568408118910.y2uw8r29b1e"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:46:51.895Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "8f273870-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:46:51-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Yes Tara, how can I help?",
+    "inputHint": "expectingInput",
+    "replyToId": "8f273870-6d34-11e9-a4be-dddb1331d87e",
+    "id": "8f295b50-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:46:51-07:00",
+    "timestamp": "2019-05-02T23:46:51.909Z",
+    "locale": ""
+  },
+  {
+    "text": "Tell me how to get to the nearest restaurant",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568408258890.6r51fq332v5"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:47:05.893Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "977f2550-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:47:05-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Umm, interesting. I could not find \"restaurant\". But here are some similar recommendations! Where would you like to go? You can just say the option numberchineses\"?\n\n   1. P.F. Changs: Palo Alto\n   2. Jin-Jing: Palo Alto\n   3. Da Sichuan Bistro: Palo Alto\n   4. Tai Pan: Palo Alto\n   5. Others",
+    "inputHint": "expectingInput",
+    "replyToId": "977f2550-6d34-11e9-a4be-dddb1331d87e",
+    "id": "97ccf730-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:47:06-07:00",
+    "timestamp": "2019-05-02T23:47:06.403Z",
+    "locale": ""
+  },
+  {
+    "text": "Others",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568409991800.0ab341wfd40c"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:49:59.197Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "fecb3cd0-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:49:59-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Ok, would you mind telling me the place of where you would like to go? Just the place name please!",
+    "inputHint": "expectingInput",
+    "replyToId": "fecb3cd0-6d34-11e9-a4be-dddb1331d87e",
+    "id": "fecd1190-6d34-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:49:59-07:00",
+    "timestamp": "2019-05-02T23:49:59.209Z",
+    "locale": ""
+  },
+  {
+    "text": "Tofu House",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568410104200.hff2q8kg6jd"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:50:10.429Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "057d1ad0-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:10-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Sorry, but I couldn't find a single instance of \"Tofu House\". But maybe I can recommend you some places to go? You can just say the option number\"indian\"?\n\n   1. Zareen's: Palo Alto\n   2. Darbar: Palo Alto\n   3. Shiva's: Mountain View\n   4. Sakoon: Mountain View\n   5. Others",
+    "inputHint": "expectingInput",
+    "replyToId": "057d1ad0-6d35-11e9-a4be-dddb1331d87e",
+    "id": "058dbca0-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:10-07:00",
+    "timestamp": "2019-05-02T23:50:10.538Z",
+    "locale": ""
+  },
+  {
+    "text": "Others",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568410397080.36fyraz82l8"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:50:39.730Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "16f41520-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:39-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Sorry I couldn't find the right place. Maybe you should ask for Google's help! I will try to be smarter to help you.",
+    "inputHint": "expectingInput",
+    "replyToId": "16f41520-6d35-11e9-a4be-dddb1331d87e",
+    "id": "16f5e9e0-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:39-07:00",
+    "timestamp": "2019-05-02T23:50:39.742Z",
+    "locale": ""
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Let me know if you need anything else, Tara",
+    "inputHint": "expectingInput",
+    "replyToId": "16f41520-6d35-11e9-a4be-dddb1331d87e",
+    "id": "16f79790-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:39-07:00",
+    "timestamp": "2019-05-02T23:50:39.753Z",
+    "locale": ""
+  },
+  {
+    "text": "Take me to Zareen's: Palo Alto",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568410554200.zq9pposgtkj"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:50:55.431Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "204fdd70-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:55-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Yes Tara, how can I help?",
+    "inputHint": "expectingInput",
+    "replyToId": "204fdd70-6d35-11e9-a4be-dddb1331d87e",
+    "id": "20518b20-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:50:55-07:00",
+    "timestamp": "2019-05-02T23:50:55.442Z",
+    "locale": ""
+  },
+  {
+    "text": "Take me to Zareen's",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568411327070.se4iyq4h8l"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:52:12.724Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "4e61d740-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:52:12-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Umm, interesting. I could not find \"zareen\". But here are some similar recommendations! Where would you like to go? You can just say the option numberbreakfasts\"?\n\n   1. Philz: Palo Alto\n   2. Café Venetia: Palo Alto\n   3. Coupa Café Y2E2: Stanford\n   4. Café Borrone: Menlo Park\n   5. Others",
+    "inputHint": "expectingInput",
+    "replyToId": "4e61d740-6d35-11e9-a4be-dddb1331d87e",
+    "id": "4e97db60-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:52:13-07:00",
+    "timestamp": "2019-05-02T23:52:13.078Z",
+    "locale": ""
+  },
+  {
+    "text": "Philz: Palo Alto",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568411827750.t4wq23z8wsr"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:53:02.801Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "6c3afc10-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:53:02-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Great! We will head over to \"Philz: Palo Alto!\"",
+    "inputHint": "acceptingInput",
+    "replyToId": "6c3afc10-6d35-11e9-a4be-dddb1331d87e",
+    "id": "6c3ca9c0-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:53:02-07:00",
+    "timestamp": "2019-05-02T23:53:02.812Z",
+    "locale": ""
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Let me know if you need anything else, Tara",
+    "inputHint": "expectingInput",
+    "replyToId": "6c3afc10-6d35-11e9-a4be-dddb1331d87e",
+    "id": "6c3e7e80-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:53:02-07:00",
+    "timestamp": "2019-05-02T23:53:02.824Z",
+    "locale": ""
+  },
+  {
+    "text": "Boston's great we'll head over to okay fantastic so now I have to be like this well after a little bit",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568412022730.jfz6myx7w4"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:53:22.291Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "77d8ec30-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:53:22-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Yes Tara, how can I help?",
+    "inputHint": "expectingInput",
+    "replyToId": "77d8ec30-6d35-11e9-a4be-dddb1331d87e",
+    "id": "77dac0f0-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:53:22-07:00",
+    "timestamp": "2019-05-02T23:53:22.303Z",
+    "locale": ""
+  },
+  {
+    "text": "I'm hungry",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568414134730.eam0r0vvidu"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:56:53.488Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "f5bb0700-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:56:53-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Oh no, I will find some burger restaurants for you. Here are a few: ",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "Ruff’s Burger",
+          "value": "Ruff’s Burger"
+        },
+        {
+          "type": "imBack",
+          "title": "Pinakothekan",
+          "value": "Pinakothekan"
+        },
+        {
+          "type": "imBack",
+          "title": "Hamburgerei",
+          "value": "Hamburgerei"
+        },
+        {
+          "type": "imBack",
+          "title": "Burger House",
+          "value": "Burger House"
+        }
+      ]
+    },
+    "replyToId": "f5bb0700-6d35-11e9-a4be-dddb1331d87e",
+    "id": "f60cf790-6d35-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:56:54-07:00",
+    "timestamp": "2019-05-02T23:56:54.025Z",
+    "locale": ""
+  },
+  {
+    "text": "Let's go to Hamburgerei",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568414315210.gbz3qv9kd6j"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:57:11.541Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "007db250-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:57:11-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "On the way to Hamburgerei. We will be there in just 19 minutes.",
+    "inputHint": "acceptingInput",
+    "replyToId": "007db250-6d36-11e9-a4be-dddb1331d87e",
+    "id": "007fd530-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:57:11-07:00",
+    "timestamp": "2019-05-02T23:57:11.555Z",
+    "locale": ""
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Just let me know if there’s anything else I can help with, Tara",
+    "inputHint": "expectingInput",
+    "replyToId": "007db250-6d36-11e9-a4be-dddb1331d87e",
+    "id": "0081a9f0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:57:11-07:00",
+    "timestamp": "2019-05-02T23:57:11.567Z",
+    "locale": ""
+  },
+  {
+    "text": "Hmmm - now I'm thirsty",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568414888590.tirldp223o"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:58:08.876Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "22aa52c0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:08-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Yes Tara, how can I help?",
+    "inputHint": "expectingInput",
+    "replyToId": "22aa52c0-6d36-11e9-a4be-dddb1331d87e",
+    "id": "22ac2780-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:08-07:00",
+    "timestamp": "2019-05-02T23:58:08.888Z",
+    "locale": ""
+  },
+  {
+    "text": "choices voices is very str",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568415117670.5t4cryz88w8"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:58:31.805Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "305502d0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:31-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "I have nothing to work with here. Give me more context.",
+    "inputHint": "expectingInput",
+    "replyToId": "305502d0-6d36-11e9-a4be-dddb1331d87e",
+    "id": "309eb600-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:32-07:00",
+    "timestamp": "2019-05-02T23:58:32.288Z",
+    "locale": ""
+  },
+  {
+    "text": "Sorry!",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568415224370.6aenx2l80e4"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-02T23:58:42.466Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "36afc020-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:42-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Great! We will head over to \"undefined!\"",
+    "inputHint": "acceptingInput",
+    "replyToId": "36afc020-6d36-11e9-a4be-dddb1331d87e",
+    "id": "36b0d190-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:42-07:00",
+    "timestamp": "2019-05-02T23:58:42.473Z",
+    "locale": ""
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Just let me know if there’s anything else I can help with, Tara",
+    "inputHint": "expectingInput",
+    "replyToId": "36afc020-6d36-11e9-a4be-dddb1331d87e",
+    "id": "36b25830-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T16:58:42-07:00",
+    "timestamp": "2019-05-02T23:58:42.483Z",
+    "locale": ""
+  },
+  {
+    "text": "I'm thirsty",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568416006010.vwrqocu22b"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-03T00:00:00.646Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "65491260-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:00:00-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Yes Tara, how can I help?",
+    "inputHint": "expectingInput",
+    "replyToId": "65491260-6d36-11e9-a4be-dddb1331d87e",
+    "id": "6549fcc0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:00:00-07:00",
+    "timestamp": "2019-05-03T00:00:00.652Z",
+    "locale": ""
+  },
+  {
+    "text": "okay so I think I should have thought",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568416247560.u2y9nz6wc4b"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-03T00:00:24.799Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "73ae86f0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:00:24-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "I have nothing to work with here. Give me more context.",
+    "inputHint": "expectingInput",
+    "replyToId": "73ae86f0-6d36-11e9-a4be-dddb1331d87e",
+    "id": "73ebb700-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:00:25-07:00",
+    "timestamp": "2019-05-03T00:00:25.200Z",
+    "locale": ""
+  },
+  {
+    "text": "O",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568416755980.y2ynjall1xs"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-03T00:01:15.647Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "91fd50f0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:01:15-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Great! We will head over to \"undefined!\"",
+    "inputHint": "acceptingInput",
+    "replyToId": "91fd50f0-6d36-11e9-a4be-dddb1331d87e",
+    "id": "91fefea0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:01:15-07:00",
+    "timestamp": "2019-05-03T00:01:15.658Z",
+    "locale": ""
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Let me know if you need anything else, Tara",
+    "inputHint": "expectingInput",
+    "replyToId": "91fd50f0-6d36-11e9-a4be-dddb1331d87e",
+    "id": "9200ac50-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:01:15-07:00",
+    "timestamp": "2019-05-03T00:01:15.669Z",
+    "locale": ""
+  },
+  {
+    "text": "Can we go to Jamba Juice?",
+    "textFormat": "plain",
+    "type": "message",
+    "channelData": {
+      "clientActivityID": "15568417315190.bfvyj9o7pfc"
+    },
+    "channelId": "emulator",
+    "from": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2019-05-03T00:02:11.548Z",
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "id": "b34f21c0-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:02:11-07:00",
+    "recipient": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "http://localhost:50380"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "http://localhost:50380",
+    "channelId": "emulator",
+    "from": {
+      "id": "1",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "2386e201-6d34-11e9-8f23-1d00b5c38fba|livechat"
+    },
+    "recipient": {
+      "id": "4d2d9f62-d7e4-44ed-8a0c-0ac24abd3d7b",
+      "role": "user"
+    },
+    "text": "Yes Tara, how can I help?",
+    "inputHint": "expectingInput",
+    "replyToId": "b34f21c0-6d36-11e9-a4be-dddb1331d87e",
+    "id": "b350f680-6d36-11e9-a4be-dddb1331d87e",
+    "localTimestamp": "2019-05-02T17:02:11-07:00",
+    "timestamp": "2019-05-03T00:02:11.559Z",
+    "locale": ""
+  }
+]

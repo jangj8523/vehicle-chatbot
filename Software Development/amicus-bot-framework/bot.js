@@ -7,34 +7,15 @@ const { DialogSet, WaterfallDialog, TextPrompt, Dialog, DialogTurnStatus } = req
 const DIALOG_STATE_PROPERTY = 'dialogStatePropertyAccessor';
 const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
-const { CheckInDialog } = require("./dialogs/checkInDialog.js");
-const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
-const { ControlCarFeaturePositive } = require("./dialogs/controlCarFeaturePositive.js");
 
-const { ChooseMusic } = require("./dialogs/chooseMusic.js");
 
-const { GoToDestination } = require("./dialogs/goToDestination.js");
-const { GoToDestinationNegative } = require("./dialogs/goToDestinationNegative.js");
 const { GoToDestinationClean } = require("./dialogs/goToDestinationClean.js");
 const { RequestNameDialog } = require("./dialogs/requestNameDialog.js");
-const { ReserveRestaurant } = require("./dialogs/reserveRestaurant.js");
 
 
-const { ConversationDialog } = require("./dialogs/conversationDialog.js");
+
 const { TextToSpeech } = require("./util/textToSpeech.js");
 const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3eaa2bb4-22bf-43da-8c30-f00d0ae07cfc?verbose=true&timezoneOffset=-360&subscription-key=060adde9a0b44caabbac37ac8dcb8cbe&q=";
-
-/**
-DEMO Dialogs
-*/
-
-const { GoToBurger } = require("./dialogs/DemoDialog/goToBurger.js");
-const { GoToBurgerPositive } = require("./dialogs/DemoDialog/goToBurgerPositive.js");
-const { GoToBurgerNegative } = require("./dialogs/DemoDialog/goToBurgerNegative.js");
-const { CheckScore } = require("./dialogs/DemoDialog/checkScore.js");
-const { CheckScorePositive } = require("./dialogs/DemoDialog/checkScorePositive.js");
-const { CheckScoreNegative } = require("./dialogs/DemoDialog/checkScoreNegative.js");
-
 
 
 //TODO working on simplifying this
@@ -51,30 +32,15 @@ class MyBot {
         this.conversationState = conversationState;
         this.userState = userState;
         this.textToSpeech = new TextToSpeech();
-
-
         this.emotion = 0;
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
 
         this.dialogs = new DialogSet(this.dialogStateAccessor)
-        .add(new TextPrompt('textPrompt'))
-        .add(new ControlCarFeature('controlCarFeature'))
-        .add(new ChooseMusic('chooseMusic'))
-        .add(new ConversationDialog('conversationDialog'))
-        .add(new GoToDestination('goToDestination'))
         .add(new GoToDestinationClean('goToDestinationClean'))
-        .add(new ReserveRestaurant('reserveRestaurant'))
-        .add(new GoToDestinationNegative('goToDestinationNegative'))
-        .add(new ControlCarFeaturePositive('controlCarFeaturePositive'))
-        .add(new GoToBurger('goToBurger'))
+        .add(new TextPrompt('textPrompt'))
         .add(new RequestNameDialog('requestNameDialog'))
-        .add(new GoToBurgerPositive('goToBurgerPositive'))
-        .add(new GoToBurgerNegative('goToBurgerNegative'))
-        .add(new CheckScorePositive('checkScorePositive'))
-        .add(new CheckScoreNegative('checkScoreNegative'))
-        .add(new CheckScore('checkScore'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
             this.startChildDialog.bind(this),
@@ -141,9 +107,9 @@ class MyBot {
         user.mustClarify = false;
         console.log(user.numInvalidQueries);
 
-        if (user.nameExists == false) {
-          return await step.beginDialog('requestNameDialog', user);
-        }
+        // if (user.nameExists == false) {
+        //   return await step.beginDialog('requestNameDialog', user);
+        // }
 
 
 
@@ -182,56 +148,6 @@ class MyBot {
           return await step.beginDialog('goToDestinationClean', user);
         }
 
-        if (query.includes("hungry") || query.includes("burger")){
-            user.numInvalidQueries = 0;
-            if (this.emotion == 'neutral') {
-                return await step.beginDialog('goToBurger', user);
-            } else if (this.emotion == 'negative') {
-                return await step.beginDialog('goToBurgerNegative', user);
-            } else {
-                return await step.beginDialog('goToBurgerPositive', user);
-            }
-
-        } else if (query.includes("score")){
-            user.numInvalidQueries = 0;
-            if (this.emotion == 'neutral') {
-                return await step.beginDialog('checkScore', user);
-            } else if (this.emotion == 'negative') {
-                return await step.beginDialog('checkScoreNegative', user);
-            } else {
-                return await step.beginDialog('checkScorePositive', user);
-            }
-        } else if (user.topScoreIntent.includes("WindowDoorItems")) {
-            user.numInvalidQueries = 0;
-            if (this.emotion == 'neutral') {
-                return await step.beginDialog('controlCarFeature', user);
-            } else {
-                return await step.beginDialog('controlCarFeaturePositive', user);
-            }
-
-        } else if (user.topScoreIntent.includes("GetDestinationItem")) {
-            if (this.emotion == 'negative') {
-                return await step.beginDialog('goToDestinationNegative', user);
-            } else {
-                return await step.beginDialog('goToDestination', user);
-            }
-        } else if (user.topScoreIntent.includes("ReserveRestaurantItem")) {
-            user.numInvalidQueries = 0;
-            return await step.beginDialog('reserveRestaurant', user);
-        } else {
-            user.numInvalidQueries += 1;
-            if (user.numInvalidQueries < 2) {
-              await step.context.sendActivity("Sorry I do not understand what you mean.");
-              user.mustClarify = true;
-              await this.userInfoAccessor.set(step.context, user);
-              await this.promptForChoice(step);
-              return step.endDialog();
-            } else {
-              await step.context.sendActivity("Sorry. You are currently using the Demo mode of the Amicus product. We currently only support navigation to a chosen food destination. Try asking BMW/Amicus to take you to a destination of your choice!");
-              user.numInvalidQueries = 0;
-              return step.endDialog();
-            }
-        }
     }
 
 
