@@ -20,7 +20,9 @@ const entityType = {
 const PREFIX = 0;
 const SUFFIX = 1;
 
-class GoToDestinationDialog  extends ComponentDialog {
+// Handles the GoToDestination dialog to navigate a user to a specified 
+// restaurant destination
+class goToDestinationDialog  extends ComponentDialog {
     constructor(dialogId) {
         super(dialogId);
 
