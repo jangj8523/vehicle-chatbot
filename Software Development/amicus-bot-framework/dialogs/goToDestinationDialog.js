@@ -44,7 +44,7 @@ class goToDestinationDialog  extends ComponentDialog {
 
     async responseRetrieval(step, restaurantList, place, type) {
       if (restaurantList.length === 0) {
-        await step.context.sendActivity(`Sorry! I couldn't find a single instance of ${place}.`);
+        await step.context.sendActivity(`Unfortunately, I can't find a ${place} nearby.`);
         step.values.gracefulFailure = true;
         return step.endDialog(step.values);
       }
@@ -89,7 +89,7 @@ class goToDestinationDialog  extends ComponentDialog {
           var response = await utilManager.getRandomResponse(ResponseList["RESTAURANT_QUERY_CLARIFICATION_RESPONSE"]);
           return await step.prompt('textPrompt', response[PREFIX]);
         } else {
-          await step.context.sendActivity(`Great! We will head over to ${userChoice}!"`);
+          await step.context.sendActivity(`Sounds great! Let's head over to ${userChoice}!"`);
           return await step.endDialog(step.values);
         }
     }
@@ -102,7 +102,7 @@ class goToDestinationDialog  extends ComponentDialog {
           var response = await utilManager.getRandomResponse(ResponseList["RESTAURANT_GRACEFUL_FAILURE_RESPONSE"]);
           await step.context.sendActivity(response[PREFIX] + step.values.place + response[SUFFIX]);
         } else {
-          await step.context.sendActivity(`Great! We will head over to "${userChoice}!"`);
+          await step.context.sendActivity(`All set! Navigating to "${userChoice}!"`);
         }
         return await step.endDialog(step.values);
     }
