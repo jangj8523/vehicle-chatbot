@@ -9,9 +9,10 @@ const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
 
 
-const { goToDestinationDialog } = require("./dialogs/goToDestinationDialog.js");
+const { GoToDestinationDialog } = require("./dialogs/goToDestinationDialog.js");
 const { RequestNameDialog } = require("./dialogs/requestNameDialog.js");
-
+const utilManager = require("./utilManager.js");
+const { ResponseList } = require("./constant.js");
 
 
 const { TextToSpeech } = require("./util/textToSpeech.js");
@@ -38,7 +39,7 @@ class MyBot {
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
 
         this.dialogs = new DialogSet(this.dialogStateAccessor)
-        .add(new GoToDestinationClean('goToDestinationClean'))
+        .add(new GoToDestinationDialog('goToDestinationDialog'))
         .add(new TextPrompt('textPrompt'))
         .add(new RequestNameDialog('requestNameDialog'))
         .add(new WaterfallDialog('mainDialog', [
@@ -50,7 +51,6 @@ class MyBot {
 
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
-
         var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?'];
 
         if (!user.nameExists) {
@@ -107,9 +107,9 @@ class MyBot {
         user.mustClarify = false;
         console.log(user.numInvalidQueries);
 
-        // if (user.nameExists == false) {
-        //   return await step.beginDialog('requestNameDialog', user);
-        // }
+        if (user.nameExists == false) {
+          return await step.beginDialog('requestNameDialog', user);
+        }
 
 
 
@@ -121,6 +121,9 @@ class MyBot {
         let query = sentimentIntentList[4];
         this.emotion = sentimentIntentList[5];
         //console.log("EMOTION", this.emotion);
+        //DEMO PURPOSES: must erase
+        var emotionList = ['neutral', 'negative', 'positive']
+        this.emotion = emotionList[Math.floor(Math.random() * emotionList.length)];
 
         /***
         Navigate to its corresponding intent.
@@ -147,9 +150,7 @@ class MyBot {
 
     async saveResult(step) {
         // Process the return value from the child dialog.
-        var closingRemark = ["Let me know if you need anything else, ", "Just let me know if there’s anything else I can help with, ", "If you need something, call me with \"Hey\" again. See you "];
-        var index = Math.floor(Math.random() * (closingRemark.length-1));
-        var response = closingRemark[index]
+        var response = await utilManager.getRandomResponse(ResponseList["CLOSING_REMARK_RESPONSE"]);
 
         if (step.result) {
             const user = await this.userInfoAccessor.get(step.context);
@@ -159,15 +160,10 @@ class MyBot {
                 user.nameExists = true;
             }
 
-            if(this.emotion == 'neutral') {
-                await step.prompt('textPrompt', response +  user.userName);
-            } else if (this.emotion == 'negative') {
-                await step.prompt('textPrompt', response +  user.userName)
-            } else {
-                await step.prompt('textPrompt', response +  user.userName)
+            if (step.result.gracefulFailure === true) {
+              response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
             }
-            //await step.prompt('textPrompt', `Just let your friend here, Amicus, know if there’s anything else I can help with, ${user.userName}`)
-            await this.userInfoAccessor.set(step.context, user);
+            return await step.prompt('textPrompt', response +  user.userName)
         }
         // Restart the main menu dialog.
         // return await step.replaceDialog('mainDialog'); // Show the menu again

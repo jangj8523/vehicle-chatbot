@@ -27,7 +27,7 @@ class RequestNameDialog  extends ComponentDialog {
 
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
-            async function (step) {
+            async function (step,) {
                 var promptOptions = {
                     prompt: `Ok, ` + step.context.activity.text  + `! I want to be more exact with your name. Would you mind clarifying please?`,
                     choices: ["Tara Padma Iyer", "Benjamin Hannel","Vikram Pattabi","Andrew Zhang", "Lily Liu"]
