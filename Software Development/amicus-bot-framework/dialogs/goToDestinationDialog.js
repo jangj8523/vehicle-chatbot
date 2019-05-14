@@ -21,7 +21,10 @@ const PREFIX = 0;
 const SUFFIX = 1;
 
 // Handles the GoToDestination dialog to navigate a user to a specified 
-// restaurant destination
+// restaurant destination by capturing the appropriate user intent
+// suggesting a list of restaurants within the scope of the user suggested
+// criteria, and confirming a final location
+// Integrated with Google Maps API
 class goToDestinationDialog  extends ComponentDialog {
     constructor(dialogId) {
         super(dialogId);
@@ -44,7 +47,7 @@ class goToDestinationDialog  extends ComponentDialog {
 
     async responseRetrieval(step, restaurantList, place, type) {
       if (restaurantList.length === 0) {
-        await step.context.sendActivity(`Unfortunately, I can't find a ${place} nearby.`);
+        await step.context.sendActivity(`Unfortunately, I can't find any ${place} nearby.`);
         step.values.gracefulFailure = true;
         return step.endDialog(step.values);
       }
@@ -89,7 +92,7 @@ class goToDestinationDialog  extends ComponentDialog {
           var response = await utilManager.getRandomResponse(ResponseList["RESTAURANT_QUERY_CLARIFICATION_RESPONSE"]);
           return await step.prompt('textPrompt', response[PREFIX]);
         } else {
-          await step.context.sendActivity(`Sounds great! Let's head over to ${userChoice}!"`);
+          await step.context.sendActivity(`Sounds great; let's head over to ${userChoice}!"`);
           return await step.endDialog(step.values);
         }
     }
