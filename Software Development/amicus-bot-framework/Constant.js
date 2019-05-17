@@ -16,19 +16,19 @@ const entityType = {
 
 
 var FOUND_RESTAURANT_RESPONSE = [
-  ["Sure I have found multiple options for \"", "\" nearby. Which one are you referring to?"],
-  ["Ok, there are a number of \"", "\" closeby. Can you specify which one?"]
+  ["Sure. There are several nearby options for \"", "\". Which one are you referring to?"],
+  ["Ok, there are a number of \"", "\" nearby. Can you specify which one you want?"]
 ]
 
 var RESTAURANT_QUERY_CLARIFICATION_RESPONSE = [
-  ["Ok, would you mind telling me the name of the place again?"],
-  ["Umm, then would you refine your request please? Please just tell me the name of the place?"],
-  ["Sure, where would you like to go? Would you mind clarifying? Just the name of the place."]
+  ["Ok, would you mind repeating your desired destination again?"],
+  ["Please refine your request; what restaurant would you like to head to?"],
+  ["Sure, where would you like to go? Just the name of the place please."]
 ]
 
 var RESTAURANT_GRACEFUL_FAILURE_RESPONSE= [
-  ["Sorry I wasn't able to find any relevant place named \"", "\". You may need to manually lookup the exact place."],
-  ["Sorry, I couldn't find the place called \"", "\". Hopefully I learn fast enough to learn about it!"]
+  ["Sorry I wasn't able to find any restaurant named \"", "\". Double check there is one nearby and use the GPS to navigate; sorry."],
+  ["Sorry, I couldn't find the place called \"", "\". Hopefully I learn fast enough to find it soon!"]
 ]
 
 var CLOSING_REMARK_RESPONSE = [
