@@ -66,11 +66,14 @@ const server = restify.createServer();
 
 server.use(restify.plugins.bodyParser({ mapParams: true }));
 
-server.listen(process.env.port || process.env.PORT || 3978, () => {
-    console.log(`\n${ server.name } listening to ${ server.url }`);
-    console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
-    console.log(`\nTo talk to your bot, open amicus.bot file in the Emulator`);
-});
+// server.listen(process.env.port || process.env.PORT || 3978, () => {
+//     console.log(`\n${ server.name } listening to ${ server.url }`);
+//     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
+//     console.log(`\nTo talk to your bot, open amicus.bot file in the Emulator`);
+// });
+
+//Listen to your own LocalHost
+server.listen(3000);
 
 // .bot file path
 const BOT_FILE = path.join(__dirname, (process.env.botFilePath || ''));

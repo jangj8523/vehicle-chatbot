@@ -20,7 +20,7 @@ const entityType = {
 const PREFIX = 0;
 const SUFFIX = 1;
 
-// Handles the GoToDestination dialog to navigate a user to a specified 
+// Handles the GoToDestination dialog to navigate a user to a specified
 // restaurant destination by capturing the appropriate user intent
 // suggesting a list of restaurants within the scope of the user suggested
 // criteria, and confirming a final location
@@ -112,4 +112,4 @@ class goToDestinationDialog  extends ComponentDialog {
 
 }
 
-module.exports.GoToDestinationDialog = GoToDestinationDialog;
+module.exports.GoToDestinationDialog = goToDestinationDialog;
