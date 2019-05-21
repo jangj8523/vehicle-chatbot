@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
 import { Message } from 'react-chat-ui';
 
+import { getConversationID } from '../managers/networking/conversation';
+
 import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
@@ -62,6 +64,9 @@ class MainScreen extends Component {
         const { currentHint } = this.state;
         this.setState({currentHint: currentHint+1});
       }, 5000);
+
+      const convoID = getConversationID();
+      console.log("[MainScreen] current conversation: " + convoID);
   }
 
   componentWillUnmount() {
@@ -80,9 +85,6 @@ class MainScreen extends Component {
   }
 
   setAvatarParameters = (source) => {
-    if (source !== source) {
-      return;
-    }
     const angryScale = source.expression.angryScale;
     const sadScale = source.expression.sadScale;
     const surprisedScale = source.expression.surprisedScale;
