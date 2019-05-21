@@ -62,18 +62,19 @@ const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
 
 // Create HTTP server
 const server = restify.createServer();
-
+const second_server = restify.createServer();
 
 server.use(restify.plugins.bodyParser({ mapParams: true }));
 
-// server.listen(process.env.port || process.env.PORT || 3978, () => {
-//     console.log(`\n${ server.name } listening to ${ server.url }`);
-//     console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
-//     console.log(`\nTo talk to your bot, open amicus.bot file in the Emulator`);
-// });
+server.listen(process.env.port || process.env.PORT || 3978, () => {
+    console.log(`\n${ server.name } listening to ${ server.url }`);
+    console.log(`\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator`);
+    console.log(`\nTo talk to your bot, open amicus.bot file in the Emulator`);
+});
 
-//Listen to your own LocalHost
-server.listen(3000);
+second_server.listen(3000, () => {
+  console.log(`\n${ second_server.name } LISTENING to ${ second_server.url }`)
+});
 
 // .bot file path
 const BOT_FILE = path.join(__dirname, (process.env.botFilePath || ''));
@@ -141,36 +142,27 @@ let userState;
 // adapter.use(conversationState);
 
 //PubNub WebSocket
-pubnub.subscribe({ channels: ['amicus_global'] });
-pubnub.addListener({
-  status: function(statusEvent) {
-      if (statusEvent.category === "PNConnectedCategory") {
-          //publishSampleMessage();
-      }
-  },
-  message: function(msg) {
-    //  console.log(msg);
-      //console.log(msg.message.title);
-      //console.log(msg.message.description);
-  },
-  presence: function(presenceEvent) {
-      // handle presence
-  }
-})
+// pubnub.subscribe({ channels: ['amicus_global'] });
+// pubnub.addListener({
+//   status: function(statusEvent) {
+//     console.log("SOMETHING CAME");
+//     console.log(statusEvent);
+//     if (statusEvent.category === "PNConnectedCategory") {
+//           console.log(statusEvent);
+//           myBot.onTurn(statusEvent);
+//       }
+//   },
+//
+//   message: function(msg) {
+//       console.log(msg);
+//       console.log(msg.message.title);
+//       console.log(msg.message.description);
+//   },
+//   presence: function(presenceEvent) {
+//       // handle presence
+//   }
+// })
 
-function publishSampleMessage() {
-    console.log("Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish.");
-    var publishConfig = {
-        channel : "amicus_global",
-        message : {
-            title: "Test",
-            description: "Message Description"
-        }
-    }
-    pubnub.publish(publishConfig, function(status, response) {
-        //console.log(status, response);
-    })
-}
 
 
 
@@ -183,9 +175,16 @@ const conversationState = new ConversationState(memoryStorage);
 
 // Create the main dialog.
 const myBot = new MyBot(conversationState, userState);
+//     console.log("[INCOMING]");
+//     console.log(req.params);
+//     adapter.processActivity(req, res, async (context) => {
+//         // Route to main dialog.
+//         await myBot.onTurn(context);
+//     });
+// });
 
 server.post('/api/v1/web/messages', (req, res, next) => {
-    // console.log(req.params);
+    console.log(req.params);
     adapter.processActivity(req, res, async (context) => {
         // Route to main dialog.
         await myBot.onTurn(context);
@@ -194,10 +193,10 @@ server.post('/api/v1/web/messages', (req, res, next) => {
     return next();
 });
 
-// Listen for incoming requests.
+// Listen for incoming requests. CHANNEL
 server.post('/api/messages', (req, res) => {
-    //console.log("[INCOMING]");
-    //console.log(req.params);
+    console.log("[INCOMING]");
+    console.log(req.params);
     adapter.processActivity(req, res, async (context) => {
         // Route to main dialog.
         await myBot.onTurn(context);

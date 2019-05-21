@@ -34,8 +34,8 @@ class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({
-        publishKey: 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
-        subscribeKey: 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
+      publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
+      subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
     });
     this.pubnub.init(this);
   }
@@ -48,6 +48,7 @@ class MainScreen extends Component {
 
       this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
+            console.log("MESSAGE: ", msg.message);
             this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate, emotion: msg.message.emotion})
             //TODO: set state with new avatarActions object
             this.recordMessage(msg.message.description, true);
@@ -79,6 +80,9 @@ class MainScreen extends Component {
   }
 
   setAvatarParameters = (source) => {
+    if (source !== source) {
+      return;
+    }
     const angryScale = source.expression.angryScale;
     const sadScale = source.expression.sadScale;
     const surprisedScale = source.expression.surprisedScale;
@@ -112,10 +116,10 @@ class MainScreen extends Component {
 
   pubnubPublish = (message) => {
     if (message === "") return;
-
+    console.log("DEBUG");
     this.pubnub.publish({
         message: message,
-        channel: 'amicus_delivery'
+        channel: 'amicus_global'
     });
 
     this.recordMessage(message, false);
@@ -186,7 +190,10 @@ class MainScreen extends Component {
             <MessageChatComponent messages={messages}/>
             <div className="h-5"/>
 
-            <RecordComponent onPublish={(msg) => {this.pubnubPublish(msg)}}/>
+            <RecordComponent onPublish={(msg) => {
+              console.log("RECORDING");
+              this.pubnubPublish(msg)
+            }}/>
 
             {this.viewFeedback()}
             {this.viewStateButtons()}

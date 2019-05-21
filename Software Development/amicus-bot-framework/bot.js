@@ -22,8 +22,8 @@ const intentUri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/3ea
 //TODO working on simplifying this
 const PubNub = require('pubnub');
 const pubnub = new PubNub({
-    publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
-    subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
+  publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
+  subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
 });
 
 class MyBot {
