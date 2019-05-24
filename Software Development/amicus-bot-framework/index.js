@@ -20,8 +20,8 @@ const { MyBot } = require('./bot');
 //const { PubNubClient } = require('./pubnub/');
 //const pubnub = new PubNubClient();
 const pubnub = new PubNub({
-    publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
-    subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
+  publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
+  subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
 });
 
 //  Azure DB Storage
@@ -97,8 +97,8 @@ const endpointConfig = botConfig.findServiceByNameOrId(BOT_CONFIGURATION);
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about .bot file its use and bot configuration.
 const adapter = new BotFrameworkAdapter({
-    appId: endpointConfig.appId || process.env.microsoftAppID,
-    appPassword: endpointConfig.appPassword || process.env.microsoftAppPassword
+    appId: process.env.microsoftAppID,
+    appPassword: process.env.microsoftAppPassword
 });
 
 // Catch-all for errors.
@@ -121,51 +121,6 @@ let userState;
 
 
 
-
-// const storage = new CosmosDbStorage({
-//     serviceEndpoint: process.env.ACTUAL_SERVICE_ENDPOINT,
-//     authKey: process.env.ACTUAL_AUTH_KEY,
-//     databaseId: process.env.DATABASE,
-//     collectionId: process.env.COLLECTION
-// })
-
-
-// //Blob Storage
-// // storage = new BlobStorage({
-// //    "amicus123",
-// //    "DefaultEndpointsProtocol=https;AccountName=amicus123;AccountKey=VeclGls4vOtaIhIjnSHQiXoSwI0DrdWoV0yANalAFVLsPPwNEtZXTItdWNfPdDRSXZbJ/lRwGyLTUffnCAzzyg==;EndpointSuffix=core.windows.net",
-// //    "VeclGls4vOtaIhIjnSHQiXoSwI0DrdWoV0yANalAFVLsPPwNEtZXTItdWNfPdDRSXZbJ/lRwGyLTUffnCAzzyg=="
-// // });
-
-// const conversationState = new ConversationState(storage);
-// userState = new UserState(storage);
-// adapter.use(conversationState);
-
-//PubNub WebSocket
-// pubnub.subscribe({ channels: ['amicus_global'] });
-// pubnub.addListener({
-//   status: function(statusEvent) {
-//     console.log("SOMETHING CAME");
-//     console.log(statusEvent);
-//     if (statusEvent.category === "PNConnectedCategory") {
-//           console.log(statusEvent);
-//           myBot.onTurn(statusEvent);
-//       }
-//   },
-//
-//   message: function(msg) {
-//       console.log(msg);
-//       console.log(msg.message.title);
-//       console.log(msg.message.description);
-//   },
-//   presence: function(presenceEvent) {
-//       // handle presence
-//   }
-// })
-
-
-
-
 // For local development, in-memory storage is used.
 // CAUTION: The Memory Storage used here is for local bot debugging only. When the bot
 // is restarted, anything stored in memory will be gone.
@@ -175,13 +130,6 @@ const conversationState = new ConversationState(memoryStorage);
 
 // Create the main dialog.
 const myBot = new MyBot(conversationState, userState);
-//     console.log("[INCOMING]");
-//     console.log(req.params);
-//     adapter.processActivity(req, res, async (context) => {
-//         // Route to main dialog.
-//         await myBot.onTurn(context);
-//     });
-// });
 
 server.post('/api/v1/web/messages', (req, res, next) => {
     console.log(req.params);

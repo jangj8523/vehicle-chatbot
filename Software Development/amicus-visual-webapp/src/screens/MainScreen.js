@@ -80,7 +80,7 @@ class MainScreen extends Component {
   }
 
   setAvatarParameters = (source) => {
-    if (source !== source) {
+    if (source !== null) {
       return;
     }
     const angryScale = source.expression.angryScale;
@@ -123,6 +123,23 @@ class MainScreen extends Component {
     });
 
     this.recordMessage(message, false);
+  }
+
+  publishToAzure = (message) => {
+    console.log('PUBLISH TO AZURE');
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+    var xhr = new XMLHttpRequest();
+    // const url = "https://webchat.botframework.com/embed/lucas-direct-line?t="+message;
+    xhr.open('GET', "https://webchat.botframework.com/api/tokens", true);
+    xhr.setRequestHeader('Authorization', 'BotConnector ' + 'cpnLitsCRbc.w0Wq-dgG6yVfMi24TNoicpM7EMRt3f8IFlD6Hg7fMx0');
+    xhr.send();
+    console.log (xhr.responseText);
+    function processRequest(e) {
+      if (xhr.readyState === 4  && xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        document.getElementById("chat").src="https://webchat.botframework.com/embed/lucas-direct-line?t="+response
+      }
+    }
   }
 
   recordMessage = (msg, isFromBot) => {
@@ -192,7 +209,8 @@ class MainScreen extends Component {
 
             <RecordComponent onPublish={(msg) => {
               console.log("RECORDING");
-              this.pubnubPublish(msg)
+              this.pubnubPublish(msg);
+              this.publishToAzure(msg);
             }}/>
 
             {this.viewFeedback()}

@@ -33,7 +33,7 @@ class MyBot {
         this.conversationState = conversationState;
         this.userState = userState;
         this.textToSpeech = new TextToSpeech();
-        this.emotion = 0;
+        this.sentiment = 0;
         // Create our state property accessors.
         this.dialogStateAccessor = conversationState.createProperty(DIALOG_STATE_PROPERTY);
         this.userInfoAccessor = userState.createProperty(USER_INFO_PROPERTY);
@@ -119,11 +119,11 @@ class MyBot {
         let response = sentimentIntentList[2];
         let entities = sentimentIntentList[3];
         let query = sentimentIntentList[4];
-        this.emotion = sentimentIntentList[5];
-        //console.log("EMOTION", this.emotion);
+
         //DEMO PURPOSES: must erase
+        // this.sentiment = sentimentIntentList[5];
         var emotionList = ['neutral', 'negative', 'positive']
-        this.emotion = emotionList[Math.floor(Math.random() * emotionList.length)];
+        this.sentiment = emotionList[Math.floor(Math.random() * emotionList.length)];
 
         /***
         Navigate to its corresponding intent.
@@ -159,7 +159,6 @@ class MyBot {
                 user.userName = step.result.userName;
                 user.nameExists = true;
             }
-
             if (step.result.gracefulFailure === true) {
               response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
             }
@@ -177,9 +176,9 @@ class MyBot {
 
       let emote = null;
 
-      if (this.emotion === 'neutral') {
+      if (this.sentiment === 'neutral') {
         emote = neutralEmotion[Math.floor(Math.random() * neutralEmotion.length)];
-      } else if (this.emotion === 'negative') {
+      } else if (this.sentiment === 'negative') {
         emote = negativeEmotion[Math.floor(Math.random() * negativeEmotion.length)];
       } else {
         emote = positiveEmotion[Math.floor(Math.random() * positiveEmotion.length)];
@@ -195,9 +194,9 @@ class MyBot {
 
         let state = null;
 
-        if (this.emotion === 'neutral') {
+        if (this.sentiment === 'neutral') {
           state = neutralStates[Math.floor(Math.random() * neutralStates.length)];
-        } else if (this.emotion === 'negative') {
+        } else if (this.sentiment === 'negative') {
           state = negativeStates[Math.floor(Math.random() * negativeStates.length)];
         } else {
           state = positiveStates[Math.floor(Math.random() * positiveStates.length)];
@@ -213,11 +212,11 @@ class MyBot {
 
         let expression = null;
 
-        if (this.emotion === 'neutral') {
+        if (this.sentiment === 'neutral') {
           angryScale = (Math.random() * (0.850 - 0.3200) + 0.3200);
           surprisedScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
           sadScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
-        } else if (this.emotion === 'negative') {
+        } else if (this.sentiment === 'negative') {
           angryScale = (Math.random() * (0.010 - 0.0500) + 0.0500);
           surprisedScale = (Math.random() * (0.120 - 0.0200) + 0.0200);
           sadScale = (Math.random() * (0.950 - 0.5200) + 0.5200);;
@@ -234,20 +233,19 @@ class MyBot {
         return response;
     }
 
-    async modifyPitch(emotion){
+    async modifyPitch(){
         var pitch = 0.0;
         var rate = 0.0;
         var volume = 0.0;
-
-        if (this.emotion === 'neutral') {
+        if (this.sentiment === 'neutral') {
             volume = 1.0;
             rate = 1.0;
             pitch = 0.8;
-        } else if (this.emotion === 'negative') {
+        } else if (this.sentiment === 'negative') {
             volume = 0.7;
             rate = 0.65;
             pitch = 0.45;
-        } else if (this.emotion === 'positive') {
+        } else if (this.sentiment === 'positive') {
             volume = 1.0;
             rate = 1.15;
             pitch = 0.9;
@@ -259,7 +257,6 @@ class MyBot {
      * @param {TurnContext} on turn context object.
      */
     async onTurn(turnContext) {
-
         turnContext.onSendActivities(async (context, activities, next) => {
           const responses = await next();
 
@@ -282,8 +279,6 @@ class MyBot {
             const expression = await this.retrieveExpression(response);
             const setting = await this.modifyPitch();
 
-            //console.log("problem");
-
             let inputMap = {};
             inputMap['title'] = "Amicus Message";
             inputMap['description'] = response;
@@ -294,7 +289,6 @@ class MyBot {
             inputMap['state'] = state;
             inputMap['expression'] = expression;
             // console.log(inputMap);
-
             var payload = {
                 channel : "amicus_global",
                 message : inputMap
@@ -310,18 +304,11 @@ class MyBot {
         if (turnContext.activity.type === ActivityTypes.Message) {
             const user = await this.userInfoAccessor.get(turnContext, {});
             const dc = await this.dialogs.createContext(turnContext);
-
             const dialogTurnResult = await dc.continueDialog();
-
-            // Talking Bot
-            // await dc.context.sendActivity("Welcome to Amicus. I am your B", "<speak>Sorry, I don\'t understand</speak>");
-
-
             if (!dc.context.responded) {
                 // Continue the current dialog if one is pending.
                 await dc.continueDialog();
             }
-
             if (!dc.context.responded) {
                 // If no response has been sent, start the onboarding dialog.
                 await dc.beginDialog('mainDialog');
@@ -332,28 +319,6 @@ class MyBot {
         }
     }
 
-    async sendWelcomeMessage(turnContext) {
-        // If any new membmers added to the conversation
-        if (turnContext.activity && turnContext.activity.membersAdded) {
-            // Define a promise that will welcome the user
-            async function welcomeUserFunc(conversationMember) {
-                // Greet anyone that was not the target (recipient) of this message.
-                // The bot is the recipient of all events from the channel, including all ConversationUpdate-type activities
-                // turnContext.activity.membersAdded !== turnContext.activity.aecipient.id indicates
-                // a user was added to the conversation
-                if (conversationMember.id !== this.activity.recipient.id) {
-                    // Because the TurnContext was bound to this function, the bot can call
-                    // `TurnContext.sendActivity` via `this.sendActivity`;
-                    await this.sendActivity('Welcome to Amicus. I am your BMW Chatbot. Let\'s introduce each other shall we? What\'s is your name?');
-                }
-            }
-
-            // Prepare Promises to greet the  user.
-            // The current TurnContext is bound so `replyForReceivedAttachments` can also send replies.
-            const replyPromises = turnContext.activity.membersAdded.map(welcomeUserFunc.bind(turnContext));
-            await Promise.all(replyPromises);
-        }
-    }
 }
 
 module.exports.MyBot = MyBot;
