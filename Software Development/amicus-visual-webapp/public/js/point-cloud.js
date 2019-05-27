@@ -16,7 +16,8 @@
         mouseY = 0,
         windowHalfX, windowHalfY, cameraZ,
         fogHex, fogDensity, parameters = {},
-        parameterCount, particles;
+        parameterCount, particles,
+        rem, secondDown;
 
     init();
     animate();
@@ -32,6 +33,9 @@
         aspectRatio = WIDTH / HEIGHT;
         nearPlane = 100;
         farPlane = 3000;
+
+        rem = false;
+        secondDown = false;
 
         /*  fieldOfView — Camera frustum vertical field of view.
     aspectRatio — Camera frustum aspect ratio.
@@ -69,7 +73,6 @@
             vertex.x = Math.random() * 2000 - 1000;
             vertex.y = Math.random() * 2000 - 1000;
             vertex.z = Math.random() * 2000 - 1000;
-
             geometry.vertices.push(vertex);
         }
 
@@ -100,13 +103,10 @@
             materials[i] = new THREE.PointCloudMaterial({
                 size: size
             });
-
             particles = new THREE.PointCloud(geometry, materials[i]);
-
             particles.rotation.x = Math.random() * 6;
             particles.rotation.y = Math.random() * 6;
             particles.rotation.z = Math.random() * 6;
-
             scene.add(particles);
         }
 
@@ -116,17 +116,9 @@
 
         container.appendChild(renderer.domElement);
 
-        // stats = new Stats();
-        // stats.domElement.style.position = 'absolute';
-        // stats.domElement.style.top = '0px';
-        // stats.domElement.style.right = '0px';
-        // container.appendChild(stats.domElement);
-
         window.addEventListener('resize', onWindowResize, false);
         document.addEventListener('mousemove', onDocumentMouseMove, false);
-        document.addEventListener('touchstart', onDocumentTouchStart, false);
-        document.addEventListener('touchmove', onDocumentTouchMove, false);
-
+        document.addEventListener('keydown', onDocumentKeyDown, false);
     }
 
     function animate() {
@@ -139,16 +131,148 @@
 
         camera.position.x += (mouseX - camera.position.x) * 0.05;
         camera.position.y += (-mouseY - camera.position.y) * 0.05;
-
+        // if (rem == true) {
+        //     camera.position.x = 0;
+        //     camera.position.y = 0;
+        // } else {
+        //     camera.position.x += (mouseX - camera.position.x) * 0.05;
+        //     camera.position.y += (-mouseY - camera.position.y) * 0.05;
+        // }
+        console.log("Camera X:")
+        console.log(camera.position.x);
+        console.log("Camera Y:");
+        console.log(camera.position.y);
         camera.lookAt(scene.position);
+
+        if (rem == true && secondDown == false) {
+            for (i = 0; i < scene.children.length; i++) {
+                var object = scene.children[i];
+                if (object instanceof THREE.PointCloud) {
+                    scene.remove(object);
+                }
+            }
+            scene.children = [];
+            geometry = new THREE.Geometry();
+
+            particleCount = 5000;
+
+            for (i = 0; i < particleCount; i++) {
+
+                var vertex = new THREE.Vector3();
+                vertex.x = Math.random() * 2000 - 1000;
+                // vertex.y = Math.random() * 2000 - 1000;
+                // vertex.z = Math.random() * 2000 - 1000;
+                // vertex.x = 100;
+                // vertex.y = 100;
+                // vertex.z = 100;
+
+                geometry.vertices.push(vertex);
+            }
+
+            parameters = [
+                [
+                    [0.1, 1, 0.5], 1
+                ],
+                [
+                    [0.1, 1, 0.5], 2
+                ],
+                [
+                    [0.1, 1, 0.5], 2
+                ],
+                [
+                    [0.1, 1, 1], 1
+                ],
+                [
+                    [0.1, 1, 1], 1
+                ]
+            ];
+            parameterCount = parameters.length;
+
+            for (i = 0; i < parameterCount; i++) {
+
+                color = parameters[i][0];
+                size = parameters[i][1];
+
+                materials[i] = new THREE.PointCloudMaterial({
+                    size: size
+                });
+
+                particles = new THREE.PointCloud(geometry, materials[i]);
+                scene.add(particles);
+            }
+        } else if (secondDown == true && rem == true) {
+            rem = false;
+            secondDown = false;
+            for (i = 0; i < scene.children.length; i++) {
+
+                var object = scene.children[i];
+                if (object instanceof THREE.PointCloud) {
+                    scene.remove(object);
+                }
+            }
+            scene.children = [];
+            geometry = new THREE.Geometry();
+
+            particleCount = 5000;
+
+            for (i = 0; i < particleCount; i++) {
+
+                var vertex = new THREE.Vector3();
+                vertex.x = Math.random() * 2000 - 1000;
+                vertex.y = Math.random() * 2000 - 1000;
+                vertex.z = Math.random() * 2000 - 1000;
+                // vertex.x = 100;
+                // vertex.y = 100;
+                // vertex.z = 100;
+
+                geometry.vertices.push(vertex);
+            }
+
+            parameters = [
+                [
+                    [0.1, 1, 0.5], 1
+                ],
+                [
+                    [0.1, 1, 0.5], 2
+                ],
+                [
+                    [0.1, 1, 0.5], 2
+                ],
+                [
+                    [0.1, 1, 1], 1
+                ],
+                [
+                    [0.1, 1, 1], 1
+                ]
+            ];
+            parameterCount = parameters.length;
+
+            for (i = 0; i < parameterCount; i++) {
+
+                color = parameters[i][0];
+                size = parameters[i][1];
+
+                materials[i] = new THREE.PointCloudMaterial({
+                    size: size
+                });
+
+                particles = new THREE.PointCloud(geometry, materials[i]);
+                scene.add(particles);
+            }
+        }
 
         for (i = 0; i < scene.children.length; i++) {
 
             var object = scene.children[i];
 
             if (object instanceof THREE.PointCloud) {
-
-                object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+                // if (rem == true) {
+                //     object.x = 100;
+                //     object.y = 100;
+                //     object.z = 100;
+                // } else {
+                    object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+                //}
             }
         }
 
@@ -166,26 +290,7 @@
     function onDocumentMouseMove(e) {
         mouseX = e.clientX - windowHalfX;
         mouseY = e.clientY - windowHalfY;
-    }
-
-    function onDocumentTouchStart(e) {
-
-        if (e.touches.length === 1) {
-
-            e.preventDefault();
-            mouseX = e.touches[0].pageX - windowHalfX;
-            mouseY = e.touches[0].pageY - windowHalfY;
-        }
-    }
-
-    function onDocumentTouchMove(e) {
-
-        if (e.touches.length === 1) {
-
-            e.preventDefault();
-            mouseX = e.touches[0].pageX - windowHalfX;
-            mouseY = e.touches[0].pageY - windowHalfY;
-        }
+        //console.log(mouseX);
     }
 
     function onWindowResize() {
@@ -196,5 +301,13 @@
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function onDocumentKeyDown() {
+        if (rem == false) {
+            rem = true;
+        } else if (secondDown == false) {
+            secondDown = true;
+        }
     }
 })();
