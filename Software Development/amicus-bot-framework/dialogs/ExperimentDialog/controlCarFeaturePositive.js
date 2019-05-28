@@ -4,9 +4,9 @@ const { ActivityTypes, IMessageActivity } = require('botbuilder');
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
 
-class ControlCarFeature  extends ComponentDialog {
+class ControlCarFeaturePositive  extends ComponentDialog {
 
-    
+
 
     constructor(dialogId) {
         super(dialogId);
@@ -35,7 +35,7 @@ class ControlCarFeature  extends ComponentDialog {
                 // } else {
                 //     console.log(`user is neutral: ${step.options.sentiment}`);
                 // }
-                
+
                 // step.context.activity.text = 'There is a snake';
                 // step.context.activity.speak = 'There is a snake';
 
@@ -49,7 +49,7 @@ class ControlCarFeature  extends ComponentDialog {
 
                 step.values.windowDoor = windowDoor;
                 const promptOptions = {
-                    prompt: `Ok, there are multiple "` + windowDoor + `". Which one are you referring to?`,
+                    prompt: `Ok, which ` + windowDoor + `"would you like closed?`,
                     choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
                 };
                 return await step.prompt('choicePrompt', promptOptions);
@@ -64,17 +64,17 @@ class ControlCarFeature  extends ComponentDialog {
 
                 if (step.values.windowDoor === "door") {
                     return await step.next([]);
-                } 
+                }
 
-                var promptChoiceA = open; 
+                var promptChoiceA = open;
                 var promptChoiceB = half;
                 if (step.values.verb.includes("close")) {
                     promptChoiceA = close;
                 }
 
                 const promptOptions = {
-                    prompt: `Sure, ` + step.values.activity + ` ` +  step.values.windowDoor + ` it is. How much should we ` + step.values.verb + ` it?`,
-                    choices: [promptChoiceA, promptChoiceB]
+                    prompt: `Sure, ` + step.values.activity + ` ` +  step.values.windowDoor + ` it is. Would you like it fully closed?`,
+                    choices: ['YES', 'NO']
                 };
 
                 return await step.prompt('choicePrompt', promptOptions);
@@ -85,17 +85,13 @@ class ControlCarFeature  extends ComponentDialog {
                 if (step.values.windowDoor === "window") {
                     step.values.activity = step.result;
                     step.values.conversation.push(step.result);
-                } 
-                
+                }
+
                 var windowDoor = step.values.windowDoor;
 
-                var verb = step.values.verb;
 
-                if (step.values.windowDoor === "window") {
-                    await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` ${step.result.value}`);
-                } else {
-                    await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` on the` + ` ${step.values.activity}`);
-                }
+                await step.context.sendActivity(`Great! ${windowDoor} shut`);
+
 
                 // End the dialog, returning the user info.
                 return await step.endDialog(step.values);
@@ -104,9 +100,9 @@ class ControlCarFeature  extends ComponentDialog {
         ]));
     }
 
-    
+
 
 
 }
 
-module.exports.ControlCarFeature = ControlCarFeature;
+module.exports.ControlCarFeaturePositive = ControlCarFeaturePositive;

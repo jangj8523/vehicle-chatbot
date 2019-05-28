@@ -34,8 +34,8 @@ class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({
-        publishKey: 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
-        subscribeKey: 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
+      publishKey : 'pub-c-08bc673e-b941-4909-9e97-3c388077baef',
+      subscribeKey : 'sub-c-e9df644a-3b9d-11e9-9010-ca52b265d058'
     });
     this.pubnub.init(this);
   }
@@ -48,9 +48,11 @@ class MainScreen extends Component {
 
       this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
+            console.log("MESSAGE: ", msg.message);
             this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate, emotion: msg.message.emotion})
             //TODO: set state with new avatarActions object
             this.recordMessage(msg.message.description, true);
+            this.setAvatarParameters(msg.message);
             console.log(msg.message.description);
           }
           console.log(msg);
@@ -77,6 +79,25 @@ class MainScreen extends Component {
     }
   }
 
+  setAvatarParameters = (source) => {
+    if (source !== null) {
+      return;
+    }
+    const angryScale = source.expression.angryScale;
+    const sadScale = source.expression.sadScale;
+    const surprisedScale = source.expression.surprisedScale;
+
+    const state = source.state;
+    const emotion = source.emotion;
+
+    if (!angryScale || !sadScale || !surprisedScale || !state || !emotion) {
+      console.log("ERROR: new actions from bot-framework are incomplete.");
+      return; //incomplete
+    }
+
+    this.setState({avatarActions: {timestamp: new Date(), state: state, emotes: [emotion], expressions: {angry: angryScale, surprised: surprisedScale, sad: sadScale}}});
+  }
+
   selectEmotion = (index) => {
     if (this.state.selectedEmotion !== index) {
       this.setState({selectedEmotion: index});
@@ -95,13 +116,30 @@ class MainScreen extends Component {
 
   pubnubPublish = (message) => {
     if (message === "") return;
-
+    console.log("DEBUG");
     this.pubnub.publish({
         message: message,
-        channel: 'amicus_delivery'
+        channel: 'amicus_global'
     });
 
     this.recordMessage(message, false);
+  }
+
+  publishToAzure = (message) => {
+    console.log('PUBLISH TO AZURE');
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+    var xhr = new XMLHttpRequest();
+    // const url = "https://webchat.botframework.com/embed/lucas-direct-line?t="+message;
+    xhr.open('GET', "https://webchat.botframework.com/api/tokens", true);
+    xhr.setRequestHeader('Authorization', 'BotConnector ' + 'cpnLitsCRbc.w0Wq-dgG6yVfMi24TNoicpM7EMRt3f8IFlD6Hg7fMx0');
+    xhr.send();
+    console.log (xhr.responseText);
+    function processRequest(e) {
+      if (xhr.readyState === 4  && xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        document.getElementById("chat").src="https://webchat.botframework.com/embed/lucas-direct-line?t="+response
+      }
+    }
   }
 
   recordMessage = (msg, isFromBot) => {
@@ -169,7 +207,11 @@ class MainScreen extends Component {
             <MessageChatComponent messages={messages}/>
             <div className="h-5"/>
 
-            <RecordComponent onPublish={(msg) => {this.pubnubPublish(msg)}}/>
+            <RecordComponent onPublish={(msg) => {
+              console.log("RECORDING");
+              this.pubnubPublish(msg);
+              this.publishToAzure(msg);
+            }}/>
 
             {this.viewFeedback()}
             {this.viewStateButtons()}

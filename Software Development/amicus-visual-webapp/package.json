@@ -18,7 +18,8 @@
     "say": "^0.15.0",
     "string-similarity": "^3.0.0",
     "three": "^0.103.0",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "tailwind:css": "tailwind build src/css/tailwind.src.css -c  tailwind.js -o src/css/tailwind.css",

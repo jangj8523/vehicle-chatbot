@@ -12,10 +12,10 @@ var request = require('request');
 
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
-class GoToDestination  extends ComponentDialog {
+class GoToDestinationNegative  extends ComponentDialog {
 
 
-    
+
 
     constructor(dialogId) {
         super(dialogId);
@@ -34,10 +34,13 @@ class GoToDestination  extends ComponentDialog {
                 // Clear the user information and prompt for the user's name.
                 if (step.values.conversation == null){
                     step.values.conversation = []
-                } 
+                }
 
-                
-                var dest_entity = step.options.entities[0].entity;
+
+                var dest_entity = ""
+                if (step.options.entities !== null) {
+                  dest_entity = step.options.entities[0].entity;
+                }
 
 
 
@@ -45,11 +48,11 @@ class GoToDestination  extends ComponentDialog {
                 currretLocationApi += apiKey
 
                 /***
-                Get Current Location API: 
+                Get Current Location API:
                 ============================
                 */
 
-                // var locationBody = request(currretLocationApi, function(err, response, body) {  
+                // var locationBody = request(currretLocationApi, function(err, response, body) {
                 //     console.log(body);
                 //     console.log("");
                 //     console.log(response);
@@ -71,25 +74,25 @@ class GoToDestination  extends ComponentDialog {
                 // console.log(location);
 
 
-                
+
                 // async findNearbyLocation (destination) {
                 let NearbyMapsApi = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
                 NearbyMapsApi += "location=-33.8670522,151.1957362&radius=1500&&keyword= " + dest_entity +"&key="
-                NearbyMapsApi += apiKey 
+                NearbyMapsApi += apiKey
 
-                
+
                 /***
-                Get Nearby Location API: 
+                Get Nearby Location API:
                 ============================
                 */
 
-                // var responseBody = request(NearbyMapsApi, function(err, response, body) {  
+                // var responseBody = request(NearbyMapsApi, function(err, response, body) {
                 //     console.log(body);
                 //     return body;
                 // });
 
 
-                
+
 
 
                 var results = null;
@@ -97,18 +100,18 @@ class GoToDestination  extends ComponentDialog {
                 if (responseBody !== null) {
                     results = responseBody.results;
                 }
-                
+
                 var locationList = []
                 if (results !== null && typeof(results) !== "undefined") {
                     for (var i = 0; i < results.length; i++) {
                         console.log(results[i].name);
                     }
                 }
-                
+
                 var promptOptions = null;
                 if (locationList.length == 0) {
                     promptOptions = {
-                        prompt: `Ok, there are more than one "` + dest_entity + `". Which one are you referring to?`,
+                        prompt: `Ok, which of "` + dest_entity + `" would you like to go?`,
                         choices: [dest_entity +": Mt View Office", dest_entity + ": PA Bimmer", "Stevens Creek: " + dest_entity, "Peter Pan: " + dest_entity]
                     };
                 } else {
@@ -121,16 +124,16 @@ class GoToDestination  extends ComponentDialog {
 
                 // var destination = this.findNearbyLocation(dest_entity);
 
-                
+
                 step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
             },
 
             async function (step) {
-                
+
                 step.values.activity = step.result.value;
                 step.values.conversation.push(step.result.value);
-                await step.context.sendActivity(`Great! We will head over to "${step.result.value}!"`);
+                await step.context.sendActivity(`Taking us to "${step.result.value}."`);
 
 
                 // End the dialog, returning the user info.
@@ -145,7 +148,7 @@ class GoToDestination  extends ComponentDialog {
 
 }
 
-module.exports.GoToDestination = GoToDestination;
+module.exports.GoToDestinationNegative = GoToDestinationNegative;
 
 // async function (step) {
     //     // Clear the user information and prompt for the user's name.

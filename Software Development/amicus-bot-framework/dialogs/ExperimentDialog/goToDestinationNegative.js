@@ -15,7 +15,7 @@ const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, C
 class GoToDestinationNegative  extends ComponentDialog {
 
 
-    
+
 
     constructor(dialogId) {
         super(dialogId);
@@ -34,10 +34,13 @@ class GoToDestinationNegative  extends ComponentDialog {
                 // Clear the user information and prompt for the user's name.
                 if (step.values.conversation == null){
                     step.values.conversation = []
-                } 
+                }
 
-                
-                var dest_entity = step.options.entities[0].entity;
+
+                var dest_entity = ""
+                if (step.options.entities !== null) {
+                  dest_entity = step.options.entities[0].entity;
+                }
 
 
 
@@ -45,11 +48,11 @@ class GoToDestinationNegative  extends ComponentDialog {
                 currretLocationApi += apiKey
 
                 /***
-                Get Current Location API: 
+                Get Current Location API:
                 ============================
                 */
 
-                // var locationBody = request(currretLocationApi, function(err, response, body) {  
+                // var locationBody = request(currretLocationApi, function(err, response, body) {
                 //     console.log(body);
                 //     console.log("");
                 //     console.log(response);
@@ -71,25 +74,25 @@ class GoToDestinationNegative  extends ComponentDialog {
                 // console.log(location);
 
 
-                
+
                 // async findNearbyLocation (destination) {
                 let NearbyMapsApi = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
                 NearbyMapsApi += "location=-33.8670522,151.1957362&radius=1500&&keyword= " + dest_entity +"&key="
-                NearbyMapsApi += apiKey 
+                NearbyMapsApi += apiKey
 
-                
+
                 /***
-                Get Nearby Location API: 
+                Get Nearby Location API:
                 ============================
                 */
 
-                // var responseBody = request(NearbyMapsApi, function(err, response, body) {  
+                // var responseBody = request(NearbyMapsApi, function(err, response, body) {
                 //     console.log(body);
                 //     return body;
                 // });
 
 
-                
+
 
 
                 var results = null;
@@ -97,14 +100,14 @@ class GoToDestinationNegative  extends ComponentDialog {
                 if (responseBody !== null) {
                     results = responseBody.results;
                 }
-                
+
                 var locationList = []
                 if (results !== null && typeof(results) !== "undefined") {
                     for (var i = 0; i < results.length; i++) {
                         console.log(results[i].name);
                     }
                 }
-                
+
                 var promptOptions = null;
                 if (locationList.length == 0) {
                     promptOptions = {
@@ -121,13 +124,13 @@ class GoToDestinationNegative  extends ComponentDialog {
 
                 // var destination = this.findNearbyLocation(dest_entity);
 
-                
+
                 step.values.conversation.push(step.result);
                 return await step.prompt('choicePrompt', promptOptions);
             },
 
             async function (step) {
-                
+
                 step.values.activity = step.result.value;
                 step.values.conversation.push(step.result.value);
                 await step.context.sendActivity(`Taking us to "${step.result.value}."`);
