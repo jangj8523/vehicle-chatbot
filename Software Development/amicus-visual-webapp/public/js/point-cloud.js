@@ -138,10 +138,10 @@
         //     camera.position.x += (mouseX - camera.position.x) * 0.05;
         //     camera.position.y += (-mouseY - camera.position.y) * 0.05;
         // }
-        console.log("Camera X:")
-        console.log(camera.position.x);
-        console.log("Camera Y:");
-        console.log(camera.position.y);
+        // console.log("Camera X:")
+        // console.log(camera.position.x);
+        // console.log("Camera Y:");
+        // console.log(camera.position.y);
         camera.lookAt(scene.position);
 
         if (rem == true && secondDown == false) {
