@@ -49,7 +49,7 @@
     that lies between two parallel planes cutting it. - wikipedia.      */
 
         cameraZ = farPlane / 3;
-        fogHex = 0x000000; 
+        fogHex = 0x000000;
         fogDensity = 0.0007;
 
         camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
