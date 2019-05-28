@@ -24,6 +24,11 @@ export function getConversationID() {
   );
 }
 
+export function sendMessage(msg) {
+  let messageSkeleton = JSON.parse('');
+
+  //return post("/v1/api/message/add", JSON.stringify(msg));
+}
 
 export function startConversation() {
   if (sessionStorage.getItem(KEY_CONVO) !== null) {

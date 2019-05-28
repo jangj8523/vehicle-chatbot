@@ -1,0 +1,22 @@
+{
+	"text": "hi",
+	"textFormat": "plain",
+	"type": "message",
+	"channelData": {
+		"clientActivityID": "15584774055750.1012fsrdxz2"
+	},
+	"channelId": "webchat",
+	"from": {
+		"id": "768e1c7d-932a-4560-8d33-5278234f3a94",
+		"name": "User",
+		"role": "user"
+	},
+	"locale": "en-us",
+	"timestamp": "2019-05-21T22:23:25.575Z",
+	"entities": [{
+		"requiresBotState": true,
+		"supportsListening": true,
+		"supportsTts": true,
+		"type": "ClientCapabilities"
+	}]
+}
