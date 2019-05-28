@@ -162,9 +162,6 @@
                 vertex.x = Math.random() * 2000 - 1000;
                 // vertex.y = Math.random() * 2000 - 1000;
                 // vertex.z = Math.random() * 2000 - 1000;
-                // vertex.x = 100;
-                // vertex.y = 100;
-                // vertex.z = 100;
 
                 geometry.vertices.push(vertex);
             }
@@ -221,9 +218,6 @@
                 vertex.x = Math.random() * 2000 - 1000;
                 vertex.y = Math.random() * 2000 - 1000;
                 vertex.z = Math.random() * 2000 - 1000;
-                // vertex.x = 100;
-                // vertex.y = 100;
-                // vertex.z = 100;
 
                 geometry.vertices.push(vertex);
             }
@@ -266,13 +260,7 @@
             var object = scene.children[i];
 
             if (object instanceof THREE.PointCloud) {
-                // if (rem == true) {
-                //     object.x = 100;
-                //     object.y = 100;
-                //     object.z = 100;
-                // } else {
-                    object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
-                //}
+                object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
             }
         }
 
@@ -290,7 +278,6 @@
     function onDocumentMouseMove(e) {
         mouseX = e.clientX - windowHalfX;
         mouseY = e.clientY - windowHalfY;
-        //console.log(mouseX);
     }
 
     function onWindowResize() {
