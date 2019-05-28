@@ -210,7 +210,7 @@ class MainScreen extends Component {
             <RecordComponent onPublish={(msg) => {
               console.log("RECORDING");
               this.pubnubPublish(msg);
-              this.publishToAzure(msg);
+              //this.publishToAzure(msg);
             }}/>
 
             {this.viewFeedback()}
