@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
 import { Message } from 'react-chat-ui';
 
-import { getConversationID } from '../managers/networking/conversation';
+import { getConversationID, sendMessage } from '../managers/networking/conversation';
 
 import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
@@ -66,6 +66,7 @@ class MainScreen extends Component {
       }, 5000);
 
       const convoID = getConversationID();
+      sendMessage("hello");
       console.log("[MainScreen] current conversation: " + convoID);
   }
 

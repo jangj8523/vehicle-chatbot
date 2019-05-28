@@ -1,5 +1,6 @@
 import { get, post } from './api';
 import { KEY_CONVO, KEY_CONVO_ID } from '../../constants';
+const messageTemplate = require('../../model/MessageTemplate.json');
 
 export function clearAll() {
   sessionStorage.clear();
@@ -25,7 +26,9 @@ export function getConversationID() {
 }
 
 export function sendMessage(msg) {
-  let messageSkeleton = JSON.parse('');
+  let messageSkeleton = messageTemplate;
+  messageSkeleton.text = msg;
+  console.log(messageSkeleton);
 
   //return post("/v1/api/message/add", JSON.stringify(msg));
 }
