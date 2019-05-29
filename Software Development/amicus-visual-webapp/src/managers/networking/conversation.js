@@ -25,6 +25,24 @@ export function getConversationID() {
   );
 }
 
+export function pingWaterfall() {
+  if (sessionStorage.getItem(KEY_CONVO) == null) {
+    console.error("[pingWaterfall] no convo ID exists -- please start a conversation ahead of time.");
+    return
+  }
+
+  const convoID = sessionStorage.getItem(KEY_CONVO_ID);
+  return get("/v3/directline/conversations/" + convoID + "/activities?watermark=0"/*, JSON.stringify(msg)*/).then(res => res.json())
+  .then((result) => {
+      console.log(result);
+      return result;
+    },(error) => {
+      console.log(error);
+      return error;
+    }
+  );
+}
+
 export function sendMessage(msg) {
   let messageSkeleton = messageTemplate;
   messageSkeleton.text = msg;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
 import { Message } from 'react-chat-ui';
 
-import { getConversationID, sendMessage } from '../managers/networking/conversation';
+import { getConversationID, sendMessage, pingWaterfall } from '../managers/networking/conversation';
 
 import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
@@ -66,14 +66,17 @@ class MainScreen extends Component {
       }, 5000);
 
       const convoID = getConversationID();
-      sendMessage("hello");
       console.log("[MainScreen] current conversation: " + convoID);
+
+      this.waterfallRunning = false;
+      this.waterfallInterval = setInterval(() => this.waterfall(), 2000);
   }
 
   componentWillUnmount() {
       this.pubnub.unsubscribe({
           channels: ['amicus_global']
       });
+      clearInterval(this.waterfallInterval);
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -83,6 +86,18 @@ class MainScreen extends Component {
       //reasoning: response only includes on message, but the bot could've sent multiple
       this.sayDialog();
     }
+  }
+
+  waterfall = () => {
+    if (this.waterfallRunning) return;
+
+    this.waterfallRunning = true;
+
+    const result = pingWaterfall();
+    console.log("result: " + result);
+    console.log("waterfall");
+    
+    this.waterfallRunning = false;
   }
 
   setAvatarParameters = (source) => {
