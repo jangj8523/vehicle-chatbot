@@ -1,4 +1,4 @@
-<img src="https://github.com/cs210/BMW-2/blob/amicus-visual-munich/Public%20Assets/amicus_logo.png?raw=true" alt="amicus logo" width="400">
+<img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/amicus_logo.png?raw=true" alt="amicus logo" width="400">
 
 Project Synopsis
 ------

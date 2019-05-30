@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
 import { Message } from 'react-chat-ui';
 
+import { startNewConversation, sendMessage, pingWatermark } from '../managers/networking/conversation';
+
 import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
@@ -29,6 +31,8 @@ class MainScreen extends Component {
     messages: [],
     selectedEmotion: EMOTIONS_ENUM.neutral,
     avatarActions: {},
+    waterfallId: 0,
+    conversationId: null
   }
 
   constructor(props) {
@@ -46,7 +50,7 @@ class MainScreen extends Component {
           withPresence: true
       });
 
-      this.pubnub.getMessage('amicus_global', (msg) => {
+      /*this.pubnub.getMessage('amicus_global', (msg) => {
           if (msg != null && msg.message != null){
             console.log("MESSAGE: ", msg.message);
             this.setState({response: msg.message.description, loading: false, pitch: msg.message.pitch, volume: msg.message.volume, rate: msg.message.rate, emotion: msg.message.emotion})
@@ -56,18 +60,22 @@ class MainScreen extends Component {
             console.log(msg.message.description);
           }
           console.log(msg);
-      });
+      });*/
 
       this.timeout = setInterval(() => {
         const { currentHint } = this.state;
         this.setState({currentHint: currentHint+1});
       }, 5000);
+
+      this.waterfallRunning = false;
+      this.waterfallInterval = setInterval(() => this.waterfall(), 2000);
   }
 
   componentWillUnmount() {
       this.pubnub.unsubscribe({
           channels: ['amicus_global']
       });
+      clearInterval(this.waterfallInterval);
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -79,10 +87,63 @@ class MainScreen extends Component {
     }
   }
 
+  waterfall = async () => {
+    if (this.waterfallRunning) return;
+
+    this.waterfallRunning = true;
+
+    const { waterfallId } = this.state;
+    const convoID = await this.getConversationID();
+    console.log("[MainScreen] current conversation: " + convoID);
+
+    pingWatermark(convoID, waterfallId).then(res => res.json())
+    .then((result) => {
+        if (result.watermark === null || result.activities === null) return;
+
+        if (result.watermark !== waterfallId) {
+          //we have an update...
+
+          for (var activity of result.activities) {
+            if (activity.text === null) continue;
+            if (activity.from.id === null) continue;
+
+            if (activity.from.id === "1") {
+              //message came from bot!
+              const message = activity.text;
+              this.recordMessage(message, true);
+            }
+          }
+
+          this.setState({waterfallId: result.watermark});
+        }
+        console.log("watermark result: " + JSON.stringify(result));
+      },(error) => {
+        console.log("watermark error: " + JSON.stringify(error));
+      }
+    );
+
+    this.waterfallRunning = false;
+  }
+
+  getConversationID = async () => {
+    const { conversationId } = this.state;
+    if (conversationId !== null) return conversationId;
+
+    return await startNewConversation().then(res => res.json())
+    .then((result) => {
+        console.log(result);
+        if (result == null || result.conversationId === null) { return null; }
+        this.setState({conversationId: result.conversationId});
+        return result.conversationId;
+      },(error) => {
+        console.error(error);
+      }
+    )
+  }
+
   setAvatarParameters = (source) => {
-    if (source !== null) {
-      return;
-    }
+    if (source == null || source.expression == null) return;
+
     const angryScale = source.expression.angryScale;
     const sadScale = source.expression.sadScale;
     const surprisedScale = source.expression.surprisedScale;
@@ -114,6 +175,13 @@ class MainScreen extends Component {
     }
   }
 
+  publish = async (message) => {
+    const convoID = await this.getConversationID();
+    sendMessage(message, convoID);
+
+    this.pubnubPublish(message);
+  }
+
   pubnubPublish = (message) => {
     if (message === "") return;
     console.log("DEBUG");
@@ -126,7 +194,7 @@ class MainScreen extends Component {
   }
 
   publishToAzure = (message) => {
-    console.log('PUBLISH TO AZURE');
+    /*console.log('PUBLISH TO AZURE');
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
     var xhr = new XMLHttpRequest();
     // const url = "https://webchat.botframework.com/embed/lucas-direct-line?t="+message;
@@ -139,7 +207,7 @@ class MainScreen extends Component {
         var response = JSON.parse(xhr.responseText);
         document.getElementById("chat").src="https://webchat.botframework.com/embed/lucas-direct-line?t="+response
       }
-    }
+    }*/
   }
 
   recordMessage = (msg, isFromBot) => {
@@ -209,8 +277,7 @@ class MainScreen extends Component {
 
             <RecordComponent onPublish={(msg) => {
               console.log("RECORDING");
-              this.pubnubPublish(msg);
-              this.publishToAzure(msg);
+              this.publish(msg);
             }}/>
 
             {this.viewFeedback()}
