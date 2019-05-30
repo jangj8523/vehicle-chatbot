@@ -1,15 +1,24 @@
 {
     "name": "amicus",
+    "description": "",
     "services": [
         {
             "type": "endpoint",
-            "name": "development",
-            "endpoint": "http://localhost:3978/api/messages",
             "appId": "",
             "appPassword": "",
-            "id": "1"
+            "endpoint": "http://localhost:3978/api/messages",
+            "id": "1",
+            "name": "development"
+        },
+        {
+            "type": "endpoint",
+            "endpoint": "http://localhost:3978/api/messages",
+            "name": "amicus",
+            "id": "46"
         }
     ],
     "padlock": "",
-    "version": "2.0"
+    "version": "2.0",
+    "path": "/Users/jaewoojang/Desktop/spring2019/cs210b/BMW-2/Software Development/amicus-bot-framework/amicus.bot",
+    "overrides": null
 }

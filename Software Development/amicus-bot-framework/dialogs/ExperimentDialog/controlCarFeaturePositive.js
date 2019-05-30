@@ -20,6 +20,8 @@ class ControlCarFeaturePositive  extends ComponentDialog {
         // Define the prompts used in this conversation flow.
         this.addDialog(new TextPrompt('textPrompt'));
         this.addDialog(new ChoicePrompt('choicePrompt'));
+        // TEMP: his.addDialog(new TextPrompt('textPrompt'));
+        this.addDialog(new ChoicePrompt('choicePrompt'));
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
             async function (step) {
@@ -48,6 +50,22 @@ class ControlCarFeaturePositive  extends ComponentDialog {
                 var windowDoor = step.options.entities[1].entity;
 
                 step.values.windowDoor = windowDoor;
+                const promptOptions = {
+                    prompt: `Ok, which ` + windowDoor + `"would you like closed?`,
+                    choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
+                };
+                const promptOptions = {
+                    prompt: `Ok, which ` + windowDoor + `"would you like closed?`,
+                    choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
+                };
+                const promptOptions = {
+                    prompt: `Ok, which ` + windowDoor + `"would you like closed?`,
+                    choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
+                };
+                const promptOptions = {
+                    prompt: `Ok, which ` + windowDoor + `"would you like closed?`,
+                    choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
+                };
                 const promptOptions = {
                     prompt: `Ok, which ` + windowDoor + `"would you like closed?`,
                     choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
