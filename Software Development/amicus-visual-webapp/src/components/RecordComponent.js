@@ -104,6 +104,9 @@ class RecordComponent extends Component {
     } else {
       this.stopListeningAPI();
     }
+
+    var event = new Event('keydown');
+    document.dispatchEvent(event);
   }
 
   startListeningAPI = () => {

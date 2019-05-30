@@ -193,6 +193,23 @@ class MainScreen extends Component {
     this.recordMessage(message, false);
   }
 
+  publishToAzure = (message) => {
+    console.log('PUBLISH TO AZURE');
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+    var xhr = new XMLHttpRequest();
+    // const url = "https://webchat.botframework.com/embed/lucas-direct-line?t="+message;
+    xhr.open('GET', "https://webchat.botframework.com/api/tokens", true);
+    xhr.setRequestHeader('Authorization', 'BotConnector ' + 'cpnLitsCRbc.w0Wq-dgG6yVfMi24TNoicpM7EMRt3f8IFlD6Hg7fMx0');
+    xhr.send();
+    console.log (xhr.responseText);
+    function processRequest(e) {
+      if (xhr.readyState === 4  && xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        document.getElementById("chat").src="https://webchat.botframework.com/embed/lucas-direct-line?t="+response
+      }
+    }
+  }
+
   recordMessage = (msg, isFromBot) => {
     const { messages } = this.state;
     let newMessages = messages;
@@ -244,7 +261,7 @@ class MainScreen extends Component {
     const { messages } = this.state;
 
     return (
-      <div className="flex flex-col h-full bg-pitch-black text-grey-lighter">
+      <div className="flex flex-col h-full bg-transparent text-grey-lighter">
         <div className="flex flex-col h-auto my-auto">
           <ThreeAvatarComponent actions={this.state.avatarActions}/>
           <div className="flex flex-col mx-auto p-2" style={{width: '40rem'}}>

@@ -108,7 +108,7 @@ class ThreeAvatarComponent extends React.Component {
 			console.error( e );
 		});
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.gammaOutput = true;
 		this.renderer.gammaFactor = 2.2;

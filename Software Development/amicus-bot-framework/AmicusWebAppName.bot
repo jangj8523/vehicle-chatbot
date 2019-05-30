@@ -1,0 +1,42 @@
+{
+    "name": "AmicusWebAppName",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "62873733-9c82-4d63-8827-35b01496c9f8",
+            "appPassword": "Amicus1234",
+            "endpoint": "https://AmicusWebAppName.azurewebsites.net/api/messages",
+            "id": "1c7bab00-7d3b-11e9-be05-19176ef31133",
+            "name": "https://AmicusWebAppName.azurewebsites.net/api/messages"
+        },
+        {
+            "type": "abs",
+            "appId": "62873733-9c82-4d63-8827-35b01496c9f8",
+            "resourceGroup": "amicus",
+            "serviceName": "Amicus_CS210_1234",
+            "subscriptionId": "219e0a8b-ab66-4969-95d1-c96f396221dc",
+            "id": "114"
+        },
+        {
+            "type": "abs",
+            "appId": "62873733-9c82-4d63-8827-35b01496c9f8",
+            "serviceName": "Amicus_CS210_1234",
+            "subscriptionId": "219e0a8b-ab66-4969-95d1-c96f396221dc",
+            "tenantId": "amicus",
+            "id": "205"
+        },
+        {
+            "type": "endpoint",
+            "appId": "62873733-9c82-4d63-8827-35b01496c9f8",
+            "appPassword": "Amicus1234",
+            "endpoint": "https://AmicusWebAppName.azurewebsites.net/api/messages",
+            "name": "Amicus_CS210_1234",
+            "id": "125"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "path": "/Users/jaewoojang/Desktop/spring2019/cs210b/BMW-2/Software Development/amicus-bot-framework/AmicusWebAppName.bot",
+    "overrides": null
+}
