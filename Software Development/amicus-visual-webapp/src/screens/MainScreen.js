@@ -194,7 +194,7 @@ class MainScreen extends Component {
   }
 
   publishToAzure = (message) => {
-    console.log('PUBLISH TO AZURE');
+    /*console.log('PUBLISH TO AZURE');
     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
     var xhr = new XMLHttpRequest();
     // const url = "https://webchat.botframework.com/embed/lucas-direct-line?t="+message;
@@ -207,7 +207,7 @@ class MainScreen extends Component {
         var response = JSON.parse(xhr.responseText);
         document.getElementById("chat").src="https://webchat.botframework.com/embed/lucas-direct-line?t="+response
       }
-    }
+    }*/
   }
 
   recordMessage = (msg, isFromBot) => {
