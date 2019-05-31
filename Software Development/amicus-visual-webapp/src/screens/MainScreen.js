@@ -32,7 +32,8 @@ class MainScreen extends Component {
     selectedEmotion: EMOTIONS_ENUM.neutral,
     avatarActions: {},
     waterfallId: 0,
-    conversationId: null
+    conversationId: null,
+    online: false,
   }
 
   constructor(props) {
@@ -100,6 +101,7 @@ class MainScreen extends Component {
     .then((result) => {
         if (result.watermark === null || result.activities === null) return;
 
+        this.setState({online: true});
         if (result.watermark !== waterfallId) {
           //we have an update...
 
@@ -257,6 +259,10 @@ class MainScreen extends Component {
     );
   }
 
+  openConnectionSettings = () => {
+    console.log("connection settings");
+  }
+
   render() {
     const { messages } = this.state;
 
@@ -284,9 +290,31 @@ class MainScreen extends Component {
             {this.viewStateButtons()}
           </div>
         </div>
+        {this.viewDebugOnline()}
       </div>
     );
   }
+
+  viewDebugOnline = () => {
+
+    const globalClass = " text-white font-bold py-2 px-2 rounded-full";
+    const enabledClass = " bg-green hover:bg-green-dark" + globalClass;
+    const disabledClass = " bg-grey-darker hover:bg-grey-darkest" + globalClass;
+
+    const { online } = this.state;
+    const currentClass = online ? enabledClass : disabledClass;
+
+    return (
+      <div className="absolute pin-b pin-r m-3 text-grey text-center">
+        <div className="flex flex-col">
+          <button className={currentClass}
+            onClick={this.openConnectionSettings}>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
 
   viewHistory = () => {
     if (this.state.messages.length < MESSAGE_LIMIT) return;
