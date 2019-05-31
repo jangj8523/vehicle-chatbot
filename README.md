@@ -18,11 +18,11 @@ Team Members
 ------
 Member | Photograph | Email 
 --- | --- | ---
-Santiago Gutierrez | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/santi.jpg?raw=true" alt="Santiago Gutierrez" width="175">  | santig@stanford.edu
-Ryan Jae | <img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/25289513_1037307379742870_1375725072571679165_n.jpg?_nc_cat=100&_nc_ht=scontent-lax3-2.xx&oh=d7e1cd7851d17b0c1715b6e56fc9ca24&oe=5CBB6831" alt="Ryan Jae" width="175">  | ryanjae@cs.stanford.edu
-Jae Woo Jang | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/not_git_photo.png?raw=true" alt="Jae Woo Jang" width="175">  | jaewooj@stanford.edu
-Nitya Mani | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/not_git_photo.png?raw=true" alt="Nitya Mani" width="175">  | nityam@stanford.edu
-Sharman Tan | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/not_git_photo.png?raw=true" alt="Sharman Tan" width="175">  | sharmant@stanford.edu
+Santiago Gutierrez | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/santi.jpg?raw=true" alt="Santiago Gutierrez" width="125">  | santig@stanford.edu
+Ryan Jae | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/ryan.jpg?raw=true" alt="Ryan Jae" width="125">  | ryanjae@cs.stanford.edu
+Jae Woo Jang | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/no_git_photo.png?raw=true" alt="Jae Woo Jang" width="125">  | jaewooj@stanford.edu
+Nitya Mani | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/no_git_photo.png?raw=true" alt="Nitya Mani" width="125">  | nityam@stanford.edu
+Sharman Tan | <img src="https://github.com/cs210/BMW-2/blob/amicus-standalone/Public/no_git_photo.png?raw=true" alt="Sharman Tan" width="125">  | sharmant@stanford.edu
 
 Team Skills Matrix
 ------
