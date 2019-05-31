@@ -38,11 +38,12 @@ class RecordComponent extends Component {
   componentDidUpdate(prevProps, prevState){
     if (this.props.transcript !== prevProps.transcript) {
       const { transcript } = this.props;
-      console.log("[componentDidUpdate] transcript delta: " + transcript);
 
       const { isListening } = this.state;
       if (this.isTriggerValid(transcript) && !isListening) {
         console.log("[componentDidUpdate] Amicus recognized");
+        console.log("[componentDidUpdate] transcript delta: " + transcript);
+        
         this.startListeningAPI();
       } else {
         this.startSpeechTimer(() => {
@@ -179,7 +180,6 @@ class RecordComponent extends Component {
             {isListening && <Spinner className="z-0" color="#FFFFFF" size={47}/>}
           </button>
         </div>
-        {this.viewDebug()}
       </div>
     );
   }
@@ -209,30 +209,6 @@ class RecordComponent extends Component {
 
     return (
       <Digital className="mt-1 mr-2" color="#FFFFFF" size={13}/>
-    );
-  }
-
-  viewDebug = () => {
-
-    const globalClass = " text-white font-bold py-2 px-2 rounded-full";
-    const enabledClass = " bg-red hover:bg-red-dark" + globalClass;
-    const disabledClass = " bg-grey-darker hover:bg-grey-darkest" + globalClass;
-
-    const { listening } = this.props;
-    const currentClass = listening ? enabledClass : disabledClass;
-
-    return (
-      <div className="absolute pin-b pin-r m-3 text-grey text-center">
-        <div className="flex flex-col">
-          <button className={currentClass}
-            onClick={this.toggleBrowserRecording}>
-          </button>
-          {/*<button className="bg-blue hover:bg-blue-dark text-white font-bold mt-3 py-2 px-4 rounded"
-            onClick={this.sendPendingMessage}>
-            Debug Send
-          </button>*/}
-        </div>
-      </div>
     );
   }
 

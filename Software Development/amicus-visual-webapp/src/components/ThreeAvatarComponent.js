@@ -32,7 +32,7 @@ class ThreeAvatarComponent extends React.Component {
     let newActions = newActionsParent;
 
     if (!newActions.state || !newActions.emotes || !newActions.expressions || !newActions.timestamp) {
-      console.log("ERROR: new actions are incomplete.");
+      //console.log("ERROR: new actions are incomplete.");
       return;
     }
 

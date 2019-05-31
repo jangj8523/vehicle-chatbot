@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
+import Modal from 'react-awesome-modal';
 import { Message } from 'react-chat-ui';
 
 import { startNewConversation, sendMessage, pingWatermark } from '../managers/networking/conversation';
@@ -8,6 +9,7 @@ import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
 import MessageChatComponent from '../components/MessageChatComponent';
+import ConnectionComponent from '../components/ConnectionComponent';
 
 //import Sentry from 'react-activity/lib/Sentry';
 //import Dots from 'react-activity/lib/Dots';
@@ -32,7 +34,9 @@ class MainScreen extends Component {
     selectedEmotion: EMOTIONS_ENUM.neutral,
     avatarActions: {},
     waterfallId: 0,
-    conversationId: null
+    conversationId: null,
+    online: false,
+    connectionModalVisible: false
   }
 
   constructor(props) {
@@ -100,6 +104,7 @@ class MainScreen extends Component {
     .then((result) => {
         if (result.watermark === null || result.activities === null) return;
 
+        this.setState({online: true});
         if (result.watermark !== waterfallId) {
           //we have an update...
 
@@ -257,6 +262,10 @@ class MainScreen extends Component {
     );
   }
 
+  openConnectionSettings = () => {
+    this.setState({connectionModalVisible : true});
+  }
+
   render() {
     const { messages } = this.state;
 
@@ -284,9 +293,50 @@ class MainScreen extends Component {
             {this.viewStateButtons()}
           </div>
         </div>
+        {this.viewConnectionModal()}
+        {this.viewDebugOnline()}
       </div>
     );
   }
+
+  viewConnectionModal = () => {
+
+    this.closeModal = () => {
+        this.setState({connectionModalVisible : false});
+    };
+
+    return (
+      <Modal
+          visible={this.state.connectionModalVisible}
+          width="400"
+          height="320"
+          effect="fadeInUp"
+          onClickAway={() => this.closeModal()} >
+          <ConnectionComponent onPress={() => this.closeModal()}/>
+      </Modal>
+    );
+  }
+
+  viewDebugOnline = () => {
+
+    const globalClass = " text-white font-bold py-2 px-2 rounded-full";
+    const enabledClass = " bg-green hover:bg-green-dark" + globalClass;
+    const disabledClass = " bg-grey-darker hover:bg-grey-darkest" + globalClass;
+
+    const { online } = this.state;
+    const currentClass = online ? enabledClass : disabledClass;
+
+    return (
+      <div className="absolute pin-b pin-r m-3 text-grey text-center">
+        <div className="flex flex-col">
+          <button className={currentClass}
+            onClick={this.openConnectionSettings}>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
 
   viewHistory = () => {
     if (this.state.messages.length < MESSAGE_LIMIT) return;
