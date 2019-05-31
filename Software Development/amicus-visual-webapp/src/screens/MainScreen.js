@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PubNubReact from 'pubnub-react';
+import Modal from 'react-awesome-modal';
 import { Message } from 'react-chat-ui';
 
 import { startNewConversation, sendMessage, pingWatermark } from '../managers/networking/conversation';
@@ -8,6 +9,7 @@ import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
 import MessageChatComponent from '../components/MessageChatComponent';
+import ConnectionComponent from '../components/ConnectionComponent';
 
 //import Sentry from 'react-activity/lib/Sentry';
 //import Dots from 'react-activity/lib/Dots';
@@ -34,6 +36,7 @@ class MainScreen extends Component {
     waterfallId: 0,
     conversationId: null,
     online: false,
+    connectionModalVisible: false
   }
 
   constructor(props) {
@@ -260,7 +263,7 @@ class MainScreen extends Component {
   }
 
   openConnectionSettings = () => {
-    console.log("connection settings");
+    this.setState({connectionModalVisible : true});
   }
 
   render() {
@@ -290,8 +293,27 @@ class MainScreen extends Component {
             {this.viewStateButtons()}
           </div>
         </div>
+        {this.viewConnectionModal()}
         {this.viewDebugOnline()}
       </div>
+    );
+  }
+
+  viewConnectionModal = () => {
+
+    this.closeModal = () => {
+        this.setState({connectionModalVisible : false});
+    };
+
+    return (
+      <Modal
+          visible={this.state.connectionModalVisible}
+          width="400"
+          height="320"
+          effect="fadeInUp"
+          onClickAway={() => this.closeModal()} >
+          <ConnectionComponent onPress={() => this.closeModal()}/>
+      </Modal>
     );
   }
 
