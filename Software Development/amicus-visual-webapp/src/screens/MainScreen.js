@@ -267,6 +267,9 @@ class MainScreen extends Component {
 
   openConnectionSettings = () => {
     this.setState({connectionModalVisible : true});
+
+    var event = new Event('event_rain');
+    window.dispatchEvent(event);
   }
 
   render() {

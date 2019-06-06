@@ -12,7 +12,6 @@ class ConnectionComponent extends Component {
     connectionUrl: '',
   }
 
-
   componentWillMount() {
     this.setState({connectionUrl: getCallURL()});
   }

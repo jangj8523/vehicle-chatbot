@@ -1,4 +1,5 @@
-import java.awt.Rectangle;
+
+//import java.awt.Rectangle;
 
 class Particle {
   
@@ -81,7 +82,11 @@ class Particle {
 
 ArrayList particles;
 
-Rectangle blackhole;
+PShape blackhole;
+int x;
+int y;
+int width;
+int height;
 
 PImage overlay;
 
@@ -89,15 +94,19 @@ ArrayList drops;
 
 PImage [] boy;
 int currentPosition = 0;
-PImage bg;
+//PImage bg;
 
 void setup() {
   size(1024,768);
-  bg = loadImage("night_sky.jpg");
+  //bg = loadImage("night_sky.jpg");
   
   frameRate(120/2);
   
-  blackhole = new Rectangle(0,720,1024,68);
+  blackhole = createShape(RECT,0,720,1024,68);
+  x = 0;
+  y = 720;
+  width = 1024;
+  height = 68;
   particles = new ArrayList();
   
   drops = new ArrayList();
@@ -105,13 +114,12 @@ void setup() {
 }
 
 void draw() {
-  background(bg);
- //background(13,20,29);
+  background(13,20,29);
  
   noStroke();
   fill(10,15,17);
   //fill(38, 96, 79);
-  rect(blackhole.x, blackhole.y, blackhole.width,blackhole.height);
+  rect(x, y, width,height);
   
   for (int i = 3; i >= 0; i-- )    {
     particles.add(new Particle(random(0, 1024),random(-40,-50)));

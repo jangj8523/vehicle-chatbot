@@ -177,6 +177,11 @@
     <style type="text/css">
       .inner {
         position: absolute;
+        visibility: visible;
+      }
+      .innerHide {
+        position: absolute;
+        visibility: invisible;
       }
     </style>
 
@@ -186,6 +191,8 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script type="text/javascript" src="./js/processing.js"></script>
+    <script type="text/javascript" src="./js/p5.min.js"></script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -212,7 +219,8 @@
       </div>
     </div>
     <div class="outer">
-      <script class="inner" src="js/point-cloud.js"></script>
+      <!--<script class="inner" id="point-cloud" src="js/point-cloud.js"></script>-->
+      <script class="inner" id="rain" src="./models/processing/night_rain_js.js"></script>
       <div class="inner" id="root"></div>
     </div>
     <!--
