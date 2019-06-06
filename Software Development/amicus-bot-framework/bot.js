@@ -4,6 +4,8 @@
 const { ActivityTypes, MessageFactory, IMessageActivity } = require('botbuilder');
 const { DialogSet, WaterfallDialog, TextPrompt, Dialog, DialogTurnStatus } = require('botbuilder-dialogs');
 
+const amicusEncode = require('./util/jwtManager.js');
+
 const DIALOG_STATE_PROPERTY = 'dialogStatePropertyAccessor';
 const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
@@ -57,7 +59,9 @@ class MyBot {
             user.nameExists = false;
             user.userName = "Vik"
             user.mustClarify = false;
-            await step.prompt('textPrompt', "Welcome! I am Amicus, your friend. To get started input your name! ");
+
+            let encodedAmicus = amicusEncode("Welcome! I am Amicus, your friend. To get started input your name!");
+            await step.prompt('textPrompt', /*encodedAmicus*/"Welcome! I am Amicus, your friend. To get started input your name!");
         } else if (user.mustClarify == true) {
             var response = clarifyResponse[Math.floor(Math.random() * clarifyResponse.length)];
             await step.prompt('textPrompt', response);

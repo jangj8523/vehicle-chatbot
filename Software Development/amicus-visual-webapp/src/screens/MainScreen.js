@@ -3,6 +3,8 @@ import PubNubReact from 'pubnub-react';
 import Modal from 'react-awesome-modal';
 import { Message } from 'react-chat-ui';
 
+import { amicusDecode } from '../managers/jwtManager';
+
 import { startNewConversation, sendMessage, pingWatermark } from '../managers/networking/conversation';
 
 import RecordComponent from '../components/RecordComponent';
@@ -228,6 +230,13 @@ class MainScreen extends Component {
     //there needs to be a limit
 
     newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
+
+    if (isFromBot) {
+      //decode test
+      const testDecode = amicusDecode(msg);
+      console.log("decoded: " + testDecode);
+    }
+
     this.setState({messages: newMessages});
   }
 

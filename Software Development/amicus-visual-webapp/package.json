@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "dat.gui": "^0.7.6",
+    "jwt-simple": "^0.5.6",
     "pubnub": "^4.21.7",
     "pubnub-react": "^1.2.0",
     "react": "^16.8.2",
