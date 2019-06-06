@@ -10,6 +10,7 @@ import RecordComponent from '../components/RecordComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
 import MessageChatComponent from '../components/MessageChatComponent';
 import ConnectionComponent from '../components/ConnectionComponent';
+import InformationComponent from '../components/InformationComponent';
 
 //import Sentry from 'react-activity/lib/Sentry';
 //import Dots from 'react-activity/lib/Dots';
@@ -35,6 +36,7 @@ class MainScreen extends Component {
     avatarActions: {},
     waterfallId: 0,
     conversationId: null,
+    errorMsg: null,
     online: false,
     connectionModalVisible: false
   }
@@ -104,7 +106,7 @@ class MainScreen extends Component {
     .then((result) => {
         if (result.watermark === null || result.activities === null) return;
 
-        this.setState({online: true});
+        this.setState({online: true, errorMsg: null});
         if (result.watermark !== waterfallId) {
           //we have an update...
 
@@ -124,6 +126,7 @@ class MainScreen extends Component {
         console.log("watermark result: " + JSON.stringify(result));
       },(error) => {
         console.log("watermark error: " + JSON.stringify(error));
+        this.setState({online: false, errorMsg: 'no connection 🔌'});
       }
     );
 
@@ -294,7 +297,7 @@ class MainScreen extends Component {
           </div>
         </div>
         {this.viewConnectionModal()}
-        {this.viewDebugOnline()}
+        {this.viewInformation()}
       </div>
     );
   }
@@ -317,18 +320,20 @@ class MainScreen extends Component {
     );
   }
 
-  viewDebugOnline = () => {
+  viewInformation = () => {
 
-    const globalClass = " text-white font-bold py-2 px-2 rounded-full";
+    const globalClass = " text-white font-bold py-2 px-2 rounded-full w-2 h-2 my-auto";
     const enabledClass = " bg-green hover:bg-green-dark" + globalClass;
     const disabledClass = " bg-grey-darker hover:bg-grey-darkest" + globalClass;
 
-    const { online } = this.state;
+    const { online, errorMsg } = this.state;
     const currentClass = online ? enabledClass : disabledClass;
 
     return (
       <div className="absolute pin-b pin-r m-3 text-grey text-center">
-        <div className="flex flex-col">
+        <div className="flex flex-row">
+          {errorMsg || !online ? <InformationComponent message={errorMsg}
+            onClick={this.openConnectionSettings}/> : <div/>}
           <button className={currentClass}
             onClick={this.openConnectionSettings}>
           </button>
