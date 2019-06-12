@@ -6,19 +6,21 @@ import Dots from 'react-activity/lib/Dots';
 class InformationComponent extends Component {
 
   render() {
-    let { message } = this.props;
+    let { message, online } = this.props;
 
     let messageRender = null;
     if (message) {
-      messageRender = (<div className="text-white">{message}</div>);
-    } else {
+      messageRender = (<div className="text-red">{message}</div>);
+    } else if (!online) {
       messageRender = <Dots color="#FFFFFF"/>
+    } else {
+      messageRender = (<div className="text-green">connected</div>);
     }
 
     return (
-      <div className="mr-2 hover:bg-grey-darker">
+      <div className="ml-2 hover:bg-grey-darker">
         <button className="text-color-white" onClick={this.props.onClick}>
-        <div className="bg-grey-darker border-white border-2 border-solid pl-5 pr-5 pt-2 pb-2 rounded-lg" style={{backgroundColor: '#20496869'}}>
+        <div className="bg-grey-darker pl-2 pr-2 pt-1 pb-1 rounded-lg" style={{backgroundColor: '#20496869'}}>
           {messageRender}
         </div>
         </button>

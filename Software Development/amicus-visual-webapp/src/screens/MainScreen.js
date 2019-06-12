@@ -10,10 +10,11 @@ import { startNewConversation, sendMessage, pingWatermark } from '../managers/ne
 import RecordComponent from '../components/RecordComponent';
 //import AvatarComponent from '../components/AvatarComponent';
 import ThreeAvatarComponent from '../components/ThreeAvatarComponent';
-import MessageChatComponent from '../components/MessageChatComponent';
+//import MessageChatComponent from '../components/MessageChatComponent';
 import ConnectionComponent from '../components/ConnectionComponent';
 import InformationComponent from '../components/InformationComponent';
 
+import Digital from 'react-activity/lib/Digital';
 //import Sentry from 'react-activity/lib/Sentry';
 //import Dots from 'react-activity/lib/Dots';
 
@@ -42,6 +43,7 @@ class MainScreen extends Component {
     online: false,
     connectionModalVisible: false,
     toggleRecordingCounter: 0,
+    spokenText: '',
   }
 
   constructor(props) {
@@ -92,7 +94,7 @@ class MainScreen extends Component {
       //TODO: jae, the response is no longer what should used for speech
       //alternative: get messages[] from the state and read the last ones with the bot ID
       //reasoning: response only includes on message, but the bot could've sent multiple
-      this.sayDialog();
+      //this.sayDialog();
     }
   }
 
@@ -289,31 +291,33 @@ class MainScreen extends Component {
   }
 
   render() {
-    const { messages, toggleRecordingCounter } = this.state;
+    const { toggleRecordingCounter } = this.state;
 
     return (
-      <div className="flex flex-col h-full bg-transparent text-grey-lighter">
+      <div className="flex flex-col h-full bg-pitch-black text-grey-lighter">
         <div className="flex flex-col h-auto my-auto">
           <ThreeAvatarComponent actions={this.state.avatarActions}/>
-          <div className="flex flex-col mx-auto p-2" style={{width: '40rem'}}>
-            {/*<AvatarComponent emotion={selectedEmotion}/>*/}
-            {/*<div className="h-5"/>*/}
+          <div className="flex flex-col mx-auto" style={{width: '40rem'}}>
 
-            {this.viewIntro()}
-            <div className="h-5"/>
-
+            {this.viewFeedback()}
             {this.viewHistory()}
-            <MessageChatComponent messages={messages}/>
-            <div className="h-5"/>
+
+            {/*<MessageChatComponent messages={messages}/>*/}
 
             <RecordComponent
               recorderCounter={toggleRecordingCounter}
               onPublish={(msg) => {
-              console.log("RECORDING");
-              this.publish(msg);
-            }}/>
+                  console.log("RECORDING");
+                  this.publish(msg);
+              }}
+              reportSpokenText={(text) => {
+                  this.setState({spokenText: text});
+              }}
+              onCleanTranscript={() => {
+                  this.setState({messages: []});
+              }}/>
 
-            {this.viewFeedback()}
+            <div className="mt-32">&nbsp;</div>
             {this.viewStateButtons()}
           </div>
         </div>
@@ -343,7 +347,7 @@ class MainScreen extends Component {
 
   viewInformation = () => {
 
-    const globalClass = " text-white font-bold py-2 px-2 rounded-full w-2 h-2 my-auto";
+    const globalClass = " text-white font-bold py-1 px-1 w-2 h-2 my-auto";
     const enabledClass = " bg-green hover:bg-green-dark" + globalClass;
     const disabledClass = " bg-grey-darker hover:bg-grey-darkest" + globalClass;
 
@@ -351,13 +355,20 @@ class MainScreen extends Component {
     const currentClass = online ? enabledClass : disabledClass;
 
     return (
-      <div className="absolute pin-b pin-r m-3 text-grey text-center">
-        <div className="flex flex-row">
-          {errorMsg || !online ? <InformationComponent message={errorMsg}
-            onClick={this.openConnectionSettings}/> : <div/>}
-          <button className={currentClass}
-            onClick={this.openConnectionSettings}>
-          </button>
+      <div className="absolute pin-b pin-l p-8 text-grey">
+        <div className="flex flex-col ml-2 mr-2">
+          <div className="font-light syncopate text-5xl">amicus</div>
+          <div className="font-light text-base -mt-4">an intelligent bot-interface-as-a-servce (bAaS)</div>
+          <div className="font-light text-base -mt-1">created with our friends over at BMW</div>
+          <div className="bg-white h-1 mt-2 w-full" style={{height:'0.05em'}} />
+          <div className="flex flex-row mt-3">
+            <button className={currentClass}
+              onClick={this.openConnectionSettings}>
+            </button>
+            <InformationComponent message={errorMsg}
+              online={online}
+              onClick={this.openConnectionSettings}/>
+          </div>
         </div>
       </div>
     );
@@ -365,28 +376,61 @@ class MainScreen extends Component {
 
 
   viewHistory = () => {
-    if (this.state.messages.length < MESSAGE_LIMIT) return;
+    //if (this.state.messages.length < MESSAGE_LIMIT) return;
+    const { messages, spokenText } = this.state;
+
+    var botMessage = null;
+    var waitingForBot = false;
+    if (messages) {
+      var lastPayload = messages[messages.length - 1]; //last message
+      if (lastPayload && lastPayload.message) {
+        if (lastPayload.id !== 0) { //message is coming from human
+          botMessage = lastPayload.message;
+        }
+        waitingForBot = lastPayload.id === 0;
+      }
+    }
+
+    var loaderColor = waitingForBot ? "#ef1c7f" : "#FFFFFF";
+    var textClass = botMessage ? "text-grey-darker" : "text-white"
 
     return (
-      <div className="text-grey-dark text-sm text-center mx-auto">[no prior message history available]</div>
+      <div className="flex flex-col">
+
+        { (spokenText.length > 0) ? <div className="flex flex-row w-2/3 mx-auto">
+          <div className="flex w-auto mx-auto"></div>
+          {!botMessage ? <Digital className="ml-2 mr-2 my-auto w-10 h-5" color={loaderColor} size={15}/> : <div/> }
+          <div className="font-light text-base py-2 px-4 rounded bg-woodsmoke">
+            <div className={textClass}>{spokenText.toLowerCase()}</div>
+          </div>
+        </div> : <div/>}
+
+        {botMessage ? <div className="mt-3">
+          <div className="text-white text-2xl w-2/3 text-left mx-auto">
+            {botMessage}
+          </div>
+        </div> : <div/>}
+      </div>
     );
   }
 
   viewIntro = () => {
     return (
-      <div className="font-light text-2xl mx-auto text-center">hey there! my name is
-        <div className="syncopate text-5xl">amicus</div>
+      <div className="absolute pin-b pin-l font-light mx-auto text-center">
+        <div className="font-light syncopate text-5xl">amicus</div>
       </div>
     );
   }
 
   viewFeedback = () => {
-    const { currentHint, hints } = this.state;
+    const { currentHint, hints, messages } = this.state;
+
+    if (messages.length > 0) return;
 
     const hintText = hints[currentHint % hints.length];
 
     return (
-      <div className="w-full mt-3 text-center text-grey-dark">
+      <div className="w-full -mt-5 mb-2 text-center text-grey-dark">
         <div className="text-sm" key={hintText}>{hintText}</div>
       </div>
     );
@@ -396,25 +440,25 @@ class MainScreen extends Component {
 
     const { selectedEmotion } = this.state;
 
-    const globalClassName = " font-bold py-2 px-4 rounded mt-2";
+    const globalClassName = " font-bold py-1 px-4 rounded mt-2";
     const selectedClassName = " bg-red hover:bg-red-dark text-white" + globalClassName;
     const neutralClassName = " bg-grey hover:bg-grey-dark text-black" + globalClassName;
 
     return (
-      <div className="absolute pin-t pin-l m-3 mt-5 text-center">
-        <div className="flex flex-col">
-          <div>Simulate</div>
+      <div className="absolute pin-b pin-r p-8 text-center">
+        <div className="flex flex-col mr-2 ml-2">
+          <div>simulate</div>
           <button className={selectedEmotion === EMOTIONS_ENUM.happy ? selectedClassName : neutralClassName}
             onClick={() => this.selectEmotion(EMOTIONS_ENUM.happy)}>
-            Happy
+            happy
           </button>
           <button className={selectedEmotion === EMOTIONS_ENUM.sad ? selectedClassName : neutralClassName}
             onClick={() => this.selectEmotion(EMOTIONS_ENUM.sad)}>
-            Sad
+            sad
           </button>
           <button className={selectedEmotion === EMOTIONS_ENUM.neutral ? selectedClassName : neutralClassName}
             onClick={() => this.selectEmotion(EMOTIONS_ENUM.neutral)}>
-            Neutral
+            neutral
           </button>
         </div>
       </div>

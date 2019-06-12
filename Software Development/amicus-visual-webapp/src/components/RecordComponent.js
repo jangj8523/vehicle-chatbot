@@ -37,6 +37,7 @@ class RecordComponent extends Component {
 
   componentDidUpdate(prevProps, prevState){
 
+    const { isListening } = this.state;
     const { recorderCounter } = this.props;
     if ((prevProps.recorderCounter !== recorderCounter) && recorderCounter !== 0) {
       this.startListeningAPI();
@@ -45,13 +46,18 @@ class RecordComponent extends Component {
     if (this.props.transcript !== prevProps.transcript) {
       const { transcript } = this.props;
 
-      const { isListening } = this.state;
       if (this.isTriggerValid(transcript) && !isListening) {
         console.log("[componentDidUpdate] Amicus recognized");
         console.log("[componentDidUpdate] transcript delta: " + transcript);
 
         this.startListeningAPI();
       } else {
+
+        const { reportSpokenText, onCleanTranscript } = this.props;
+        if (isListening && transcript.length > 0) {
+          reportSpokenText(transcript);
+        }
+
         this.startSpeechTimer(() => {
           if(this.sendPendingMessage()) {
             this.stopListeningAPI();
@@ -123,6 +129,7 @@ class RecordComponent extends Component {
     const { resetTranscript } = this.props;
     this.setState({isListening: true});
     this.startBrowserRecording();
+
     resetTranscript();
   }
 
@@ -175,9 +182,7 @@ class RecordComponent extends Component {
     const { isListening } = this.state;
 
     return (
-      <div>
-        {this.viewSpokenText()}
-        <div className="h-5"/>
+      <div className="mt-4">
         <div className="w-full text-center text-grey-dark">
           <button className="flex flex-col mx-auto relative bg-grey-light hover:bg-grey-dark w-16 h-16 rounded-full"
                   onClick={() => {this.toggleListeningAPI()}}>
@@ -186,6 +191,8 @@ class RecordComponent extends Component {
             {isListening && <Spinner className="z-0" color="#FFFFFF" size={47}/>}
           </button>
         </div>
+        {/*<div className="h-5"/>*/}
+        {/*this.viewSpokenText()*/}
       </div>
     );
   }
@@ -196,11 +203,11 @@ class RecordComponent extends Component {
     if (!isListening || transcript === "") return;
 
     return (
-      <div className="flex flex-col w-64 text-white text-center text-md mx-auto mt-3 py-2 px-4 rounded bg-woodsmoke">
+      <div className="flex flex-col w-auto text-white text-center font-light text-xl -mt-8 py-5 px-4 mx-16 rounded bg-woodsmoke">
         <div>{transcript}</div>
-        <div className="flex flex-row mx-auto text-sm">
+        <div className="flex flex-row mx-auto mt-2 text-sm">
           {this.viewCountDown()}
-          <div className="text-grey-dark">sending...</div>
+          {/*<div className="text-grey-dark">sending...</div>*/}
         </div>
 
         {/*!browserSupportsSpeechRecognition && <div>No support</div>*/}
@@ -214,7 +221,7 @@ class RecordComponent extends Component {
     if (!speechTimerShown) return;
 
     return (
-      <Digital className="mt-1 mr-2" color="#FFFFFF" size={13}/>
+      <Digital className="mt-1 mr-2" color="#FFFFFF" size={15}/>
     );
   }
 
@@ -223,6 +230,8 @@ class RecordComponent extends Component {
 RecordComponent.propTypes = {
   // Props injected by SpeechRecognition
   onPublish: PropTypes.func,
+  reportSpokenText: PropTypes.func,
+  onCleanTranscript: PropTypes.func,
   transcript: PropTypes.string,
   resetTranscript: PropTypes.func,
   browserSupportsSpeechRecognition: PropTypes.bool
