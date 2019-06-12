@@ -61,11 +61,10 @@ class MyBot {
         var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?'];
         var response = '';
         let encodedAmicus = '';
-        user.nameExists = true;
-        user.userName = "Jaewoo";
+        // user.nameExists = true;
+        // user.userName = "Jaewoo";
         if (!user.nameExists) {
             user.nameExists = false;
-            user.userName = "Vik"
             user.mustClarify = false;
 
             response = "Welcome! I am Amicus, your friend. To get started input your name!";
@@ -125,9 +124,9 @@ class MyBot {
         user.mustClarify = false;
         console.log(user.numInvalidQueries);
 
-        // if (user.nameExists == false) {
-        //   return await step.beginDialog('requestNameDialog', user);
-        // }
+        if (user.nameExists == false) {
+          return await step.beginDialog('requestNameDialog', user);
+        }
 
 
 
@@ -175,8 +174,8 @@ class MyBot {
     async saveResult(step) {
         // Process the return value from the child dialog.
         var response = await utilManager.getRandomResponse(ResponseList["CLOSING_REMARK_RESPONSE"]);
-        console.log(step._info.result);
-        if (step._info.result) {
+        console.log("done", step._info.result);
+        if (step) {
             const user = await this.userInfoAccessor.get(step.context);
             // console.log(step);
             var encodedAmicus = '';
@@ -184,16 +183,14 @@ class MyBot {
               encodedAmicus = amicusEncode("Please tell me your name again!", "negative");
               return await step.prompt('textPrompt', encodedAmicus);
             }
-            if (step._info.result.userName) {
-                // Store the results of the reserve-table dialog.
-                user.userName = step._info.result.userName;
-                user.nameExists = true;
-                encodedAmicus = amicusEncode(response +  user.userName, "positive");
+            if (step._info.result.userName !== null) {
+              user.userName = step._info.result.userName;
+              user.nameExists = true;
             }
             if (step._info.result.gracefulFailure === true) {
               response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
-              encodedAmicus = amicusEncode(response +  user.userName, "negative");
             }
+            encodedAmicus = amicusEncode(response +  user.userName, "positive");
             console.log('saved!: ', response);
             return await step.prompt('textPrompt', encodedAmicus);
         }
