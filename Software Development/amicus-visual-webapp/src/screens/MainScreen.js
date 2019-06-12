@@ -112,7 +112,7 @@ class MainScreen extends Component {
         if (result.watermark === null || result.activities === null) return;
 
         this.setState({online: true, errorMsg: null});
-        if (result.watermark !== waterfallId) {
+        if ((result.watermark !== waterfallId) && result.activities) {
           //we have an update...
 
           for (var activity of result.activities) {
@@ -242,6 +242,8 @@ class MainScreen extends Component {
       this.setState({avatarActions: {timestamp: new Date(), state: decodedMessage['state'], emotes: [decodedMessage['emotion']], expressions: {angry: decodedMessage["angry"], surprised: decodedMessage["surprise"], sad: decodedMessage["sad"]}}});
       this.setState({pitch: decodedMessage['pitch'], volume: decodedMessage['volume'], rate: decodedMessage['rate']});
       this.setState({toggleRecordingCounter: this.state.toggleRecordingCounter+1})
+
+      this.say(decodedMessage["description"]);
     } else {
       newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
     }
