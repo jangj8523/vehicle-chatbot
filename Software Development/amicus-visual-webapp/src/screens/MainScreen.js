@@ -40,7 +40,8 @@ class MainScreen extends Component {
     conversationId: null,
     errorMsg: null,
     online: false,
-    connectionModalVisible: false
+    connectionModalVisible: false,
+    toggleRecordingCounter: 0,
   }
 
   constructor(props) {
@@ -236,8 +237,9 @@ class MainScreen extends Component {
       decodedMessage = amicusDecode(msg);
       newMessages.push(new Message({ id: 1, message: decodedMessage["description"] }));
       console.log(decodedMessage);
-      this.setState({avatarActions: {timestamp: new Date(), state: decodedMessage['state'], emotes: [decodedMessage['emotion']], expressions: {angry: decodedMessage["angry"], surprised: decodedMessage["surprise"], sad: decodedMessage["sad"]}}})
-      this.setState({pitch: decodedMessage['pitch'], volume: decodedMessage['volume'], rate: decodedMessage['rate']})
+      this.setState({avatarActions: {timestamp: new Date(), state: decodedMessage['state'], emotes: [decodedMessage['emotion']], expressions: {angry: decodedMessage["angry"], surprised: decodedMessage["surprise"], sad: decodedMessage["sad"]}}});
+      this.setState({pitch: decodedMessage['pitch'], volume: decodedMessage['volume'], rate: decodedMessage['rate']});
+      this.setState({toggleRecordingCounter: this.state.toggleRecordingCounter+1})
     } else {
       newMessages.push(new Message({ id: isFromBot ? 1 : 0, message: msg }));
     }
@@ -282,12 +284,12 @@ class MainScreen extends Component {
   openConnectionSettings = () => {
     this.setState({connectionModalVisible : true});
 
-    var event = new Event('event_rain');
-    window.dispatchEvent(event);
+    //var event = new Event('event_rain');
+    //window.dispatchEvent(event);
   }
 
   render() {
-    const { messages } = this.state;
+    const { messages, toggleRecordingCounter } = this.state;
 
     return (
       <div className="flex flex-col h-full bg-transparent text-grey-lighter">
@@ -304,7 +306,9 @@ class MainScreen extends Component {
             <MessageChatComponent messages={messages}/>
             <div className="h-5"/>
 
-            <RecordComponent onPublish={(msg) => {
+            <RecordComponent
+              recorderCounter={toggleRecordingCounter}
+              onPublish={(msg) => {
               console.log("RECORDING");
               this.publish(msg);
             }}/>

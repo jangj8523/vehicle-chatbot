@@ -100,7 +100,7 @@ class ThreeAvatarComponent extends React.Component {
 
     this.api = { state: 'Idle' };
     var loader = new GLTFLoader();
-		loader.load('./models/gltf/RobotExpressive/RobotExpressive_colored.gltf', ( gltf ) => {
+		loader.load('./models/gltf/RobotExpressive/RobotExpressive.gltf', ( gltf ) => {
 			var model = gltf.scene;
 			this.scene.add(model);
 			this.createGUI(model, gltf.animations);
@@ -183,8 +183,13 @@ class ThreeAvatarComponent extends React.Component {
 		this.previousAction = this.activeAction;
 		this.activeAction = this.actions[ name ];
 		if ( this.previousAction !== this.activeAction ) {
-			this.previousAction.fadeOut( duration );
+      if (this.previousAction) {
+			     this.previousAction.fadeOut( duration );
+      }
 		}
+
+    if (!this.activeAction) return;
+
 		this.activeAction
 			.reset()
 			.setEffectiveTimeScale( 1 )
