@@ -53,7 +53,7 @@ class RecordComponent extends Component {
         this.startListeningAPI();
       } else {
 
-        const { reportSpokenText, onCleanTranscript } = this.props;
+        const { reportSpokenText } = this.props;
         if (isListening && transcript.length > 0) {
           reportSpokenText(transcript);
         }
