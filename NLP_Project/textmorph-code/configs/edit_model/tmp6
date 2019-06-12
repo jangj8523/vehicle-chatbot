@@ -1,0 +1,4 @@
+include "edit_baseline.txt"
+editor{
+  norm_eps = 0.01
+}
