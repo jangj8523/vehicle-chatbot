@@ -401,8 +401,9 @@ class MainScreen extends Component {
       }
     }
 
-    var loaderColor = waitingForBot ? "#ef1c7f" : "#FFFFFF";
-    var textClass = botMessage ? "text-grey-darker" : "text-white"
+    let loaderColor = waitingForBot ? "#ef1c7f" : "#FFFFFF";;
+    let textClass = botMessage ? "text-grey-darker" : "text-white";
+    let botTextClass = (botMessage && (botMessage.length > 50)) ? "text-base" : "text-2xl";
 
     return (
       <div className="flex flex-col mb-2">
@@ -417,7 +418,7 @@ class MainScreen extends Component {
 
         {botMessage ? <div className="mt-3">
           <div className="text-white text-2xl w-2/3 text-left mx-auto" style={{'whiteSpace': 'pre-wrap'}}>
-            {botMessage}
+            <div className={botTextClass}>{botMessage}</div>
           </div>
         </div> : <div/>}
       </div>
