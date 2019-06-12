@@ -12,6 +12,7 @@ const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
 
 const { GoToDestinationDialog } = require("./dialogs/goToDestinationDialog.js");
+const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { RequestNameDialog } = require("./dialogs/requestNameDialog.js");
 const utilManager = require("./utilManager.js");
 const { ResponseList } = require("./constant.js");
@@ -43,6 +44,7 @@ class MyBot {
         this.dialogs = new DialogSet(this.dialogStateAccessor)
         .add(new GoToDestinationDialog('goToDestinationDialog'))
         .add(new TextPrompt('textPrompt'))
+        .add(new ControlCarFeature('controlCarFeature'))
         .add(new RequestNameDialog('requestNameDialog'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
@@ -56,6 +58,8 @@ class MyBot {
         var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?'];
         var response = '';
         let encodedAmicus = '';
+        user.nameExists = true;
+        user.userName = "Jaewoo";
         if (!user.nameExists) {
             user.nameExists = false;
             user.userName = "Vik"
@@ -118,9 +122,11 @@ class MyBot {
         user.mustClarify = false;
         console.log(user.numInvalidQueries);
 
-        if (user.nameExists == false) {
-          return await step.beginDialog('requestNameDialog', user);
-        }
+        // if (user.nameExists == false) {
+        //   return await step.beginDialog('requestNameDialog', user);
+        // }
+
+
 
 
 
@@ -154,6 +160,8 @@ class MyBot {
         if (user.topScoreIntent.includes("goToDestinationDialog")) {
           console.log("topScoringIntent (launch)");
           return await step.beginDialog('goToDestinationDialog', user);
+        } else if (user.topScoreIntent.includes("controlCarFeature")) {
+          return await step.beginDialog('controlCarFeature', user);
         }
 
     }
