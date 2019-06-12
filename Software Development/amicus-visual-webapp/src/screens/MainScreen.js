@@ -383,12 +383,21 @@ class MainScreen extends Component {
     var botMessage = null;
     var waitingForBot = false;
     if (messages) {
-      var lastPayload = messages[messages.length - 1]; //last message
-      if (lastPayload && lastPayload.message) {
-        if (lastPayload.id !== 0) { //message is coming from human
-          botMessage = lastPayload.message;
+
+      let lastPayload = messages[messages.length - 1]; //last message
+      if (lastPayload && (lastPayload.id === 0)) { //0 is a human message, 1 is a bot
+        waitingForBot = true;
+      } else {
+        for (var i=messages.length-1; i>=0; i--) {
+            let payload = messages[i];
+            if (!payload || !payload.message || !payload.id) continue;
+
+            if (payload.id === 0) break; //0 is a human message, 1 is a bot
+
+            if (!botMessage) botMessage = "";
+            if (botMessage.length > 0) botMessage += "\n";
+            botMessage += payload.message;
         }
-        waitingForBot = lastPayload.id === 0;
       }
     }
 
@@ -407,7 +416,7 @@ class MainScreen extends Component {
         </div> : <div/>}
 
         {botMessage ? <div className="mt-3">
-          <div className="text-white text-2xl w-2/3 text-left mx-auto">
+          <div className="text-white text-2xl w-2/3 text-left mx-auto" style={{'whiteSpace': 'pre-wrap'}}>
             {botMessage}
           </div>
         </div> : <div/>}
