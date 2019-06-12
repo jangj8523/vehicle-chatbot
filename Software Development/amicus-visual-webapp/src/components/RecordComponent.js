@@ -36,6 +36,12 @@ class RecordComponent extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
+
+    const { recorderCounter } = this.props;
+    if ((prevProps.recorderCounter !== recorderCounter) && recorderCounter !== 0) {
+      this.startListeningAPI();
+    }
+
     if (this.props.transcript !== prevProps.transcript) {
       const { transcript } = this.props;
 
