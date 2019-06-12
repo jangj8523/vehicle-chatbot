@@ -296,7 +296,7 @@ class MainScreen extends Component {
     const { toggleRecordingCounter } = this.state;
 
     return (
-      <div className="flex flex-col h-full bg-pitch-black text-grey-lighter">
+      <div className="flex flex-col h-full bg-transparent text-grey-lighter">
         <div className="flex flex-col h-auto my-auto">
           <ThreeAvatarComponent actions={this.state.avatarActions}/>
           <div className="flex flex-col mx-auto" style={{width: '40rem'}}>
