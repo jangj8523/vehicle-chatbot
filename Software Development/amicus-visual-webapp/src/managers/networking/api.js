@@ -1,7 +1,23 @@
-import { BASE_URL } from '../../constants';
+import { KEY_BASE_URL, BASE_URL } from '../../constants';
+
+export function getCallURL() {
+  let url = sessionStorage.getItem(KEY_BASE_URL);
+  if (url == null) {
+    url = BASE_URL;
+    sessionStorage.setItem(KEY_BASE_URL, url);
+  }
+
+  return url;
+}
+
+export function setCallURL(url) {
+  sessionStorage.setItem(KEY_BASE_URL, url);
+}
 
 export function post(endpoint, body) {
-  return fetch(`${BASE_URL}${endpoint}`, {
+
+  let url = getCallURL();
+  return fetch(`${url}${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -11,7 +27,9 @@ export function post(endpoint, body) {
 }
 
 export function get(endpoint) {
-  return fetch(`${BASE_URL}${endpoint}`, {
+
+  let url = getCallURL();
+  return fetch(`${url}${endpoint}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

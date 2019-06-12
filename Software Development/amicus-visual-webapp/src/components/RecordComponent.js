@@ -43,7 +43,7 @@ class RecordComponent extends Component {
       if (this.isTriggerValid(transcript) && !isListening) {
         console.log("[componentDidUpdate] Amicus recognized");
         console.log("[componentDidUpdate] transcript delta: " + transcript);
-        
+
         this.startListeningAPI();
       } else {
         this.startSpeechTimer(() => {

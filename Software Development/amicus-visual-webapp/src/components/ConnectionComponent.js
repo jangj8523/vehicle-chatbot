@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getCallURL, setCallURL } from '../managers/networking/api';
 import PropTypes from 'prop-types';
 
 //import { KEY_BOT_URL } from '../constants';
@@ -11,13 +12,20 @@ class ConnectionComponent extends Component {
     connectionUrl: '',
   }
 
+  componentWillMount() {
+    this.setState({connectionUrl: getCallURL()});
+  }
+
   handleConnectionChange = (event) => {
     this.setState({connectionUrl: event.target.value});
   }
 
   handleConnectionSubmit = (event) => {
-    //alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
+    const { connectionUrl } = this.state;
+    if (connectionUrl !== "")
+      setCallURL(connectionUrl);
+
     this.props.onPress();
   }
 
