@@ -2,6 +2,7 @@
 
 const { ActivityTypes, IMessageActivity } = require('botbuilder');
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
+const amicusEncode = require('../util/jwtManager.js');
 
 
 class ControlCarFeature  extends ComponentDialog {
@@ -40,9 +41,7 @@ class ControlCarFeature  extends ComponentDialog {
                 // step.context.activity.speak = 'There is a snake';
 
                 var windowDoor = "";
-                if (step.options.entities !== null) {
-                  dest_entity = step.options.entities[0].entity;
-                } else if (step.options.entities[0].entity.includes("open") || (step.options.query.includes("roll") && step.options.entities[0].entity.includes("down"))) {
+                if (step.options.entities[0].entity.includes("open") || (step.options.query.includes("down") && step.options.entities[0].entity.includes("down"))) {
                     step.values.verb = "open";
                     windowDoor = step.options.entities[1].entity;
                 } else {
@@ -54,20 +53,18 @@ class ControlCarFeature  extends ComponentDialog {
 
                 step.values.windowDoor = windowDoor;
 
+                var response = `Ok, there are multiple "` + windowDoor + `". Which one are you referring to? `
+                response += "Driver's seat, " + "Front seat, " +  "Back left, " +  "Back right?"
 
-                const promptOptions = {
-                    prompt: `Ok, there are multiple "` + windowDoor + `". Which one are you referring to?`,
-                    choices: ["Driver's seat", "Front seat", "Back left", "Back right"]
-                };
-                return await step.prompt('choicePrompt', promptOptions);
+                let encodedAmicus = amicusEncode(response, "neutral");
+                return await step.prompt('textPrompt', encodedAmicus);
             },
             async function (step) {
                 // Save the name and prompt for the room number.
-                step.values.activity = step.result.value;
-                step.values.conversation.push(step.result.value);
-                var close = "all the way up";
+                step.values.activity = step.context.activity.text.toLowerCase();
+                step.values.conversation.push(step.context.activity.text);
                 var half = "half way";
-                var open = "all the way down";
+                var open = "all the way";
 
                 if (step.values.windowDoor === "door") {
                     return await step.next([]);
@@ -75,36 +72,35 @@ class ControlCarFeature  extends ComponentDialog {
 
                 var promptChoiceA = open;
                 var promptChoiceB = half;
-                if (step.values.verb.includes("close")) {
-                    promptChoiceA = close;
-                }
 
-                const promptOptions = {
-                    prompt: `Sure, ` + step.values.activity + ` ` +  step.values.windowDoor + ` it is. How much should we ` + step.values.verb + ` it?`,
-                    choices: [promptChoiceA, promptChoiceB]
-                };
 
-                return await step.prompt('choicePrompt', promptOptions);
+                var response = `Sure, ` + step.values.activity + ` ` +  step.values.windowDoor + ` it is. How much should we ` + step.values.verb + ` it? `;
+                response += promptChoiceA + ", or " + promptChoiceB + "?";
+                let encodedAmicus = amicusEncode(response, "neutral");
+                return await step.prompt('textPrompt', encodedAmicus);
             },
+
             async function (step) {
                 // Save the room number and "sign off".
 
                 if (step.values.windowDoor === "window") {
-                    step.values.activity = step.result;
-                    step.values.conversation.push(step.result);
+                    step.values.activity = step.context.activity.text;
+                    step.values.conversation.push(step.context.activity.text);
                 }
-
                 var windowDoor = step.values.windowDoor;
-
                 var verb = step.values.verb;
+                var response = `Great! I can ` + verb + ` the ${windowDoor} `;
 
                 if (step.values.windowDoor === "window") {
-                    await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` ${step.result.value}`);
+                    response += `on the` + ` ${step.context.activity.text}`;
                 } else {
-                    await step.context.sendActivity(`Great! I can ` + verb + ` the ${windowDoor} ` + ` on the` + ` ${step.values.activity}`);
+                    response += `on the` + ` ${step.values.activity}`;
                 }
 
                 // End the dialog, returning the user info.
+
+                let encodedAmicus = amicusEncode(response, "neutral");
+                await step.context.sendActivity(encodedAmicus);
                 return await step.endDialog(step.values);
             }
 

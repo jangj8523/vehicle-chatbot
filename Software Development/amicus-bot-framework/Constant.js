@@ -16,8 +16,8 @@ const entityType = {
 
 
 var FOUND_RESTAURANT_RESPONSE = [
-  ["Sure. There are several nearby options for \"", "\". Which one are you referring to?"],
-  ["Ok, there are a number of \"", "\" nearby. Can you specify which one you want?"]
+  ["There are several nearby options for \"", "\". Which one are you referring to? Please tell me the number of choice 1, 2, 3, 4 or 5. "],
+  ["There are a number of \"", "\" nearby. Can you specify which one you want? Your choice number 1, 2, 3, 4 or 5. "]
 ]
 
 var RESTAURANT_QUERY_CLARIFICATION_RESPONSE = [
@@ -38,8 +38,8 @@ var CLOSING_REMARK_RESPONSE = [
 ]
 
 var RESTAURANT_RECOMMENDATION_RESPONSE = [
-  ["Sure I have found a couple \"", "\" restaurant. Which one would you like to go? "],
-  ["Ok, there are a number of \"", "\" restaurants closeby. Which one would you choose to go? "]
+  ["I have found a couple \"", "\" restaurant. Which one would you like to go? Please tell me the number of choice  1, 2, 3, 4 or 5. "],
+  ["There are a number of \"", "\" restaurants closeby. Which one would you choose to go? Please tell us the number only  1, 2, 3, 4 or 5. "]
 ]
 
 var ERROR_RESPONSE = [

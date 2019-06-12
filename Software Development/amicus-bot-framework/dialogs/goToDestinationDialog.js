@@ -8,6 +8,7 @@ var path = require("path");
 var xlsx = require('node-xlsx');
 const utilManager = require("../utilManager.js")
 const { ResponseList } = require('../constant.js')
+const amicusEncode = require('../util/jwtManager.js');
 
 
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
@@ -47,7 +48,9 @@ class goToDestinationDialog  extends ComponentDialog {
 
     async responseRetrieval(step, restaurantList, place, type) {
       if (restaurantList.length === 0) {
-        await step.context.sendActivity(`Unfortunately, I can't find any ${place} nearby.`);
+        var response = `Unfortunately, I can't find any ${place} nearby.`
+        let encodedAmicus = amicusEncode(response, "negative");
+        await step.context.sendActivity(encodedAmicus);
         step.values.gracefulFailure = true;
         return step.endDialog(step.values);
       }
@@ -58,8 +61,15 @@ class goToDestinationDialog  extends ComponentDialog {
       } else {
         response = await utilManager.getRandomResponse(ResponseList["RESTAURANT_RECOMMENDATION_RESPONSE"]);
       }
-      var choicePrompt = await utilManager.constructChoicePrompt(place, restaurantList, response);
-      return await step.prompt('choicePrompt', choicePrompt);
+      var choicesList = await utilManager.constructChoicePrompt(place, restaurantList, response);
+      var optionList = await utilManager.constructOptionList (place, restaurantList, response);
+
+      var response = response[PREFIX] + place + response[SUFFIX] + "\n";
+      response += choicesList;
+
+      let encodedAmicus = amicusEncode(response, "neutral");
+      step.values.optionsList = optionList;
+      return await step.prompt('textPrompt', encodedAmicus);
     }
 
     async startRestaurantConvo(step) {
@@ -67,45 +77,81 @@ class goToDestinationDialog  extends ComponentDialog {
       if (step.values.conversation == null){
           step.values.conversation = []
       }
-      if (step.result == null && step.options.entities.length <= 0) {
+      if (step.context.activity.text === null && step.options.entities.length <= 0) {
         step.values.gracefulFailure = true;
         return await step.endDialog(step.values);
       }
-
+      console.log("STEP ", step);
       //The first ranking entity of user's query...
-      var type = step.options.entities[0].type;
-      var place = step.options.entities[0].entity;
+      var type = step._info.options.entities[0].type;
+      var place = step._info.options.entities[0].entity;
+
+      if (type == null) {
+        place = step.context.activity.text;
+      }
       //WE change the user's choice of destination with their most recent input
-      if (step.result !== null && step.result !== undefined) { place = step.result; }
+      // if (step.context.activity.text !== null && step.context.activity.text !== undefined) { place = step.context.activity.text; }
       step.values.place = place;
 
       var restaurantList = null;
       restaurantList = await utilManager.findRestaurantList(place, type, (type === entityType.NAME));
+      console.log("RESU", restaurantList);
       return this.responseRetrieval(step, restaurantList, place, type);
     }
 
+    async getChoiceNumber(userChoice) {
+      var number = 1;
+      if (userChoice === "1" || userChoice === "one" || userChoice === "first") {
+        number = 1;
+      } else if (userChoice === "2" || userChoice === "two" || userChoice === "second") {
+        number = 2
+      } else if (userChoice === "3" || userChoice === "three" || userChoice === "third") {
+        number = 3
+      } else if (userChoice === "4" || userChoice === "four" || userChoice === "fourth") {
+        number = 4
+      } else if (userChoice === "others" || userChoice === "fifth" || userChoice === "five" || userChoice === "5") {
+        number = 5
+      }
+      return number;
+    }
 
     async confirmRestaurantChoice(step) {
-        var userChoice = step.result.value;
+        var userChoice = step.context.activity.text.toLowerCase();
+        console.log("CHEKC OUT ", step);
+        var optionList = step._info.values.optionsList;
+        console.log("PL", optionList);
         step.values.conversation.push(userChoice);
-        if (userChoice === "Others") {
+        var choiceNumber = await this.getChoiceNumber(userChoice);
+        if (choiceNumber == 5 || choiceNumber > optionList.length) {
           var response = await utilManager.getRandomResponse(ResponseList["RESTAURANT_QUERY_CLARIFICATION_RESPONSE"]);
-          return await step.prompt('textPrompt', response[PREFIX]);
+          let encodedAmicus = amicusEncode(response[PREFIX], "negative");
+          step._info.options.entities[0].type = null;
+          step._info.options.entities[0].entity = null;
+          return await step.prompt('textPrompt', encodedAmicus);
         } else {
-          await step.context.sendActivity(`Sounds great; let's head over to ${userChoice}!"`);
+          var choiceNumber = await this.getChoiceNumber(userChoice);
+          var preferPlace = optionList[choiceNumber-1]
+          var response = `Sounds great; let's head over to option ${preferPlace}!"`
+          let encodedAmicus = amicusEncode(response, "positive");
+          await step.context.sendActivity(encodedAmicus);
           return await step.endDialog(step.values);
         }
     }
 
     async finalConfirmChoice(step) {
-        var userChoice = step.result.value;
+        var userChoice = step.context.activity.text.toLowerCase();
+        var optionList = step._info.values.optionsList;
+        var choiceNumber = await this.getChoiceNumber(userChoice);
         step.values.conversation.push(userChoice);
-        if (userChoice == "Others") {
+        if (choiceNumber == 5 || choiceNumber > optionList.length) {
           step.values.gracefulFailure = true;
           var response = await utilManager.getRandomResponse(ResponseList["RESTAURANT_GRACEFUL_FAILURE_RESPONSE"]);
-          await step.context.sendActivity(response[PREFIX] + step.values.place + response[SUFFIX]);
+          let encodedAmicus = amicusEncode(response[PREFIX] + step.values.place + response[SUFFIX], "negative");
+          await step.context.sendActivity(encodedAmicus);
         } else {
-          await step.context.sendActivity(`All set! Navigating to "${userChoice}!"`);
+          var response = `All set! Navigating to option "${optionList[choiceNumber-1]}!"`
+          let encodedAmicus = amicusEncode(response, "positive");
+          await step.context.sendActivity(response);
         }
         return await step.endDialog(step.values);
     }
