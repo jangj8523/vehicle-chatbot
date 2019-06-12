@@ -32,9 +32,9 @@ var RESTAURANT_GRACEFUL_FAILURE_RESPONSE= [
 ]
 
 var CLOSING_REMARK_RESPONSE = [
-  ["Let me know if you need anything else, "],
-  ["Just let me know if there’s anything else I can help with, "],
-  ["If you need something, let me know "]
+  "Let me know if you need anything else, ",
+  "Just let me know if there’s anything else I can help with, ",
+  "If you need something, let me know "
 ]
 
 var RESTAURANT_RECOMMENDATION_RESPONSE = [
