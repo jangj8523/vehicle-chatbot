@@ -4,6 +4,8 @@
 const { ActivityTypes, MessageFactory, IMessageActivity } = require('botbuilder');
 const { DialogSet, WaterfallDialog, TextPrompt, Dialog, DialogTurnStatus } = require('botbuilder-dialogs');
 
+const amicusEncode = require('./util/jwtManager.js');
+
 const DIALOG_STATE_PROPERTY = 'dialogStatePropertyAccessor';
 const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 
@@ -52,19 +54,28 @@ class MyBot {
     async promptForChoice(step) {
         const user = await this.userInfoAccessor.get(step.context);
         var clarifyResponse = ['Please clarify your question. Thanks!', 'Mind if you asked me again?', 'I didnt quite get that, would you mind repeating?', 'Ummm, would you mind rewording your question again please?'];
-
+        var response = '';
+        let encodedAmicus = '';
         if (!user.nameExists) {
             user.nameExists = false;
             user.userName = "Vik"
             user.mustClarify = false;
-            await step.prompt('textPrompt', "Welcome! I am Amicus, your friend. To get started input your name! ");
-        } else if (user.mustClarify == true) {
-            var response = clarifyResponse[Math.floor(Math.random() * clarifyResponse.length)];
-            await step.prompt('textPrompt', response);
-        } else {
-            await step.prompt('textPrompt', `Yes ${user.userName}, how can I help?`);
-        }
 
+            response = "Welcome! I am Amicus, your friend. To get started input your name!";
+            console.log(response);
+            encodedAmicus = amicusEncode(response, "positive");
+
+            // await step.prompt('textPrompt', /*encodedAmicus*/"Welcome! I am Amicus, your friend. To get started input your name!");
+        } else if (user.mustClarify == true) {
+            response = clarifyResponse[Math.floor(Math.random() * clarifyResponse.length)];
+            encodedAmicus = amicusEncode(response, "negative");
+
+        } else {
+            response = `Yes ${user.userName}, how can I help?`;
+            encodedAmicus = amicusEncode(response, "neutral");
+
+        }
+        await step.prompt('textPrompt', encodedAmicus);
     }
 
     async findIntent (step) {
@@ -151,18 +162,26 @@ class MyBot {
     async saveResult(step) {
         // Process the return value from the child dialog.
         var response = await utilManager.getRandomResponse(ResponseList["CLOSING_REMARK_RESPONSE"]);
-
-        if (step.result) {
+        console.log(step._info.result);
+        if (step._info.result) {
             const user = await this.userInfoAccessor.get(step.context);
-            if (step.result.userName) {
+            // console.log(step);
+            var encodedAmicus = '';
+            if (step._info.result.confirm === 'no') {
+              encodedAmicus = amicusEncode("Please tell me your name again!", "negative");
+              return await step.prompt('textPrompt', encodedAmicus);
+            }
+            if (step._info.result.userName) {
                 // Store the results of the reserve-table dialog.
-                user.userName = step.result.userName;
+                user.userName = step._info.result.userName;
                 user.nameExists = true;
+                var encodedAmicus = amicusEncode(response +  user.userName, "positive");
             }
-            if (step.result.gracefulFailure === true) {
+            if (step._info.result.gracefulFailure === true) {
               response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
+              encodedAmicus = amicusEncode(response +  user.userName, "negative");
             }
-            return await step.prompt('textPrompt', response +  user.userName)
+            return await step.prompt('textPrompt', encodedAmicus);
         }
         // Restart the main menu dialog.
         // return await step.replaceDialog('mainDialog'); // Show the menu again
@@ -278,24 +297,24 @@ class MyBot {
             const text = await this.modifyText(response);
             const expression = await this.retrieveExpression(response);
             const setting = await this.modifyPitch();
-
-            let inputMap = {};
-            inputMap['title'] = "Amicus Message";
-            inputMap['description'] = response;
-            inputMap['volume'] = setting[0];
-            inputMap['rate'] = setting[1];
-            inputMap['pitch'] = setting[2];
-            inputMap['emotion'] = emotion;
-            inputMap['state'] = state;
-            inputMap['expression'] = expression;
-            // console.log(inputMap);
-            var payload = {
-                channel : "amicus_global",
-                message : inputMap
-            }
-            pubnub.publish(payload, function(status, response) {
-                //console.log(status, response);
-            })
+            // console.log("Wow I am here!!!! ", response);
+            // let inputMap = {};
+            // inputMap['title'] = "Amicus Message";
+            // inputMap['description'] = response;
+            // inputMap['volume'] = setting[0];
+            // inputMap['rate'] = setting[1];
+            // inputMap['pitch'] = setting[2];
+            // inputMap['emotion'] = emotion;
+            // inputMap['state'] = state;
+            // inputMap['expression'] = expression;
+            // // console.log(inputMap);
+            // var payload = {
+            //     channel : "amicus_global",
+            //     message : inputMap
+            // }
+            // pubnub.publish(payload, function(status, response) {
+            //     //console.log(status, response);
+            // })
           }
 
           return responses;

@@ -10,8 +10,6 @@ const zlib = require('zlib');
 var request = require('request');
 var path = require("path");
 var xlsx = require('node-xlsx');
-const amicusEncode = require('../util/jwtManager.js');
-
 
 const { DialogSet, ComponentDialog, WaterfallDialog, TextPrompt, NumberPrompt, ChoicePrompt, DialogTurnStatus } = require('botbuilder-dialogs');
 
@@ -29,32 +27,21 @@ class RequestNameDialog  extends ComponentDialog {
 
         // Define the conversation flow using a waterfall model.
         this.addDialog(new WaterfallDialog(dialogId, [
-            async function (step) {
-                // var promptOptions = {
-                //     prompt: `Ok, ` + step.context.activity.text  + `! Would you mind clarifying your name for me please?`,
-                //     choices: ["Tara Padma Iyer", "Benjamin Hannel","Vikram Pattabi","Andrew Zhang", "Lily Liu"]
-                // }
-                // return await step.prompt('choicePrompt', promptOptions);
-
-                var response = `Ok, ` + step.context.activity.text  + `! Is this correct? Yes or No?`;
-                step.values.userName = step.context.activity.text;
-                let encodedAmicus = amicusEncode(response, "neutral");
-                return await step.prompt('textPrompt', encodedAmicus);
+            async function (step,) {
+                var promptOptions = {
+                    prompt: `Ok, ` + step.context.activity.text  + `! Would you mind clarifying your name for me please?`,
+                    choices: ["Tara Padma Iyer", "Benjamin Hannel","Vikram Pattabi","Andrew Zhang", "Lily Liu"]
+                }
+                return await step.prompt('choicePrompt', promptOptions);
             },
 
             async function (step) {
-                // step.values.userName = step.result.value.split(" ")[0];
-                step.values.confirm = step.context.activity.text;
-                if (step.values.confirm === 'no')  {
-                    step.values.userName = null;
-                    step.values.nameExists = false;
-                } else {
-                  var response = `Thank you, and welcome "${step.values.userName}!"`
-                  step.values.nameExists = true;
-                  let encodedAmicus = amicusEncode(response, "positive");
-                  await step.context.sendActivity(encodedAmicus);
-                }
-              // End the dialog, returning the user info.
+                step.values.userName = step.result.value.split(" ")[0];
+                step.values.nameExists = true;
+                await step.context.sendActivity(`Thank you, and welcome "${step.values.userName}!"`);
+
+
+                // End the dialog, returning the user info.
                 return await step.endDialog(step.values);
             }
 
