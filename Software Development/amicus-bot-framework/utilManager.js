@@ -123,9 +123,9 @@ class UtilManager {
 
 
   async findRestaurantList(entityName, entityType, isCuisine) {
-      var googlePlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.4419,-122.1430&radius=5000&keyword=";
+      var googlePlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.4419,-122.1430&radius=10000&keyword=";
       if (isCuisine) {
-        googlePlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.4419,-122.1430&radius=10000&type=restaurant&keyword="
+        googlePlaceSearch = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.4419,-122.1430&radius=10000&keyword="
       }
       var parameters = entityName + "&key=" + googleMapsApiKey;
       googlePlaceSearch += parameters;

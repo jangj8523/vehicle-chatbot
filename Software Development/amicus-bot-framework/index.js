@@ -97,12 +97,16 @@ const adapter = new BotFrameworkAdapter({
     appPassword: endpointConfig.appPassword || process.env.microsoftAppPassword
 });
 
+const amicusEncode = require('./util/jwtManager.js');
+
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
     console.error(`\n [onTurnError]: ${ error }`);
     // Send a message to the user
-    await context.sendActivity(`Can you please repeat that?`);
+    var response = `Sorry but can you please repeat that?`;
+    var encodedMessage = amicusEncode(response, "negative");
+    await context.sendActivity(encodedMessage);
 };
 // Define a state store for your bot. See https://aka.ms/about-bot-state to learn more about using MemoryStorage.
 // A bot requires a state store to persist the dialog and user state between messages.
