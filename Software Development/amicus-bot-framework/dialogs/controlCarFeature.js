@@ -41,6 +41,8 @@ class ControlCarFeature  extends ComponentDialog {
                 // step.context.activity.speak = 'There is a snake';
 
                 var windowDoor = "";
+                step.values.close = true;
+                step.values.skip_intro = false;
                 if (step.options.entities[0].entity.includes("open") || (step.options.query.includes("down") && step.options.entities[0].entity.includes("down"))) {
                     step.values.verb = "open";
                     windowDoor = step.options.entities[1].entity;
@@ -61,7 +63,7 @@ class ControlCarFeature  extends ComponentDialog {
             },
             async function (step) {
                 // Save the name and prompt for the room number.
-                step.values.activity = step.context.activity.text.toLowerCase();
+                step.values.activity = step.context.activity.text.toLowerCase()
                 step.values.conversation.push(step.context.activity.text);
                 var half = "half way";
                 var open = "all the way";

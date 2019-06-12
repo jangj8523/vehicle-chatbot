@@ -82,6 +82,8 @@ class goToDestinationDialog  extends ComponentDialog {
         return await step.endDialog(step.values);
       }
       console.log("STEP ", step);
+      step.values.close = true;
+      step.values.skip_intro = false;
       //The first ranking entity of user's query...
       var type = step._info.options.entities[0].type;
       var place = step._info.options.entities[0].entity;

@@ -63,6 +63,10 @@ class MyBot {
         let encodedAmicus = '';
         // user.nameExists = true;
         // user.userName = "Jaewoo";
+        // if (user.skip_intro) {
+        //   return await step.next([]);
+        // }
+
         if (!user.nameExists) {
             user.nameExists = false;
             user.mustClarify = false;
@@ -81,6 +85,7 @@ class MyBot {
             encodedAmicus = amicusEncode(response, "neutral");
 
         }
+        user.skip_intro = true;
         return await step.prompt('textPrompt', encodedAmicus);
     }
 
@@ -175,7 +180,7 @@ class MyBot {
         // Process the return value from the child dialog.
         var response = await utilManager.getRandomResponse(ResponseList["CLOSING_REMARK_RESPONSE"]);
         console.log("done", step._info.result);
-        if (step) {
+        if (step._info.result.close) {
             const user = await this.userInfoAccessor.get(step.context);
             console.log("closing scene ", user)
 
@@ -194,11 +199,13 @@ class MyBot {
             if (step._info.result.gracefulFailure === true) {
               response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
             }
+
             console.log("MY NAME IS ", user.userName);
             encodedAmicus = amicusEncode(response +  user.userName, "positive");
             console.log('saved!: ', response);
             return await step.prompt('textPrompt', encodedAmicus);
         }
+        return await step.next([]);
         // Restart the main menu dialog.
         // return await step.replaceDialog('mainDialog'); // Show the menu again
     }

@@ -39,6 +39,8 @@ class CheckWeatherDialog  extends ComponentDialog {
                 step.values.location = null;
                 step.values.time = null;
                 step.values.skip = true;
+                step.values.skip_intro = false;
+                step.values.close = true;
                 console.log(step);
                 for (var i = 0; i < step._info.options.entities.length; i++) {
                   var type = step._info.options.entities[i].type;

@@ -38,6 +38,8 @@ class RequestNameDialog  extends ComponentDialog {
 
                 var response = `Ok, ` + step.context.activity.text  + `! Is this correct? Yes or No?`;
                 step.values.userName = step.context.activity.text;
+                step.values.close = true;
+                step.values.skip_intro = false;
                 let encodedAmicus = amicusEncode(response, "neutral");
                 return await step.prompt('textPrompt', encodedAmicus);
             },
