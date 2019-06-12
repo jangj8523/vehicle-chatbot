@@ -177,19 +177,24 @@ class MyBot {
         console.log("done", step._info.result);
         if (step) {
             const user = await this.userInfoAccessor.get(step.context);
+            console.log("closing scene ", user)
+
             // console.log(step);
             var encodedAmicus = '';
+            console.log("Before change ", user.userName);
+            console.log("asdjfio;ja, ",step._info.result.userName);
             if (step._info.result.confirm === 'no') {
               encodedAmicus = amicusEncode("Please tell me your name again!", "negative");
               return await step.prompt('textPrompt', encodedAmicus);
             }
-            if (step._info.result.userName !== null) {
+            if (step._info.result.userName !== null && typeof(step._info.result.userName) !== "undefined") {
               user.userName = step._info.result.userName;
               user.nameExists = true;
             }
             if (step._info.result.gracefulFailure === true) {
               response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
             }
+            console.log("MY NAME IS ", user.userName);
             encodedAmicus = amicusEncode(response +  user.userName, "positive");
             console.log('saved!: ', response);
             return await step.prompt('textPrompt', encodedAmicus);

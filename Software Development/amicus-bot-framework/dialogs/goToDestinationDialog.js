@@ -151,7 +151,7 @@ class goToDestinationDialog  extends ComponentDialog {
         } else {
           var response = `All set! Navigating to option "${optionList[choiceNumber-1]}!"`
           let encodedAmicus = amicusEncode(response, "positive");
-          await step.context.sendActivity(response);
+          await step.context.sendActivity(encodedAmicus);
         }
         return await step.endDialog(step.values);
     }
