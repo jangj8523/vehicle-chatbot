@@ -185,6 +185,9 @@ class ThreeAvatarComponent extends React.Component {
 		if ( this.previousAction !== this.activeAction ) {
 			this.previousAction.fadeOut( duration );
 		}
+
+    if (!this.activeAction) return;
+    
 		this.activeAction
 			.reset()
 			.setEffectiveTimeScale( 1 )
