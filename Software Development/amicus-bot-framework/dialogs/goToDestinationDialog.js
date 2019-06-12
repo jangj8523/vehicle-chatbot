@@ -100,7 +100,7 @@ class goToDestinationDialog  extends ComponentDialog {
     }
 
     async getChoiceNumber(userChoice) {
-      var number = 1;
+      var number = 5;
       if (userChoice === "1" || userChoice === "one" || userChoice === "first") {
         number = 1;
       } else if (userChoice === "2" || userChoice === "two" || userChoice === "second") {

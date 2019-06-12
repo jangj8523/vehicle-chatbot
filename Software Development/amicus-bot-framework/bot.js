@@ -124,7 +124,7 @@ class MyBot {
         user.mustClarify = false;
         console.log(user.numInvalidQueries);
 
-        if (user.nameExists == false) {
+        if (user.nameExists === false) {
           return await step.beginDialog('requestNameDialog', user);
         }
 
