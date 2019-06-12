@@ -231,7 +231,6 @@ RecordComponent.propTypes = {
   // Props injected by SpeechRecognition
   onPublish: PropTypes.func,
   reportSpokenText: PropTypes.func,
-  onCleanTranscript: PropTypes.func,
   transcript: PropTypes.string,
   resetTranscript: PropTypes.func,
   browserSupportsSpeechRecognition: PropTypes.bool

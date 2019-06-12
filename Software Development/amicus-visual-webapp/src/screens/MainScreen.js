@@ -311,10 +311,11 @@ class MainScreen extends Component {
                   this.publish(msg);
               }}
               reportSpokenText={(text) => {
+                  const { spokenText } = this.state;
+                  if (!text.startsWith(spokenText)) {
+                    this.setState({messages: []});
+                  }
                   this.setState({spokenText: text});
-              }}
-              onCleanTranscript={() => {
-                  this.setState({messages: []});
               }}/>
 
             <div className="mt-32">&nbsp;</div>
@@ -395,9 +396,9 @@ class MainScreen extends Component {
     var textClass = botMessage ? "text-grey-darker" : "text-white"
 
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col mb-2">
 
-        { (spokenText.length > 0) ? <div className="flex flex-row w-2/3 mx-auto">
+        { (spokenText.length > 0) ? <div className="flex flex-row w-2/3 -mt-5 mx-auto">
           <div className="flex w-auto mx-auto"></div>
           {!botMessage ? <Digital className="ml-2 mr-2 my-auto w-10 h-5" color={loaderColor} size={15}/> : <div/> }
           <div className="font-light text-base py-2 px-4 rounded bg-woodsmoke">
@@ -423,14 +424,14 @@ class MainScreen extends Component {
   }
 
   viewFeedback = () => {
-    const { currentHint, hints, messages } = this.state;
+    const { currentHint, hints, spokenText } = this.state;
 
-    if (messages.length > 0) return;
+    if (spokenText.length > 0) return;
 
     const hintText = hints[currentHint % hints.length];
 
     return (
-      <div className="w-full -mt-5 mb-2 text-center text-grey-dark">
+      <div className="w-full -mt-5 text-center text-grey-dark">
         <div className="text-sm" key={hintText}>{hintText}</div>
       </div>
     );
