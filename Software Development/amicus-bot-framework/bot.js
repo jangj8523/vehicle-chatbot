@@ -160,7 +160,7 @@ class MyBot {
         if (user.topScoreIntent.includes("goToDestinationDialog")) {
           console.log("topScoringIntent (launch)");
           return await step.beginDialog('goToDestinationDialog', user);
-        } else if (user.topScoreIntent.includes("controlCarFeature")) {
+        } else if (user.topScoreIntent.includes("WindowDoorItems")) {
           return await step.beginDialog('controlCarFeature', user);
         }
 

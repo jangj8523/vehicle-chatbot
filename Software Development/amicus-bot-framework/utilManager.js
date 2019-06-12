@@ -9,6 +9,7 @@ var xlsx = require('node-xlsx');
 
 var googleMapsApiKey = 'AIzaSyCbwjE5ceMa_6AWrVl6oKc2Ax5FWOXDAEc';
 const googlePlace = require("google-places-web").default; // instance of GooglePlaces Class;
+const amicusEncode = require('./util/jwtManager.js');
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
 var DISTANCE_THRESHOLD = 25;
@@ -29,22 +30,42 @@ class UtilManager {
     this.chainSpecificList = null;
   }
 
-  async constructChoicePrompt(originalName, placeList, response) {
+  async constructOptionList(originalName, placeList, response) {
     var promptOptions = null;
     var choicesList = [];
     console.log("choices", placeList);
     for (var i = 0; i < placeList.length; ++i) {
-      choicesList[i] = placeList[i]["name"] + " in \""  + placeList[i]["address"] + "\""
+      choicesList[i] = String(i+1) + ", " + placeList[i]["name"] + " in \""  + placeList[i]["address"] + "\"\n"
     }
-    choicesList[placeList.length] = "Others";
+    choicesList[4] = String(5) + ", " + "Others\n";
 
-    promptOptions = {
-        prompt: response[PREFIX] + originalName + response[SUFFIX],
-        choices: choicesList
-    };
-    console.log(promptOptions);
+    // promptOptions = {
+    //     prompt: response[PREFIX] + originalName + response[SUFFIX],
+    //     choices: choicesList
+    // };
+    // console.log(promptOptions);
 
-    return promptOptions;
+
+    return choicesList;
+  }
+
+  async constructChoicePrompt(originalName, placeList, response) {
+    var promptOptions = null;
+    var choicesList = "";
+    console.log("choices", placeList);
+    for (var i = 0; i < placeList.length; ++i) {
+      choicesList += String(i+1) + ", " + placeList[i]["name"] + " in \""  + placeList[i]["address"] + "\"\n"
+    }
+    choicesList += "5, Others\n";
+
+    // promptOptions = {
+    //     prompt: response[PREFIX] + originalName + response[SUFFIX],
+    //     choices: choicesList
+    // };
+    // console.log(promptOptions);
+
+
+    return choicesList;
   }
 
 
@@ -109,6 +130,7 @@ class UtilManager {
       var parameters = entityName + "&key=" + googleMapsApiKey;
       googlePlaceSearch += parameters;
       var responseBody = null
+      console.log(googlePlaceSearch);
       var responseBody = await this.sendGoogleRequest(googlePlaceSearch);
       var response = JSON.parse(responseBody);
       console.log(response)
