@@ -79,7 +79,7 @@ class MyBot {
             encodedAmicus = amicusEncode(response, "neutral");
 
         }
-        await step.prompt('textPrompt', encodedAmicus);
+        return await step.prompt('textPrompt', encodedAmicus);
     }
 
     async findIntent (step) {
@@ -183,12 +183,13 @@ class MyBot {
                 // Store the results of the reserve-table dialog.
                 user.userName = step._info.result.userName;
                 user.nameExists = true;
-                var encodedAmicus = amicusEncode(response +  user.userName, "positive");
+                encodedAmicus = amicusEncode(response +  user.userName, "positive");
             }
             if (step._info.result.gracefulFailure === true) {
               response = await utilManager.getRandomResponse(ResponseList["ERROR_RESPONSE"]);
               encodedAmicus = amicusEncode(response +  user.userName, "negative");
             }
+            console.log('saved!: ', response);
             return await step.prompt('textPrompt', encodedAmicus);
         }
         // Restart the main menu dialog.
