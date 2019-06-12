@@ -1,0 +1,4 @@
+include "edit_baseline.txt"
+editor{
+  kill_edit = True
+}

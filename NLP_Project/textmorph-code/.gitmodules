@@ -1,0 +1,3 @@
+[submodule "MinHash"]
+	path = MinHash
+	url = git@github.com:yonatano/MinHash.git

@@ -1,0 +1,11 @@
+include "default.txt"
+
+optim {
+    learning_rate = 0.0  # no updates
+    max_iters = 1
+}
+
+retriever.train_output = False
+
+eval.save_steps = 1  # save right away
+dataset.limit = 10  # just load very few examples

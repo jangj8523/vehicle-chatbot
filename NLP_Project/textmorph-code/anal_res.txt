@@ -1,0 +1,5 @@
+method, gram4-superlative, gram3-comparative, family,VB_VBD,VBD_VBZ,NN_NNS,VB_VBZ,JJ_JJS,JJ_JJR
+glove,0.51,0.91,0.71,0.645,0.755,0.785,0.96,0.0,0.83
+edit-top10,0.39,0.67,0.33,0.375,0.615,0.545,0.47,0.15,0.39
+edit-top1,0.06,0.29,0.03,0.13,0.04,0.085,0.45,0.1,0.04
+uncond-top10,0.12,0.18,0.23,0.025,0.2,0.285,0.45,0.1,0.32

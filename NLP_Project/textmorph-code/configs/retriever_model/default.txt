@@ -1,0 +1,25 @@
+include "../optim/default.txt"
+include "../eval/default.txt"
+
+optim {
+    num_negatives = 3
+}
+
+eval {
+    num_negatives = 20
+}
+
+retriever {
+    word_dim = 300
+    sent_dim = 300
+    vocab_size = 80000
+    pool_method = mean
+    score_method = dot_product
+    loss_method = ranking
+    train_input = True
+    train_output = False  # don't learn output embedder
+}
+
+dataset {
+    path = yelp_dataset_autocomplete
+}

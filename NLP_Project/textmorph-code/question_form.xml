@@ -1,0 +1,29 @@
+<QuestionForm xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd">
+
+  <Question>
+    <QuestionIdentifier>my_question_id</QuestionIdentifier>
+    <DisplayName>My Question</DisplayName>
+    <IsRequired>true</IsRequired>
+
+    <QuestionContent>
+      <Text>Answer the damn question.</Text>
+    </QuestionContent>
+
+    <AnswerSpecification>
+      <SelectionAnswer>
+        <StyleSuggestion>radiobutton</StyleSuggestion>
+        <MinSelectionCount>1</MinSelectionCount>
+        <MaxSelectionCount>1</MaxSelectionCount>
+        <Selections>
+          <Selection><Text>1</Text><SelectionIdentifier>1</SelectionIdentifier></Selection>
+          <Selection><Text>2</Text><SelectionIdentifier>2</SelectionIdentifier></Selection>
+          <Selection><Text>3</Text><SelectionIdentifier>3</SelectionIdentifier></Selection>
+          <Selection><Text>4</Text><SelectionIdentifier>4</SelectionIdentifier></Selection>
+          <Selection><Text>5</Text><SelectionIdentifier>5</SelectionIdentifier></Selection>
+        </Selections>
+      </SelectionAnswer>
+    </AnswerSpecification>
+
+  </Question>
+
+</QuestionForm>
