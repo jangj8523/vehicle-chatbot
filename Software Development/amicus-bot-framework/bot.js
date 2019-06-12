@@ -14,6 +14,8 @@ const USER_INFO_PROPERTY = 'userInfoPropertyAccessor';
 const { GoToDestinationDialog } = require("./dialogs/goToDestinationDialog.js");
 const { ControlCarFeature } = require("./dialogs/controlCarFeature.js");
 const { RequestNameDialog } = require("./dialogs/requestNameDialog.js");
+const { CheckWeatherDialog } = require("./dialogs/checkWeatherDialog.js");
+
 const utilManager = require("./utilManager.js");
 const { ResponseList } = require("./constant.js");
 
@@ -45,6 +47,7 @@ class MyBot {
         .add(new GoToDestinationDialog('goToDestinationDialog'))
         .add(new TextPrompt('textPrompt'))
         .add(new ControlCarFeature('controlCarFeature'))
+        .add(new CheckWeatherDialog('checkWeatherDialog'))
         .add(new RequestNameDialog('requestNameDialog'))
         .add(new WaterfallDialog('mainDialog', [
             this.promptForChoice.bind(this),
@@ -162,6 +165,8 @@ class MyBot {
           return await step.beginDialog('goToDestinationDialog', user);
         } else if (user.topScoreIntent.includes("WindowDoorItems")) {
           return await step.beginDialog('controlCarFeature', user);
+        } else if (user.topScoreIntent.includes("CheckWeatherItem")) {
+          return await step.beginDialog('checkWeatherDialog', user);
         }
 
     }
