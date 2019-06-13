@@ -107,6 +107,7 @@ adapter.onTurnError = async (context, error) => {
     var response = `Sorry but can you please repeat that?`;
     var encodedMessage = amicusEncode(response, "negative");
     await context.sendActivity(encodedMessage);
+
 };
 // Define a state store for your bot. See https://aka.ms/about-bot-state to learn more about using MemoryStorage.
 // A bot requires a state store to persist the dialog and user state between messages.
