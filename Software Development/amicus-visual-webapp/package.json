@@ -19,7 +19,7 @@
     "react-speech-recognition": "^1.0.7",
     "say": "^0.15.0",
     "string-similarity": "^3.0.0",
-    "three": "^0.103.0",
+    "three": "^0.125.0",
     "webfontloader": "^1.6.28",
     "xmlhttprequest": "^1.8.0"
   },
